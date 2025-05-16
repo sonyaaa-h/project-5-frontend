@@ -1,0 +1,53 @@
+/* src/index.css */
+:root {
+    --text-color:  #081222;
+    --successfull-color:  #0b6016;
+    --modal-color: #508f8c;
+    --white-color: #fcfcfc;
+    --background-gradient: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+    --yellow-color: #dfad3f;
+    --primary-gradient: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+    --red-color: #b20202;
+    --pink-color:  #f23a3a;
+  }
+  
+body {
+  font-family:  "Inter", sans-serif;
+  line-height: 1.5;
+  background-image: var(--background-gradient);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
