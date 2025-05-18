@@ -2,8 +2,8 @@ import css from "./Header.module.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import LogoutModal from "../Modal/LogoutModal";
-import { ReactComponent as LogoIcon } from "../../assets/icons/money_guard.svg?react";
-import { ReactComponent as ExitIcon }  from "../../assets/icons/exit-1.svg?react";
+import LogoIcon from "../tempIcons/LogoIcon";
+import ExitIcon from "../tempIcons/ExitIcon";
 
 export default function Header() {
   const username = useSelector((state) => state.auth.user.name);
