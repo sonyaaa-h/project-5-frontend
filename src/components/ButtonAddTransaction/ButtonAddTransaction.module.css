@@ -1,0 +1,38 @@
+.btnAddWrapp {
+  position: fixed;
+  z-index: 5;
+  right: calc((100vw - 280px) / 2);
+  bottom: 20px;
+}
+
+.iconAdd {
+  width: 40px;
+  height: 40px;
+  background-color: inherit;
+}
+.iconWrapp {
+  width: 44px;
+  height: 44px;
+  color:#081222;
+  background-color: #508F8C;
+  border-radius: 100%;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 768px) {
+  .btnAddWrapp {
+    right: calc((100vw - 704px) / 2);
+    bottom: 40px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .btnAddWrapp {
+    right: calc((100vw - 1265px) / 2);
+    bottom: 40px;
+  }
+}

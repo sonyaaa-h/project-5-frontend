@@ -1,12 +1,17 @@
 import { Outlet } from "react-router-dom";
-import AppBar from "./components/AppBar/AppBar";
+import ButtonAddTransaction from "./components/ButtonAddTransaction/ButtonAddTransaction";
 
 const Layout = () => {
-    return (
-        <div>
-            <AppBar />
-            <Outlet />
-        </div>
-    );
+  const handleClick = () => {
+    console.log("Клік по кнопці!");
+  };
+
+  return (
+    <div>
+      <Outlet />
+      <ButtonAddTransaction onClick={handleClick} />
+    </div>
+  );
 };
+
 export default Layout;
