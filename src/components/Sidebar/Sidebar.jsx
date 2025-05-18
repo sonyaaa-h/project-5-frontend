@@ -1,5 +1,6 @@
 import Currency from "../Currency/Currency.jsx";
 import css from "./Sidebar.module.css";
+import Navigation from "../Navigation/Navigation.jsx";
 
 const Sidebar = () => {
   return (
@@ -8,12 +9,11 @@ const Sidebar = () => {
       <div className="sidebarComponent">
         <Navigation />
       </div>
-      ;
+
       <div className="sidebarComponent">
-        <Ballance />
+        {/* <Ballance /> */}
         <Currency />
       </div>
-      ;
     </div>
   );
 };

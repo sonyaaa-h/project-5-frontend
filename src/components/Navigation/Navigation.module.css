@@ -1,0 +1,9 @@
+.active svg {
+}
+
+svg {
+  fill: red;
+}
+.block {
+  background-image: var(--primary-gradient);
+}
