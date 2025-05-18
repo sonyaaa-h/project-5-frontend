@@ -1,0 +1,23 @@
+.container {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #2b3a42;
+  color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.th,
+.td {
+  padding: 12px;
+  text-align: left;
+}
+
+.td {
+  padding: 10px;
+}
