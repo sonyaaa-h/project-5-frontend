@@ -3,7 +3,7 @@ import { logout } from "../../redux/auth/operations";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import css from "./LogoutModal.module.css";
-import { ReactComponent as LogoIcon } from "../../assets/icons/money_guard_modal.svg";
+import { ReactComponent as LogoIcon } from "../../assets/icons/money_guard_modal.svg?react";
 
 export default function LogoutModal({ onClose }) {
   const dispatch = useDispatch();
