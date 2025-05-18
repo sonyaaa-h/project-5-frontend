@@ -13,10 +13,10 @@ import {
 import storage from 'redux-persist/lib/storage'
 
 const persistConfig = {
-    key: 'auth-data',
+    key: 'auth',
     version: 1,
     storage,
-    whilelist: ['token']
+    whitelist: ['token', 'isLoggedIn', 'user']
 }
 
 
