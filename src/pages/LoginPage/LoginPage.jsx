@@ -1,4 +1,9 @@
+import { LoginForm } from "../../components/LoginForm/LoginForm.jsx";
+
 const LoginPage = () => {
-    return <div>Login page</div>;
+    return (
+        <div>
+            <LoginForm />
+        </div>);
 };
 export default LoginPage;
