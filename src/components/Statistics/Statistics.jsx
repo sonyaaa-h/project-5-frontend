@@ -1,4 +1,4 @@
-import React, from "react";
+import React from "react";
 import PieChartWithPaddingAngle from "../PieChartWithPaddingAngle/PieChartWithPaddingAngle";
 import s from "./Statistics.module.css";
 import ColorSwitches from "../SwitchButton/SwithButton";
