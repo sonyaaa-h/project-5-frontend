@@ -23,13 +23,12 @@ const initialTransactions = [
 const TransactionsList = () => {
     return (
         <div className={s.wrapper}>
-            {" "}
-            <ul>
-                <li>Date</li>
-                <li>Type</li>
-                <li>Category</li>
-                <li>Comment</li>
-                <li>Sum</li>
+            <ul className={s.titles}>
+                <li className={s.date}>Date</li>
+                <li className={s.type}>Type</li>
+                <li className={s.category}>Category</li>
+                <li className={s.comment}>Comment</li>
+                <li className={s.sum}>Sum</li>
             </ul>
             <ul>
                 {initialTransactions.map((transaction) => (
