@@ -1,0 +1,10 @@
+.wrapper {
+    margin-left: 499px;
+    border-radius: 16px;
+    padding: 32px 27px;
+    width: 757px;
+    height: 585px;
+    background-image: var(--primary-gradient);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
