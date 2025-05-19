@@ -4,8 +4,13 @@ import clsx from "clsx";
 import HomeIcon from "../../assets/icon-home.svg?react";
 import GraphIcon from "../../assets/icon-graph.svg?react";
 import DollarIcon from "../../assets/icon-dollar.svg?react";
+import { useMediaQuery } from "react-responsive";
 
 const Navigation = () => {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 768px)",
+  });
+
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.link, isActive && css.active);
   };
@@ -19,9 +24,11 @@ const Navigation = () => {
         <GraphIcon className={css.icon} />
         <span>Statistics</span>
       </NavLink>
-      <NavLink className={buildLinkClass} to="/currency">
-        <DollarIcon className={css.icon} />
-      </NavLink>
+      {isMobile &&
+        <NavLink className={buildLinkClass} to="/currency">
+          <DollarIcon className={css.icon} />
+        </NavLink>
+      }
     </div>
   );
 };

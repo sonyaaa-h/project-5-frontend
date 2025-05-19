@@ -26,7 +26,6 @@
 }
 
 .block {
-  /* background-image: var(--primary-gradient); */
   display: flex;
   /* flex-direction: column; */
   /* padding: 16px 32px; */
@@ -35,7 +34,7 @@
   /* margin-bottom: 24px; */
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .block {
     padding: 24px 46px 0 46px;
     margin-bottom: 24px;
@@ -52,4 +51,28 @@
   .active .icon {
     fill: #37575d;
   }
+}
+
+@media screen and (min-width: 768px) {
+  .block {
+    background-image: var(--primary-gradient);
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .block {
+    background-image: var(--primary-gradient);
+    padding: 35px 16px;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .block {
+    padding: 16px 32px;
+    gap: 12px
+  }
+
 }
