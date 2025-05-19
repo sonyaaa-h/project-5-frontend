@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.0",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
@@ -22,6 +25,7 @@
     "react-modal": "^3.16.3",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
+    "recharts": "^2.15.3",
     "redux-persist": "^6.0.0",
     "yup": "^1.6.1"
   },
