@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import css from "./Navigation.module.css";
 import clsx from "clsx";
-import { SlGraph } from "react-icons/sl";
-import homeIcon from "../../assets/icons.svg";
+import HomeIcon from "../../assets/icon-home.svg?react";
+import GraphIcon from "../../assets/icon-graph.svg?react";
+import DollarIcon from "../../assets/icon-dollar.svg?react";
 
 const Navigation = () => {
   const buildLinkClass = ({ isActive }) => {
@@ -11,14 +12,15 @@ const Navigation = () => {
   return (
     <div className={css.block}>
       <NavLink className={buildLinkClass} to="/">
-        <svg>{homeIcon}</svg>
+        <HomeIcon className={css.icon} />
         <span>Home</span>
       </NavLink>
       <NavLink className={buildLinkClass} to="/statistics">
+        <GraphIcon className={css.icon} />
         <span>Statistics</span>
       </NavLink>
       <NavLink className={buildLinkClass} to="/currency">
-        Currency
+        <DollarIcon className={css.icon} />
       </NavLink>
     </div>
   );
