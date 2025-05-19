@@ -10,6 +10,10 @@
     --red-color: #b20202;
     --pink-color:  #f23a3a;
 }
+
+html{
+  height: 100%;
+}
   
 body {
   font-family:  "Inter", sans-serif;
@@ -17,6 +21,8 @@ body {
   background-image: var(--background-gradient);
   background-repeat: no-repeat;
   background-size: cover;
+  padding: 0 24px 24px 27px;
+  height: 100%;
 }
 
 h1,

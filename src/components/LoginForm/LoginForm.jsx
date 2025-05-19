@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useId, useState } from "react";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -9,6 +9,8 @@ import { login } from "../../redux/auth/operations.js";
 import { RiEye2Line, RiEyeCloseFill } from "react-icons/ri";
 import { IoMdLock } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
+import logo from "../../assets/logo.svg";
+import wallet from "../../assets/wallet.svg";
 
 export const LoginForm = () => {
     const dispatch = useDispatch();
@@ -21,22 +23,37 @@ export const LoginForm = () => {
         password: "",
     };
 
+    const navigate = useNavigate();
+
     const handleSubmit = (values) => {
         dispatch(login(values))
             .unwrap()
             .then(() => {
                 toast.success("Login successful");
+                navigate('/');
             })
-            .catch(() => {
-                toast.error("Login o password error.", {
-                    duration: 4000,
-                    style: {
-                        background: "rgb(206, 84, 84)",
-                        color: "#fff",
-                        fontSize: "16px",
-                        fontWeight: "500",
-                    },
-                });
+            .catch((errorMessage) => {
+                if (errorMessage.includes("User not found")) {
+                    toast.error("User not found. Please register.", {
+                        duration: 4000,
+                        style: {
+                            background: "rgb(206, 84, 84)",
+                            color: "#fff",
+                            fontSize: "16px",
+                            fontWeight: "500",
+                        },
+                    });
+                } else {
+                    toast.error("Login o password error.", {
+                        duration: 4000,
+                        style: {
+                            background: "rgb(206, 84, 84)",
+                            color: "#fff",
+                            fontSize: "16px",
+                            fontWeight: "500",
+                        },
+                    });
+                }
             });
     };
 
@@ -58,9 +75,14 @@ export const LoginForm = () => {
                 validationSchema={LogInSchema}
                 onSubmit={handleSubmit}
             >
+            {({ errors, touched}) => (
                 <Form className={s.form}>
+                    <img className={s.logo} src={logo} alt="logo" />
                     <div>
-                        <div className={s.emailContainer}>
+                            <div className={`${s.emailContainer} 
+                                ${touched.email && errors.email ? s.errorState : ""}
+                                ${touched.email && !errors.email ? s.successState : ""}
+                            `}>
                             <MdEmail className={s.iconEmail} />
                             <Field className={s.input}
                                 name="email"
@@ -73,7 +95,10 @@ export const LoginForm = () => {
                         </div>
                         <ErrorMessage className={s.error} name="email" component="span" />
                         
-                        <div className={s.pwdContainer}>
+                        <div className={`${s.pwdContainer} 
+                            ${touched.password && errors.password ? s.errorState : ""}
+                            ${touched.password && !errors.password ? s.successState : ""}
+                        `}>
                             <IoMdLock className={s.iconLock} />
                             <Field className={s.input}
                                 name="password"
@@ -102,9 +127,11 @@ export const LoginForm = () => {
                     </button>
                     <p className={s.link}>
                         <NavLink className={s.linkReg} to="/register">Register</NavLink>
-                        </p>
-                </Form>
+                    </p>
+                    </Form>
+                )}
             </Formik>
+                <img className={s.wallet} src={wallet} alt="wallet" />
         </div>
     );
 };
