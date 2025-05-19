@@ -1,0 +1,41 @@
+.sidebar {
+  display: flex;
+}
+@media screen and (max-width: 768px) {
+  .sidebar {
+    max-width: 288px;
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .sidebar {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .sidebar {
+    max-width: 706px;
+    gap: 32px;
+  }
+  .firstBlock {
+    max-width: 338px;
+  }
+  .secondBlock {
+    flex-grow: 1;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .sidebar {
+    flex-direction: column;
+    max-width: 451px;
+    gap: 24px;
+  }
+  .secondBlock {
+    padding: 24px;
+    border-radius: 16px;
+    background-image: var(--primary-gradient);
+  }
+}
