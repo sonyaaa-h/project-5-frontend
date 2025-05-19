@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Layout from "./Layout";
+import Layout from "./Layout/Layout";
 import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
