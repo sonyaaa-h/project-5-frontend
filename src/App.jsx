@@ -36,9 +36,7 @@ function App() {
 
       <Route
         path="/"
-        // element={<PrivateRoute
-        element={<Layout />}
-        // redirectTo="/login" />}
+        element={<PrivateRoute element={<Layout />} redirectTo="/login" />}
       >
         <Route index element={<HomeTab />} />
         <Route path="statistics" element={<StatisticsTab />} />
