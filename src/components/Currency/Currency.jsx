@@ -61,16 +61,16 @@ const Currency = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.currencyBox}>
       <table className={styles.table}>
-        <thead>
+        <thead className={styles.thead}>
           <tr>
             <th className={styles.th}>Currency</th>
             <th className={styles.th}>Purchase</th>
             <th className={styles.th}>Sale</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={styles.tbody}>
           {rates.map((rate) => (
             <tr key={rate.currencyCodeA}>
               <td className={styles.td}>{currencyCodes[rate.currencyCodeA]}</td>
