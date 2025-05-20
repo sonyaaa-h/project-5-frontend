@@ -1,22 +1,46 @@
-.container {
-  font-family: Arial, sans-serif;
-}
+@media screen and (min-width: 768px) {
+  .currencyBox {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 336px;
+    height: 310px;
+    border-radius: 16px;
+    padding: 16px;
+    background: url(../../images/wallet.png),
+      linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #2b3a42;
-  color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-}
+  .thead {
+    border-radius: 12px;
+    padding: 16px 32px;
+    width: 304px;
+    font-weight: 600;
+    background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+  }
 
-.th,
-.td {
-  padding: 12px;
-  text-align: left;
-}
+  .tbody {
+    font-weight: 400;
+    text-align: center;
+  }
 
-.td {
-  padding: 10px;
+  .table {
+    padding: 16px 32px;
+    font-size: 16px;
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+  }
+
+  .th,
+  .td {
+    padding: 16px;
+  }
+
+  .loader {
+    display: flex;
+    margin: 0 auto;
+  }
 }

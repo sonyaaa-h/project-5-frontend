@@ -1,5 +1,5 @@
 import TransactionsItem from "../TransactionsItem/TransactionsItem";
-import s from "./TransactionsList.module.css"
+import s from "./TransactionsList.module.css";
 
 const initialTransactions = [
     {

@@ -1,0 +1,44 @@
+.btnAddWrapp {
+  position: fixed;
+  z-index: 5;
+  right: 20px;
+  bottom: 20px;
+}
+
+.iconAdd {
+  width: 45px;
+  height: 45px;
+  color: #000000;
+  display: block;
+  pointer-events: none;
+  line-height: 1;
+  background: none;
+  margin: 0;
+  padding: 0;
+}
+.iconWrapp {
+  width: 56px;
+  height: 56px;
+  color:#081222;
+  background-color: #508F8C;
+  border-radius: 100%;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 768px) {
+  .btnAddWrapp {
+    right: calc((100vw - 704px) / 2);
+    bottom: 40px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .btnAddWrapp {
+    right: calc((100vw - 1265px) / 2);
+    bottom: 40px;
+  }
+}
