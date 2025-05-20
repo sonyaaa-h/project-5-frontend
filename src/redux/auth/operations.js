@@ -60,6 +60,15 @@ export const register = createAsyncThunk(
   }
 );
 
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    await axios.post("/auth/logout");
+    clearAuthHeader();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
@@ -73,7 +82,7 @@ export const refreshUser = createAsyncThunk(
     try {
       setAuthHeader(persistedToken);
       thunkAPI.dispatch(setIsRefreshing(true));
-      const response = await api.get("/auth/current");
+      const response = await axios.get("/auth/current");
       thunkAPI.dispatch(
         setUser({
           user: response.data,
