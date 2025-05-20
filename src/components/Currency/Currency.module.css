@@ -1,5 +1,8 @@
 .container {
+  display: flex;
+  flex-direction: column;
   font-family: Arial, sans-serif;
+  margin: 0 auto;
 }
 
 .table {
@@ -19,4 +22,9 @@
 
 .td {
   padding: 10px;
+}
+
+.loader {
+  display: flex;
+  margin: 0 auto;
 }

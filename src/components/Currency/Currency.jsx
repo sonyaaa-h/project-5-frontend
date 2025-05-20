@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Currency.module.css";
+import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
+import Loader from "../Loader/Loader.jsx";
 
 const CURRENCY_API_URL = "https://api.monobank.ua/bank/currency";
 const CACHE_KEY = "monobank_currency_cache";
@@ -13,28 +15,8 @@ const currencyCodes = {
 
 const Currency = () => {
   const [rates, setRates] = useState([]);
-  const [error, setError] = useState(null);
-
-  const fetchCurrency = async () => {
-    try {
-      const response = await axios.get(CURRENCY_API_URL);
-      const filtered = response.data.filter(
-        (item) =>
-          (item.currencyCodeA === 840 || item.currencyCodeA === 978) &&
-          item.currencyCodeB === 980
-      );
-
-      const cacheData = {
-        timestamp: Date.now(),
-        rates: filtered,
-      };
-
-      localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
-      setRates(filtered);
-    } catch (err) {
-      setError(err.message || "Error of request");
-    }
-  };
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const cached = localStorage.getItem(CACHE_KEY);
@@ -48,16 +30,35 @@ const Currency = () => {
       }
     }
 
+    const fetchCurrency = async () => {
+      try {
+        setError(false);
+        setLoading(true);
+
+        const response = await axios.get(CURRENCY_API_URL);
+
+        const filtered = response.data.filter(
+          (item) =>
+            (item.currencyCodeA === 840 || item.currencyCodeA === 978) &&
+            item.currencyCodeB === 980
+        );
+
+        const cacheData = {
+          timestamp: Date.now(),
+          rates: filtered,
+        };
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+        setRates(filtered);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchCurrency();
   }, []);
-
-  if (error) {
-    return <div>Error {error}</div>;
-  }
-
-  if (!rates.length) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className={styles.container}>
@@ -83,6 +84,12 @@ const Currency = () => {
           ))}
         </tbody>
       </table>
+      {error && <ErrorMessage />}
+      {loading && (
+        <div className={styles.loader}>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };
