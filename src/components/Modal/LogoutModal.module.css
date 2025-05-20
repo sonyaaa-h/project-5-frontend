@@ -17,7 +17,7 @@
   border-radius: 16px;
   padding: 16px;
   width: 280px;
-  background-color: #508f8c;
+  background-color: var(--modal-color);
   animation: fadeIn 300ms ease-in-out;
 }
 
@@ -40,7 +40,7 @@
   font-weight: 700;
   font-size: 30px;
   text-align: center;
-  color: #081222;
+  color: var(--text-color);
   user-select: none;
 }
 
@@ -50,7 +50,7 @@
   font-size: 18px;
   text-align: center;
   width: 196px;
-  color: #081222;
+  color: var(--text-color);
 }
 
 .buttons {
@@ -73,12 +73,12 @@
   padding: 11px 79px;
   width: 248px;
   height: 44px;
-  background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+  background: var(--primary-gradient);
   font-family: "Inter", sans-serif;
   font-weight: 500;
   font-size: 18px;
   text-align: center;
-  color: #fcfcfc;
+  color: var(--white-color);
   cursor: pointer;
   border: none;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -89,19 +89,19 @@
 .logoutBtn:hover,
 .logoutBtn:focus {
   background: none;
-  border: 1px solid #081222;
-  color: #081222;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
 }
 
 .cancelBtn {
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   background: none;
-  color: #081222;
+  color: var(--text-color);
 }
 
 .cancelBtn:hover,
 .cancelBtn:focus {
-  background-color: #fcfcfc;
+  background-color: var(--white-color);
 }
 
 @keyframes fadeIn {
