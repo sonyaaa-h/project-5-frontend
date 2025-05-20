@@ -70,3 +70,10 @@
 .wrapperTransaction:nth-child(2n) {
     background-image: var(--background-gradient);
 }
+
+.modalDel {
+    border-radius: 16px;
+    width: 533px;
+    height: 387px;
+    background-image: var(--modal-color);
+}
