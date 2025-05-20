@@ -16,10 +16,10 @@ import PasswordStrengthBar from "react-password-strength-bar";
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const emailFieldId = useId();
   const passwordFieldId = useId();
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
 
   const registerValidationSchema = Yup.object().shape({
     name: Yup.string()
