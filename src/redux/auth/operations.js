@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setUser, setToken, logOut, setIsRefreshing } from './slice'; // setToken импортирован для будущего использования
 
-axios.defaults.baseURL = 'https://wallet.goit.ua/api';
+axios.defaults.baseURL = 'https://spendy-mu36.onrender.com';
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
