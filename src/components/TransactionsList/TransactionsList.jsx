@@ -1,5 +1,5 @@
 import TransactionsItem from "../TransactionsItem/TransactionsItem";
-import s from "./TransactionsList.module.css"
+import s from "./TransactionsList.module.css";
 
 const initialTransactions = [
     {
@@ -21,6 +21,7 @@ const initialTransactions = [
 ];
 
 const TransactionsList = () => {
+
     return (
         <div className={s.wrapper}>
             <ul className={s.titles}>

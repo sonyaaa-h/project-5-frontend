@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/auth/operations";
+import { logoutThunk } from "../../redux/auth/operations";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import css from "./LogoutModal.module.css";
@@ -11,10 +11,10 @@ export default function LogoutModal({ onClose }) {
 
   const handleLogout = async () => {
     try {
-      await dispatch(logout()).unwrap();
+      await dispatch(logoutThunk()).unwrap();
       toast.success("Successfully logged out");
-    } catch {
-      toast.error("Logout failed. Please try again.");
+    }  catch (error) {
+      toast.error(`Logout failed: ${error.message || error}`);
     } finally {
       localStorage.clear();
       navigate("/login", { replace: true });
