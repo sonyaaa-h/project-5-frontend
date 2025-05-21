@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setUser, setIsRefreshing } from "./slice"; // setToken импортирован для будущего использования
+import toast from "react-hot-toast";
 
 export const api = axios.create({
   baseURL: "https://spendy-mu36.onrender.com",
@@ -46,16 +47,55 @@ export const logoutThunk = createAsyncThunk(
 );
 
 //треба змінити!!!
-export const register = createAsyncThunk(
+export const registerThunk = createAsyncThunk(
   "auth/register",
-  async (credentials, thunkAPI) => {
+  async (body, thunkAPI) => {
     try {
-      const response = await api.post("/auth/register", credentials);
-      setAuthHeader(response.data.token);
-      thunkAPI.dispatch(setUser(response.data));
-      return response.data;
+      if (body.password !== body.confirmPassword) {
+        throw new Error(
+          toast.error("Passwords do not match", {
+            duration: 2000,
+            style: {
+              background: "rgb(206, 84, 84)",
+              color: "#fff",
+              fontSize: "16px",
+              fontWeight: "500",
+            },
+          })
+        );
+      }
+      const registerBody = { ...body };
+      delete registerBody.confirmPassword;
+      const response = await api.post("/auth/register", registerBody);
+      setAuthHeader(response.data.data.accessToken);
+
+      // thunkAPI.dispatch(setUser(response.data));
+      return response.data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.log(error.response.data);
+      if (error.response.status === 409) {
+        toast.error("User already exist! Please log in!", {
+          duration: 2000,
+          style: {
+            background: "rgb(206, 84, 84)",
+            color: "#fff",
+            fontSize: "16px",
+            fontWeight: "500",
+          },
+        });
+        return thunkAPI.rejectWithValue("User already exist! Please log in!");
+      } else {
+        toast.error(error.message, {
+          duration: 2000,
+          style: {
+            background: "rgb(206, 84, 84)",
+            color: "#fff",
+            fontSize: "16px",
+            fontWeight: "500",
+          },
+        });
+        return thunkAPI.rejectWithValue(error.message);
+      }
     }
   }
 );
