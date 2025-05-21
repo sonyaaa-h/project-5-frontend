@@ -10,7 +10,7 @@ export default function MasterLoader({ open }) {
       preventScroll={true}
       className={css.modal}
       style={{
-        overlay: { zIndex: 9 },
+        overlay: { zIndex: 9, backgroundColor: "transparent" },
       }}
     >
       <Bars
