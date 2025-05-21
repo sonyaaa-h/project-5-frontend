@@ -13,7 +13,7 @@ import StatisticsTab from "./pages/StatisticsTab/StatisticsTab";
 import CurrencyTab from "./pages/CurrencyTab/CurrencyTab";
 import { refreshUser } from "./redux/auth/operations";
 import { selectIsLoading } from "./redux/global/selectors";
-import MasterLoader from "./components/masterLoader/masterLoader";
+import MasterLoader from "./components/MasterLoader/MasterLoader";
 
 function App() {
   const dispatch = useDispatch();
