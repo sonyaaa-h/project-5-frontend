@@ -15,7 +15,7 @@ export default function Header() {
     <header className={css.header}>
       <div className={css.logo}>
         <LogoIcon className={css.logoIcon} />
-        <span className={css.textLogo}>Money Guard</span>
+        <span className={css.textLogo}>Spendy</span>
       </div>
       <div className={css.userSection}>
         <span className={css.username}>{username}</span>
