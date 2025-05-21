@@ -7,23 +7,31 @@
     height: 310px;
     border-radius: 16px;
     padding: 16px;
-    background: url(../../images/wallet.png),
-      linear-gradient(180deg, #355359 0%, #3b5d63 100%);
-    background-repeat: no-repeat;
-    background-position: bottom;
+    background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+  }
+
+  .wallet {
+    display: block;
+    margin: 9px auto 0;
+    width: 181px;
+    height: auto;
+    margin-top: -5px;
+  }
+
+  .thead th:first-child {
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 12px;
+  }
+
+  .thead th:last-child {
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
   }
 
   .thead {
-    border-radius: 12px;
-    padding: 16px 32px;
     width: 304px;
     font-weight: 600;
     background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
-  }
-
-  .tbody {
-    font-weight: 400;
-    text-align: center;
   }
 
   .table {
@@ -32,15 +40,37 @@
     width: 100%;
     border-collapse: collapse;
     color: #fff;
+    font-weight: 400;
+    text-align: center;
   }
 
-  .th,
-  .td {
+  .td,
+  .th {
     padding: 16px;
   }
 
   .loader {
     display: flex;
     margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .currencyBox {
+    max-width: 400px;
+    height: 469px;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+    margin-top: 23px;
+  }
+
+  .wallet {
+    width: 222.33px;
+    margin-top: 5px;
+  }
+
+  .thead {
+    width: 400px;
   }
 }
