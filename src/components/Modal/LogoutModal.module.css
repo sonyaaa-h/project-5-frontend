@@ -101,7 +101,9 @@
 
 .cancelBtn:hover,
 .cancelBtn:focus {
-  background-color: var(--white-color);
+  border: 1px solid var(--white-color);
+  background: none;
+  color: var(--white-color);
 }
 
 @keyframes fadeIn {

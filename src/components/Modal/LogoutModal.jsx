@@ -13,7 +13,7 @@ export default function LogoutModal({ onClose }) {
     try {
       await dispatch(logoutThunk()).unwrap();
       toast.success("Successfully logged out");
-    }  catch (error) {
+    } catch (error) {
       toast.error(`Logout failed: ${error.message || error}`);
     } finally {
       localStorage.clear();
@@ -27,7 +27,7 @@ export default function LogoutModal({ onClose }) {
       <div className={css.modal}>
         <div className={css.logo}>
           <LogoIconModal className={css.logoIcon} />
-          <span className={css.textLogo}>Money Guard</span>
+          <span className={css.textLogo}>Spendy</span>
         </div>
         <p className={css.text}>Are you sure you want to log out?</p>
         <div className={css.buttons}>

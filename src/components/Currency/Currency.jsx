@@ -90,6 +90,11 @@ const Currency = () => {
           <Loader />
         </div>
       )}
+      <img
+        src="../../images/currencyjpg.jpg"
+        alt="wallet"
+        className={styles.wallet}
+      />
     </div>
   );
 };
