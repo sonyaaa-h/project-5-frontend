@@ -57,24 +57,22 @@
     right: 5px;
   }
 } */
-.div {
+/* .div {
   margin-bottom: 30px;
-  /* width: 230px; */
   margin-top: 100px;
-}
-.formWrapper {
+} */
+/* .formWrapper {
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
   border: 2px solid rgb(168, 53, 53);
   border-radius: 5px;
   padding: 10px;
   width: 533px;
   margin-left: auto;
   margin-right: auto;
-}
+} */
 
-.wallet {
+/* .wallet {
   position: absolute;
   bottom: 35px;
   right: 16px;
@@ -91,25 +89,25 @@
   border-color: rgb(168, 53, 53);
   color: rgb(168, 53, 53);
   font-weight: 600;
-}
+} */
 /* .input {
     margin-bottom: 10px;
     font-size: 12px;
   } */
-.input {
+/* .input {
   margin-bottom: 10px;
   height: 25px;
   font-size: 14px;
   padding: 2px;
 
-  background-color: rgb(250, 238, 238);
-  /* border-color: rgb(168, 53, 53); */
-  border: 1px solid rgb(168, 53, 53);
+  background-color: rgb(250, 238, 238); */
+/* border-color: rgb(168, 53, 53); */
+/* border: 1px solid rgb(168, 53, 53);
   border-radius: 5px;
 }
 .input:hover {
   border: 2px solid rgb(54, 32, 4);
-}
+} */
 /* .button {
     border: 1px solid black;
     width: 130px;
@@ -120,7 +118,7 @@
     margin-top: 10px;
     font-size: 16px;
   } */
-.button {
+/* .button {
   border: 1px solid rgb(168, 53, 53);
   width: 150px;
   display: flex;
@@ -146,4 +144,275 @@
 .link {
   color: rgb(54, 32, 4);
   font-weight: 500;
+} */
+
+.new {
+}
+
+.div {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 1280px;
+  height: 720px;
+  padding-top: 75px;
+}
+
+.formWrapper {
+  border-radius: 16px;
+  width: 533px;
+  /* height: 519px; */
+  padding: 53px 62px 82px 62px;
+  background-color: #508f8c;
+}
+
+.logo {
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 37px;
+}
+
+.wallet {
+  position: absolute;
+  bottom: 35px;
+  right: 16px;
+  width: 320px;
+  height: auto;
+}
+
+.nameContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 409px;
+  height: 44px;
+  background-color: transparent;
+  border: 1px solid #081222;
+  outline: transparent;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.iconUser {
+  position: absolute;
+  font-size: 24px;
+  color: #081222;
+}
+.emailContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 409px;
+  height: 44px;
+  margin-top: 24px;
+  background-color: transparent;
+  border: 1px solid #081222;
+  outline: transparent;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.iconEmail {
+  position: absolute;
+  font-size: 24px;
+  color: #081222;
+}
+
+.pwdContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 409px;
+  height: 44px;
+  margin-top: 24px;
+  background-color: transparent;
+  border: 1px solid #081222;
+  outline: transparent;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pwdConfContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 14px;
+  width: 409px;
+  height: 44px;
+  margin-top: 24px;
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: 1px solid #081222;
+  outline: transparent;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nameContainer:hover,
+.emailContainer:hover,
+.pwdContainer:hover,
+.pwdConfContainer:hover,
+.nameContainer:focus-within,
+.emailContainer:focus-within,
+.pwdContainer:focus-within,
+.pwdConfContainer:focus-within {
+  border-color: #355359;
+}
+
+.nameContainer:hover .iconUser,
+.emailContainer:hover .iconEmail,
+.pwdContainer:hover .iconLock,
+.pwdConfContainer:hover .iconLock,
+.nameContainer:focus-within .iconUser,
+.emailContainer:focus-within .iconEmail,
+.pwdContainer:focus-within .iconLock,
+.pwdConfContainer:focus-within .iconLock {
+  color: #355359;
+}
+
+.nameContainer:hover input::placeholder,
+.emailContainer:hover input::placeholder,
+.pwdContainer:hover input::placeholder,
+.pwdConfContainer:hover input::placeholder,
+.nameContainer:focus-within input::placeholder,
+.emailContainer:focus-within input::placeholder,
+.pwdContainer:focus-within input::placeholder,
+.pwdConfContainer:focus-within input::placeholder {
+  color: #355359;
+}
+
+.iconLock {
+  position: absolute;
+  font-size: 24px;
+  color: #081222;
+}
+
+.toggleBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #081222;
+}
+
+.icon {
+  outline: transparent;
+  border: none;
+}
+
+.input {
+  border: none;
+  background: transparent;
+  margin-left: 40px;
+  outline: transparent;
+  width: 80%;
+}
+
+input::placeholder {
+  font-weight: 500;
+  font-size: 18px;
+  color: #081222;
+  transition: color 0.3s ease;
+}
+
+/* щоб при автозаповненні був фон імпуту */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--bg-color) inset !important;
+  -webkit-text-fill-color: var(--text-color) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.passwordBar {
+  color: #355359;
+  font-weight: 500;
+  font-size: 14px;
+  /* margin-top: 24px;
+  margin-bottom: 20px; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.error {
+  font-weight: 400;
+  font-size: 10px;
+  color: #b20202;
+  display: flex;
+  margin-top: 4px;
+}
+
+/* Error state */
+.errorState {
+  border-color: #b20202 !important;
+}
+
+.errorState .iconUser,
+.errorState .iconEmail,
+.errorState .iconLock {
+  color: #b20202 !important;
+}
+
+.errorState input::placeholder {
+  color: #b20202 !important;
+}
+
+/* Success state */
+.successState {
+  border-color: #0b6016 !important;
+}
+
+.successState .iconUser,
+.successState .iconEmail,
+.successState .iconLock {
+  color: #0b6016 !important;
+}
+
+.successState input::placeholder {
+  color: #0b6016 !important;
+}
+
+.button {
+  margin: 0 auto;
+  display: block;
+  border-radius: 8px;
+  padding: 11px 79px;
+  width: 410px;
+  height: 44px;
+  margin-top: 36px;
+  margin-bottom: 21px;
+  background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  color: #fcfcfc;
+}
+
+.link {
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  color: #081222;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #081222;
+  border-radius: 8px;
+  padding: 11px 68px;
+  background-color: transparent;
+  cursor: pointer;
+  width: 410px;
+  height: 44px;
 }

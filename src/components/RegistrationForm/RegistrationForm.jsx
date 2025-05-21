@@ -2,7 +2,7 @@ import { Field, Formik, Form, ErrorMessage, useFormik } from "formik";
 import { useId, useState } from "react";
 import s from "./RegistrationForm.module.css";
 import { useDispatch } from "react-redux";
-import { register } from "../../redux/auth/operations.js";
+import { registerThunk } from "../../redux/auth/operations.js";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
@@ -13,6 +13,7 @@ import { IoMdLock } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { RiEye2Line, RiEyeCloseFill } from "react-icons/ri";
 import PasswordStrengthBar from "react-password-strength-bar";
+import watch from "react-password-strength-bar";
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const RegistrationForm = () => {
     password: "",
   };
   const handleSubmit = (values) => {
-    dispatch(register(values))
+    dispatch(registerThunk(values))
       .unwrap()
       .then(() => {
         toast.success("Successfully registered a user!");
@@ -74,15 +75,12 @@ const RegistrationForm = () => {
       });
   };
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
+    initialValues,
     validationSchema: registerValidationSchema,
     onSubmit: handleSubmit,
   });
   const passwordValue = formik.values.password;
+  //   const passwordValue = watch("password");
   return (
     <div className={s.div}>
       <Formik
@@ -185,11 +183,24 @@ const RegistrationForm = () => {
                 name="password"
                 component="span"
               />
-              <div>
+              <div
+                className={`${s.pwdConfContainer} 
+                                          ${
+                                            touched.password && errors.password
+                                              ? s.errorState
+                                              : ""
+                                          }
+                                          ${
+                                            touched.password && !errors.password
+                                              ? s.successState
+                                              : ""
+                                          }
+                                      `}
+              >
                 <IoMdLock className={s.iconLock} />
                 <Field
                   type="password"
-                  name="confirm-password"
+                  name="confirmPassword"
                   className={s.input}
                   placeholder="Confirm password"
                   style={{ color: "rgb(54, 32, 4)" }}
@@ -215,6 +226,7 @@ const RegistrationForm = () => {
             <PasswordStrengthBar
               className={s.passwordBar}
               password={passwordValue}
+              colors={["#ff4d4f", "#ff7a45", "#faad14", "#52c41a", "#367c4d"]}
             />
             <button type="submit" className={s.button}>
               Register
