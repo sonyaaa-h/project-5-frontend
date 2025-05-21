@@ -91,7 +91,7 @@ const Currency = () => {
         </div>
       )}
       <img
-        src="../../images/wallet.png"
+        src="../../images/currencyjpg.jpg"
         alt="wallet"
         className={styles.wallet}
       />
