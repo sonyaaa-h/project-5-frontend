@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import toast from "react-hot-toast";
 import s from "./LoginForm.module.css";
-import { login } from "../../redux/auth/operations.js";
+import {  loginThunk } from "../../redux/auth/operations.js";
 import { RiEye2Line, RiEyeCloseFill } from "react-icons/ri";
 import { IoMdLock } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
@@ -26,7 +26,7 @@ export const LoginForm = () => {
     const navigate = useNavigate();
 
     const handleSubmit = (values) => {
-        dispatch(login(values))
+        dispatch(loginThunk(values))
             .unwrap()
             .then(() => {
                 toast.success("Login successful");

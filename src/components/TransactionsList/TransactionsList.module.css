@@ -1,7 +1,7 @@
 .wrapper {
     border-radius: 16px;
     padding: 32px 27px;
-    width: 757px;
+    max-width: 757px;
     height: 585px;
     background-image: var(--primary-gradient);
     background-repeat: no-repeat;
@@ -22,13 +22,14 @@
     margin-right: 74px;
 }
 
-.type{
+.type {
     margin-right: 55px;
 }
-.category{
+
+.category {
     margin-right: 48px;
 }
 
-.comment{
+.comment {
     margin-right: 59px;
 }

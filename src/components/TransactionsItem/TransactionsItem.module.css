@@ -1,0 +1,79 @@
+.wrapperTransaction {
+    background-color: transparent;
+    border-radius: 16px;
+}
+
+.transaction {
+    display: flex;
+    /* justify-content: space-between; */
+    height: 48px;
+}
+
+.transaction li {
+    text-align: left;
+    font-weight: 400;
+    font-size: 14px;
+    color: #fcfcfc;
+    font-family: "Inter", sans-serif;
+    padding: 15.5px 12px 15.5px 4px;
+}
+
+.transaction li:nth-child(1) {
+    width: 64px;
+}
+
+.transaction li:nth-child(2) {
+    width: 147px;
+    text-align: center;
+}
+
+.transaction li:nth-child(3) {
+    width: 124px;
+}
+
+.transaction li:nth-child(4) {
+    width: 142px;
+}
+
+.transaction li:nth-child(5) {
+    width: 100px;
+}
+
+.transaction li:nth-child(6) {
+    width: 105px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* gap: 24px; */
+    padding: 11.5px 12px 11.5px 4px;
+}
+
+.icon {
+
+    width: 14px;
+    height: 14px;
+}
+
+.btnDelete {
+    background-color: transparent;
+    border: 1px solid #fcfcfc;
+    border-radius: 8px;
+    padding: 4px 12px;
+    width: 67px;
+    height: 25px;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+    color: #fcfcfc;
+}
+
+.wrapperTransaction:nth-child(2n) {
+    background-image: var(--background-gradient);
+}
+
+.modalDel {
+    border-radius: 16px;
+    width: 533px;
+    height: 387px;
+    background-image: var(--modal-color);
+}
