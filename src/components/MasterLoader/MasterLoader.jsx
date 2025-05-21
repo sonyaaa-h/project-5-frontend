@@ -2,9 +2,10 @@ import { Bars } from "react-loader-spinner";
 import css from "./MasterLoader.module.css";
 import ReactModal from "react-modal";
 
-export default function MasterLoader({open}) {
+export default function MasterLoader({ open }) {
   return (
     <ReactModal
+      appElement={document.getElementById("root") || undefined}
       isOpen={open}
       preventScroll={true}
       className={css.modal}
