@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.0",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
@@ -21,16 +24,20 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "react-loader-spinner": "^6.1.6",
     "react-modal": "^3.16.3",
+    "react-password-strength-bar": "^0.4.1",
     "react-redux": "^9.2.0",
+    "react-responsive": "^10.0.1",
     "react-router-dom": "^7.6.0",
+    "recharts": "^2.15.3",
     "redux-persist": "^6.0.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@types/react": "^18.0.38",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.40",
+    "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",

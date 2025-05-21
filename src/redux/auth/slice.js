@@ -1,41 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { registerThunk, loginThunk, logoutThunk } from "./operations";
 
 const initialState = {
     user: {
         name: null,
         email: null,
-        balance: 0,
-        id: null,
-        createdAt: null,
-        avatarUrl: null
     },
-    token: null,
+    accessToken: null,
     isLoggedIn: false,
     isRefreshing: false,
-    error: null
 };
 
 const slice = createSlice({
     name: "auth",
     initialState,
-    reducers: {
-        setUser: (state, action) => {
-            state.user = action.payload.user;
-            state.token = action.payload.token;
-            state.isLoggedIn = true;
-        },
-        setToken: (state, action) => {
-            state.token = action.payload;
-        },
-        logOut: (state) => {
-            state.user = { name: null, email: null };
-            state.token = null;
-            state.isLoggedIn = false;
-            state.isRefreshing = false;
-        },
-        setIsRefreshing: (state, action) => {
-            state.isRefreshing = action.payload;
-        },
+    extraReducers: (builder) => {
+        builder
+            .addCase(registerThunk.fulfilled, (state, action) => {
+                console.log("Register successful:", action.payload);
+                state.user.userId = action.payload._id;
+                state.user.name = action.payload.name;
+                state.user.email = action.payload.email;
+                state.user.balance = action.payload.balance;
+                state.token = action.payload.accessToken;
+                state.isLoggedIn = false;
+                state.isAuthLoading = false;
+            })
+            .addCase(loginThunk.fulfilled, (state, action) => {
+                console.log("Login successful:", action.payload);
+                state.user.name = action.payload.user.name;
+                state.user.email = action.payload.user.email;
+                state.accessToken = action.payload.accessToken;
+                state.isLoggedIn = true;
+            })
+            .addCase(logoutThunk.fulfilled, () => initialState);
     },
 });
 

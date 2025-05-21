@@ -9,24 +9,25 @@ import {
     PERSIST,
     PURGE,
     REGISTER,
-} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import { transactionsReducer } from "./transactions/slise";
-import { categoriesReducer } from "./categories/slise";
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { transactionsReducer } from "./transactions/slise.js";
+import { categoriesReducer } from "./categories/slise.js";
+import { statisticsReducer } from "./statistics/slice.js";
 
 const persistConfig = {
-    key: 'auth',
+    key: "auth",
     version: 1,
     storage,
-    whitelist: ['token', 'isLoggedIn', 'user']
-}
-
+    whitelist: ["accessToken", "isLoggedIn", "user"],
+};
 
 export const store = configureStore({
     reducer: {
         transactions: transactionsReducer,
         categories: categoriesReducer,
-        auth: persistReducer(persistConfig, authReducer)
+        auth: persistReducer(persistConfig, authReducer),
+        statistics: statisticsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
@@ -36,4 +37,4 @@ export const store = configureStore({
         }),
 });
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);

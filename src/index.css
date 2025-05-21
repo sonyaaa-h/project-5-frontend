@@ -1,22 +1,27 @@
 /* src/index.css */
 :root {
-    --text-color:  #081222;
-    --successfull-color:  #0b6016;
-    --modal-color: #508f8c;
-    --white-color: #fcfcfc;
-    --background-gradient: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
-    --yellow-color: #dfad3f;
-    --primary-gradient: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
-    --red-color: #b20202;
-    --pink-color:  #f23a3a;
+  --text-color: #081222;
+  --successfull-color: #0b6016;
+  --modal-color: #508f8c;
+  --white-color: #fcfcfc;
+  --background-gradient: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+  --yellow-color: #dfad3f;
+  --primary-gradient: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+  --red-color: #b20202;
+  --pink-color: #f23a3a;
 }
-  
+
+html {
+  height: 100%;
+}
+
 body {
-  font-family:  "Inter", sans-serif;
+  font-family: "Inter", sans-serif;
   line-height: 1.5;
   background-image: var(--background-gradient);
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100%;
 }
 
 h1,
@@ -50,4 +55,3 @@ img {
   max-width: 100%;
   height: auto;
 }
-
