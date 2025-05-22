@@ -39,6 +39,9 @@
   font-size: 18px;
   color: #fcfcfc;
 }
+.optionStatistics {
+  background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+}
 .tableStatistics {
   display: flex;
   flex-direction: column;
