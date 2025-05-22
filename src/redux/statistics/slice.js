@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchStatistics } from "./operations.js";
 
 const initialState = {
-  data: null,
+  data: [],
   isLoading: false,
   error: null,
 };
@@ -20,6 +20,7 @@ const statisticsSlice = createSlice({
       .addCase(fetchStatistics.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
+        console.log("FETCH ДАТА", action.payload);
       })
       .addCase(fetchStatistics.rejected, (state, action) => {
         state.isLoading = false;
