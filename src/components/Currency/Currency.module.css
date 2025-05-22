@@ -1,64 +1,98 @@
+.currencyBox {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 288px;
+  height: 390px;
+  border-radius: 16px;
+  padding: 16px 0;
+  background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+}
+
+.wallet {
+  display: block;
+  margin: 16px auto 0;
+  width: 234px;
+  height: auto;
+}
+
+.thead th:first-child {
+  border-bottom-left-radius: 12px;
+  border-top-left-radius: 12px;
+}
+
+.thead th:last-child {
+  border-bottom-right-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.thead {
+  padding: 32px 0;
+  font-weight: 600;
+  background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+}
+
+.table {
+  font-size: 14px;
+  width: 256px;
+  border-collapse: collapse;
+  border: none;
+  color: #fff;
+  font-weight: 400;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.td,
+.th {
+  padding: 16px;
+}
+
+.loader {
+  display: flex;
+  margin: 0 auto;
+}
+
 @media screen and (min-width: 768px) {
   .currencyBox {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    max-width: 336px;
+    width: 336px;
     height: 310px;
-    border-radius: 16px;
-    padding: 16px;
-    background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+    padding: 16px 16px;
   }
 
   .wallet {
-    display: block;
-    margin: 9px auto 0;
+    margin: -19px auto 0;
     width: 181px;
     height: auto;
-    margin-top: -5px;
-  }
-
-  .thead th:first-child {
-    border-bottom-left-radius: 12px;
-    border-top-left-radius: 12px;
-  }
-
-  .thead th:last-child {
-    border-bottom-right-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-
-  .thead {
-    width: 304px;
-    font-weight: 600;
-    background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
   }
 
   .table {
-    padding: 16px 32px;
     font-size: 16px;
-    width: 100%;
-    border-collapse: collapse;
-    color: #fff;
-    font-weight: 400;
-    text-align: center;
+    width: 304px;
   }
 
-  .td,
-  .th {
-    padding: 16px;
+  .thead th {
+    padding-top: 14.5px;
+    padding-bottom: 14.5px;
   }
 
-  .loader {
-    display: flex;
-    margin: 0 auto;
+  .thead th:first-child {
+    padding-left: 32px;
+  }
+
+  .thead th:last-child {
+    padding-right: 32px;
+  }
+
+  .td {
+    padding: 16px 16px 14.5px 16px;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .currencyBox {
-    max-width: 400px;
-    height: 469px;
+    width: 400px;
+    height: 100%;
     border-radius: 0;
     padding: 0;
     background: transparent;
@@ -67,10 +101,10 @@
 
   .wallet {
     width: 222.33px;
-    margin-top: 5px;
+    margin: 5px auto 0;
   }
 
-  .thead {
-    width: 400px;
+  .table {
+    width: 100%;
   }
 }
