@@ -50,7 +50,7 @@ export const deleteTransaction = createAsyncThunk(
   "transactions/deleteTransaction",
   async (transactionId, thunkAPI) => {
     try {
-      await api.delete(`/transactions/${transactionId}`); // Шлях до ендпоінту видалення транзакції за ID
+      await api.delete(`/transactions/${transactionId}`); 
       return transactionId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
