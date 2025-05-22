@@ -157,6 +157,7 @@ export const LoginForm = () => {
                 Register
               </NavLink>
             </p>
+            <img className={s.walletMob} src={wallet} alt="wallet" />
           </Form>
         )}
       </Formik>

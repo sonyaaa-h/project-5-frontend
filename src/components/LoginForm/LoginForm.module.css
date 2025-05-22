@@ -1,35 +1,37 @@
 .loginForm {
-  position: relative;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 1280px;
-  height: 720px;
-  padding-top: 75px;
+  margin-top: 20px;
 }
 
 .form {
+  position: relative;
   border-radius: 16px;
-  width: 533px;
-  /* height: 519px; */
-  padding: 53px 62px 82px 62px;
+  width: 280px;
+  height: 528px;
+  padding: 16px;
   background-color: #508f8c;
 }
 
 .logo {
   margin: 0 auto;
   display: block;
-  margin-bottom: 37px;
+  margin-bottom: 16px;
+}
+
+.walletMob {
+  position: absolute;
+  bottom: 23px;
+  right: 12px;
+  width: 159px;
+  height: 118px;
 }
 
 .wallet {
-  position: absolute;
-  bottom: 35px;
-  right: 16px;
-  width: 320px;
-  height: auto;
+  display: none;
 }
 
 .emailContainer {
@@ -38,7 +40,7 @@
   align-items: center;
   border-radius: 8px;
   padding: 10px 14px;
-  width: 409px;
+  width: 248px;
   height: 44px;
   background-color: transparent;
   border: 1px solid #081222;
@@ -58,9 +60,9 @@
   align-items: center;
   border-radius: 8px;
   padding: 10px 14px;
-  width: 409px;
+  width: 248px;
   height: 44px;
-  margin-top: 24px;
+  margin-top: 16px;
   background-color: transparent;
   border: 1px solid #081222;
   outline: transparent;
@@ -174,20 +176,23 @@ input:-webkit-autofill {
   display: block;
   border-radius: 8px;
   padding: 11px 79px;
-  width: 410px;
+  width: 248px;
   height: 44px;
-  margin-top: 32px;
-  margin-bottom: 21px;
+  margin-top: 16px;
+  margin-bottom: 16px;
   background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
   border: none;
-  font-size: 18px;
-  font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
   font-weight: 500;
   font-size: 18px;
   text-align: center;
   color: #fcfcfc;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btnLogIn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .linkReg {
@@ -204,6 +209,74 @@ input:-webkit-autofill {
   padding: 11px 68px;
   background-color: transparent;
   cursor: pointer;
-  width: 410px;
+  width: 248px;
   height: 44px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.linkReg:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 768px) {
+  .loginForm {
+    position: relative;
+    margin-top: 176px;
+  }
+
+  .form {
+    width: 533px;
+    height: 519px;
+    padding: 53px 62px 82px 62px;
+  }
+
+  .logo {
+    margin-bottom: 37px;
+  }
+
+  .walletMob {
+    display: none;
+  }
+
+  .wallet {
+    display: flex;
+    position: absolute;
+    width: 320px;
+    height: auto;
+    margin-left: 447px;
+    margin-top: 565px;
+  }
+
+  .emailContainer {
+    width: 409px;
+    height: 44px;
+  }
+
+  .pwdContainer {
+    width: 409px;
+    height: 44px;
+    margin-top: 24px;
+  }
+
+  .btnLogIn {
+    width: 410px;
+    margin-top: 32px;
+    margin-bottom: 21px;
+  }
+
+  .linkReg {
+    width: 410px
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .loginForm {
+    margin-top: 75px;
+  }
+
+  .wallet {
+    margin-left: 944px;
+    margin-top: 371px;
+  }
 }

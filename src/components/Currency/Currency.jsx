@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./Currency.module.css";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import Loader from "../Loader/Loader.jsx";
+import wallet from "../../assets/wallet.svg";
 
 const CURRENCY_API_URL = "https://api.monobank.ua/bank/currency";
 const CACHE_KEY = "monobank_currency_cache";
@@ -90,11 +91,7 @@ const Currency = () => {
           <Loader />
         </div>
       )}
-      <img
-        src="../../images/currencyjpg.jpg"
-        alt="wallet"
-        className={styles.wallet}
-      />
+      <img src={wallet} alt="wallet" className={styles.wallet} />
     </div>
   );
 };
