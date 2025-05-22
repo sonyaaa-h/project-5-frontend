@@ -11,12 +11,14 @@
   font-size: 16px;
   text-align: right;
   color: #fcfcfc;
+  gap: 20px;
 }
 .firstBlock {
   display: flex;
   gap: 16px;
   flex-direction: column;
   align-items: center;
+  margin-right: 36px;
 }
 .secondBlock {
   display: flex;
@@ -41,6 +43,7 @@
 }
 .optionStatistics {
   background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+  color: #1e2f33;
 }
 .tableStatistics {
   display: flex;

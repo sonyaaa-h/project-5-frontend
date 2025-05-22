@@ -6,7 +6,6 @@ export const fetchStatistics = createAsyncThunk(
   async ({ year, month }, thunkAPI) => {
     try {
       const response = await api.get(`/summary/${year}-${month}`);
-      console.log("FETCH RESPONSE", response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
