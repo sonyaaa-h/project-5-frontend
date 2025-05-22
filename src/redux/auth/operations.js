@@ -23,7 +23,7 @@ export const loginThunk = createAsyncThunk(
       const token = res.data.data.accessToken;
       setAuthHeader(token);
 
-      const userResponse = await api.get("/user");
+      const userResponse = await api.get("/users/current");
       const user = userResponse.data.data;
 
       return { user, accessToken: token };
