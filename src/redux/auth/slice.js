@@ -5,6 +5,7 @@ const initialState = {
   user: {
     name: null,
     email: null,
+    balance: 0
   },
   accessToken: null,
   isLoggedIn: false,
@@ -30,6 +31,7 @@ const slice = createSlice({
         console.log("Login successful:", action.payload);
         state.user.name = action.payload.user.name;
         state.user.email = action.payload.user.email;
+        state.user.balance = action.payload.user.balance;
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
       })
