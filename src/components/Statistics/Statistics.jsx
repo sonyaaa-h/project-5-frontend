@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PieChartWithPaddingAngle from "../PieChartWithPaddingAngle/PieChartWithPaddingAngle";
 import s from "./Statistics.module.css";
 import ColorSwitches from "../SwitchButton/SwithButton";
-import { fetchStatistics } from "../../redux/statistics/operations";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchStatistics } from "../../redux/statistics/operations";
 
 const Statistics = () => {
   const dispatch = useDispatch();
@@ -17,10 +17,22 @@ const Statistics = () => {
   useEffect(() => {
     dispatch(fetchStatistics({ year, month }));
   }, [year, month, dispatch]);
+  console.log("data:", data);
 
-  const filteredData = Array.isArray(data)
-    ? data.filter((item) => item.type === (isIncome ? "-" : "+"))
-    : [];
+  const filteredData = isIncome
+    ? Object.entries(data?.income?.byCategory || {}).map(([category, sum]) => ({
+        type: "+",
+        category,
+        sum,
+      }))
+    : Object.entries(data?.expense?.byCategory || {}).map(
+        ([category, sum]) => ({
+          type: "-",
+          category,
+          sum,
+        })
+      );
+  console.log(`FILTER DATA: ${filteredData}`);
 
   const groupedByCategory = filteredData.reduce((acc, transaction) => {
     const { category, sum } = transaction;
@@ -38,9 +50,11 @@ const Statistics = () => {
       };
     }
   );
+
   const total = filteredData
     .reduce((sum, item) => sum + Number(item.sum), 0)
     .toFixed(2);
+
   return (
     <section id="statistic" className={s.statistics}>
       <div className={s.firstBlock}>
@@ -59,7 +73,9 @@ const Statistics = () => {
             value={month}
             onChange={(e) => setMonth(e.target.value)}
           >
-            <option value="01">January</option>
+            <option className={s.optionStatistics} value="01">
+              January
+            </option>
             <option value="02">February</option>
             <option value="03">March</option>
             <option value="04">April</option>
