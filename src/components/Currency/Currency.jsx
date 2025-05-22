@@ -5,7 +5,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import Loader from "../Loader/Loader.jsx";
 import wallet from "../../assets/wallet.svg";
 
-const CURRENCY_API_URL = "https://api.monobank.ua/bank/currency";
+const CURRENCY_API_URL = "https://api.monobank.ua/bank/currenc";
 const CACHE_KEY = "monobank_currency_cache";
 const CACHE_EXPIRATION_MS = 60 * 60 * 1000;
 
