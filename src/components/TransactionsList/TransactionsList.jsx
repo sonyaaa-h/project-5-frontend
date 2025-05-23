@@ -25,10 +25,9 @@ const TransactionsList = () => {
         <li className={s.sum}>Sum</li>
       </ul>
       <ul>
-        {transactions.map((transaction) => {
-          console.log("Дані транзакції:", transaction);
-          return <TransactionsItem key={transaction.id} {...transaction} />;
-        })}
+      {(transactions || []).map((transaction) => (
+  <TransactionsItem key={transaction.id} {...transaction} />
+))}
       </ul>
     </div>
   );

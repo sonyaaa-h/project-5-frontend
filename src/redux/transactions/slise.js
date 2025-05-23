@@ -23,6 +23,8 @@ const transactionsSlice = createSlice({
     builder
       //   .addCase(fetchTransactions.pending, handlePending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
+        console.log(action.payload);
+        
         // state.loading = false;
         state.data = action.payload;
       })
