@@ -1,136 +1,179 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import styles from "./EditTransactionForm.module.css";
-import { updateTransaction } from "../services/api"; // не знаю точно, який там путь
+import ColorSwitches from "../SwitchButton/SwitchButton";
+import { toast } from "react-hot-toast";
+import { IoClose } from "react-icons/io5";
 
-const EditTransactionForm = ({ mode = "edit", initialValues, onClose, onSave }) => {
-  const schema = Yup.object().shape({
-    amount: Yup.number()
-      .typeError("Amount must be a number")
-      .positive("Amount must be positive")
-      .required("Amount is required"),
-    date: Yup.date().required("Date is required"),
-    category: Yup.string().required("Category is required"),
-    comment: Yup.string().max(100, "Max 100 characters"),
-  });
+const validationSchema = Yup.object().shape({
+  amount: Yup.number()
+    .required("Amount is required")
+    .positive("Amount must be positive")
+    .typeError("Amount must be a number"),
+  date: Yup.date()
+    .required("Date is required")
+    .max(new Date(), "Date cannot be in the future"),
+  category: Yup.string()
+    .required("Category is required"),
+  comment: Yup.string()
+    .max(100, "Comment must be less than 100 characters"),
+});
 
-  const handleSubmit = async (values, actions) => {
+const initialValues = {
+  amount: "",
+  date: new Date(),
+  category: "",
+  comment: "",
+  type: "expense",
+};
+
+export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const updatedTransaction = await updateTransaction(values.id, values);
-      onSave(updatedTransaction);   // оновити список
-      onClose();                    // закрити модалку
+      // Here we'll add the dispatch logic later
+      console.log("Form values:", values);
+      if (onSave) {
+        await onSave(values);
+      }
+      toast.success("Transaction saved successfully!");
+      if (onClose) onClose();
     } catch (error) {
-      alert("Error: " + error.message); // можна замінити на push-сповіщення
+      toast.error(error.message || "Failed to save transaction");
     } finally {
-      actions.setSubmitting(false);
+      setSubmitting(false);
+    }
+  };
+
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget && onClose) {
+      onClose();
+    }
+  };
+
+  const handleCloseClick = (e) => {
+    e.stopPropagation();
+    if (onClose) {
+      onClose();
     }
   };
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <h2 className={styles.title}>
-          {mode === "edit" ? "Edit" : "Add"} transaction
-        </h2>
+    <div className={styles.overlay} onClick={handleOverlayClick}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ values, errors, touched, setFieldValue, isSubmitting, resetForm }) => (
+          <Form className={styles.modal}>
+            <button type="button" className={styles.closeButton} onClick={handleCloseClick}>
+              <IoClose size={24} />
+            </button>
 
-        <Formik
-          initialValues={initialValues}
-          validationSchema={schema}
-          onSubmit={handleSubmit}
-        >
-          {({ values, setFieldValue, isSubmitting }) => (
-            <Form>
-              <div className={styles.toggleGroup}>
-                <div className={`${styles.toggleOption} ${values.type === "income" ? styles.active : ""}`}>
-                  Income
-                </div>
-                <div className={styles.toggleSwitch}>
-                  <div className={styles.toggleIndicator}>+</div>
-                </div>
-                <div className={`${styles.toggleOption} ${values.type === "expense" ? styles.active : ""}`}>
-                  Expense
-                </div>
-              </div>
+            <h2 className={styles.title}>
+              {mode === 'edit' ? 'Edit' : 'Add'} transaction
+            </h2>
 
-              <div className={styles.inputGroup}>
-                <Field
-                  name="amount"
-                  type="number"
-                  placeholder="Amount"
-                  className={styles.amountInput}
-                />
-                <ErrorMessage name="amount" component="div" className={styles.error} />
-
-                <DatePicker
-                  selected={new Date(values.date)}
-                  onChange={(date) => setFieldValue("date", date)}
-                  className={styles.datePicker}
-                  dateFormat="dd/MM/yyyy"
-                />
-                <ErrorMessage name="date" component="div" className={styles.error} />
-              </div>
-
-              <Field
-                name="category"
-                as="select"
-                className={styles.selectInput}
+            <div className={styles.toggleGroup}>
+              <div
+                className={`${styles.toggleOption} ${values.type === "income" ? styles.active : ""}`}
               >
-                <option value="">Select category</option>
-                <option value="products">Products</option>
-                <option value="services">Services</option>
-                <option value="salary">Salary</option>
-                <option value="transport">Transport</option>
-              </Field>
-              <ErrorMessage name="category" component="div" className={styles.error} />
-
-              <Field
-                name="comment"
-                placeholder="Comment"
-                className={styles.descriptionInput}
-              />
-              <ErrorMessage name="comment" component="div" className={styles.error} />
-
-              <div className={styles.buttonGroup}>
-                <button
-                  type="submit"
-                  className={styles.saveButton}
-                  disabled={isSubmitting}
-                >
-                  Save
-                </button>
-
-                <button
-                  type="button"
-                  className={styles.cancelButton}
-                  onClick={onClose}
-                >
-                  Cancel
-                </button>
+                Income
               </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
+
+              <ColorSwitches
+                isIncome={values.type === "income"}
+                setIsIncome={(checked) => setFieldValue("type", checked ? "income" : "expense")}
+              />
+
+              <div
+                className={`${styles.toggleOption} ${values.type === "expense" ? styles.active : ""}`}
+              >
+                Expense
+              </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <Field
+                name="amount"
+                type="text"
+                className={`${styles.amountInput} ${errors.amount && touched.amount ? styles.error : ""}`}
+                placeholder="Amount"
+              />
+              {errors.amount && touched.amount && (
+                <div className={styles.errorText}>{errors.amount}</div>
+              )}
+
+              <DatePicker
+                selected={values.date}
+                onChange={(date) => setFieldValue("date", date)}
+                className={`${styles.datePicker} ${errors.date && touched.date ? styles.error : ""}`}
+                dateFormat="dd/MM/yyyy"
+                showIcon
+                toggleCalendarOnIconClick
+              />
+              {errors.date && touched.date && (
+                <div className={styles.errorText}>{errors.date}</div>
+              )}
+            </div>
+
+            <Field
+              name="category"
+              as="select"
+              className={`${styles.descriptionInput} ${errors.category && touched.category ? styles.error : ""}`}
+            >
+              <option value="">Select category</option>
+              {/* Add categories here */}
+            </Field>
+            {errors.category && touched.category && (
+              <div className={styles.errorText}>{errors.category}</div>
+            )}
+
+            <Field
+              name="comment"
+              className={`${styles.descriptionInput} ${errors.comment && touched.comment ? styles.error : ""}`}
+              placeholder="Comment"
+            />
+            {errors.comment && touched.comment && (
+              <div className={styles.errorText}>{errors.comment}</div>
+            )}
+
+            <div className={styles.buttonGroup}>
+              <button
+                type="submit"
+                className={styles.saveButton}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Saving..." : "Save"}
+              </button>
+
+              <button
+                type="button"
+                className={styles.cancelButton}
+                onClick={() => {
+                  setFieldValue("amount", "");
+                  setFieldValue("comment", "");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
 
 EditTransactionForm.propTypes = {
-  mode: PropTypes.oneOf(["edit", "add"]),
-  initialValues: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
-    date: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
-    category: PropTypes.string.isRequired,
-    comment: PropTypes.string,
-    type: PropTypes.oneOf(["income", "expense"]),
-  }).isRequired,
-  onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
+  mode: PropTypes.oneOf(['edit', 'add']),
+  onClose: PropTypes.func,
+  onSave: PropTypes.func,
 };
-
-export default EditTransactionForm;
