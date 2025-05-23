@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { deleteTransaction, fetchTransactions } from "./operations";
 
 const initialState = {
-  data: [],
-  //   loading: false,
+  items: [],
+  // loading: false,
   error: null,
 };
 
@@ -24,13 +24,13 @@ const transactionsSlice = createSlice({
       //   .addCase(fetchTransactions.pending, handlePending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         console.log(action.payload);
-        
+
         // state.loading = false;
-        state.data = action.payload;
+        state.items = action.payload.data;
       })
       //   .addCase(deleteTransaction.pending, handlePending)
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.data = state.data.filter((data) => data.id !== action.payload);
+        state.items = state.items.filter((item) => item.id !== action.payload);
       })
       .addCase(deleteTransaction.rejected, handleRejected);
   },

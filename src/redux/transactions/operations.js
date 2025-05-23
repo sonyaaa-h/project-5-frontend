@@ -1,18 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { api } from "../auth/operations.js";
 
-//витягуємо токен :
-// const setAuthHeader = (token) => {
-//   api.defaults.headers.common.Authorization = `Bearer ${token}`;
-// };
-
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
   async (data, thunkAPI) => {
     try {
       const response = await api.get("/transactions");
-      // setAuthHeader(data.token);
-
       return response.data;
     } catch (error) {
       // return thunkAPI.rejectWithValue(error.message);

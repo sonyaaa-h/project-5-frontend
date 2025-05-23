@@ -11,9 +11,10 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { transactionsReducer } from "./transactions/slise.js";
+
 import { categoriesReducer } from "./categories/slise.js";
 import { statisticsReducer } from "./statistics/slice.js";
+import { transactionsReducer } from "./transactions/slice.js";
 
 const persistConfig = {
   key: "auth",

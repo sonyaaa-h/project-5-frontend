@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./Layout/Layout";
@@ -12,13 +12,18 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import StatisticsTab from "./pages/StatisticsTab/StatisticsTab";
 import CurrencyTab from "./pages/CurrencyTab/CurrencyTab";
 import { refreshUser } from "./redux/auth/operations";
+import { selectIsRefreshing } from "./redux/auth/selectors.js";
 
 function App() {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
+  if (isRefreshing) {
+    return <h1>Loading application...</h1>;
+  }
 
   return (
     <Routes>
