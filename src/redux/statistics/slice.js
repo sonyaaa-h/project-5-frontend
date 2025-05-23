@@ -20,7 +20,6 @@ const statisticsSlice = createSlice({
       .addCase(fetchStatistics.fulfilled, (state, action) => {
         state.isLoading = false;
         state.data = action.payload;
-        console.log("FETCH ДАТА", action.payload);
       })
       .addCase(fetchStatistics.rejected, (state, action) => {
         state.isLoading = false;
