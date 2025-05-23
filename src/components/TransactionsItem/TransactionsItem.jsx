@@ -40,7 +40,7 @@ const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
           </button>
         </li>
       </ul>
-      {console.log(id, "id")}
+
       <dialog ref={modalRef} className={s.modalDel}>
         <div className={s.modalContent}>
           <img className={s.logo} src={logo} alt="logo" />

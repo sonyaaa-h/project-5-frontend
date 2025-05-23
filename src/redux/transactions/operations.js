@@ -1,27 +1,57 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { api } from "../auth/operations";
+import { api } from "../auth/operations.js";
+
+//витягуємо токен :
+// const setAuthHeader = (token) => {
+//   api.defaults.headers.common.Authorization = `Bearer ${token}`;
+// };
 
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
-  async (_, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
       const response = await api.get("/transactions");
-      console.log("data:", response.data);
+      // setAuthHeader(data.token);
 
+      return response.data;
+    } catch (error) {
+      // return thunkAPI.rejectWithValue(error.message);
+      const message = error?.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const addTransaction = createAsyncThunk(
+  "transactions/addTransaction",
+  async (newTransactionData, thunkAPI) => {
+    try {
+      const response = await api.post("/transactions", newTransactionData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
+export const updateTransaction = createAsyncThunk(
+  "transactions/updateTransaction",
+  async ({ id, updatedTransactionData }, thunkAPI) => {
+    try {
+      const response = await api.patch(
+        `/transactions/${id}`,
+        updatedTransactionData
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 export const deleteTransaction = createAsyncThunk(
   "transactions/deleteTransaction",
-  async (id, thunkAPI) => {
+  async (transactionId, thunkAPI) => {
     try {
-      const { data } = await api.delete(`/transactions/${id}`);
-      return data.id;
+      await api.delete(`/transactions/${transactionId}`);
+      return transactionId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

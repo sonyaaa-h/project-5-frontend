@@ -2,17 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import { deleteTransaction, fetchTransactions } from "./operations";
 
 const initialState = {
-  items: [],
-  isLoading: false,
+  data: [],
+  //   loading: false,
   error: null,
 };
 
-const handlePending = (state) => {
-  state.loading = true;
-};
+// const handlePending = (state) => {
+// //   state.loading = true;
+// };
 
 const handleRejected = (state, action) => {
-  state.loading = false;
+  //   state.loading = false;
   state.error = action.payload;
 };
 
@@ -21,14 +21,14 @@ const transactionsSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTransactions.pending, handlePending)
+      //   .addCase(fetchTransactions.pending, handlePending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.items = action.payload;
+        // state.loading = false;
+        state.data = action.payload;
       })
-      .addCase(deleteTransaction.pending, handlePending)
+      //   .addCase(deleteTransaction.pending, handlePending)
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.items = state.items.filter((item) => item.id !== action.payload);
+        state.data = state.data.filter((data) => data.id !== action.payload);
       })
       .addCase(deleteTransaction.rejected, handleRejected);
   },
