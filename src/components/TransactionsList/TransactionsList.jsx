@@ -30,11 +30,13 @@ const TransactionsList = () => {
         <li className={s.comment}>Comment</li>
         <li className={s.sum}>Sum</li>
       </ul>
-      <ul>
-        {(transactions || []).map((transaction) => (
-          <TransactionsItem key={transaction.id} {...transaction} />
-        ))}
-      </ul>
+      <div className={s.transactionsScroll}>
+        <ul className={s.wrapperTransactions}>
+          {(transactions || []).map((transaction) => (
+            <TransactionsItem key={transaction.id} {...transaction} />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

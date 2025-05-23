@@ -8,6 +8,13 @@
     display: none;
 }
 
+.wrapperTransactions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
 @media screen and (min-width: 768px) {
     .wrapper {
         border-radius: 16px;
@@ -47,7 +54,7 @@
 
 @media screen and (min-width: 1280px) {
     .wrapper {
-        padding: 32px 27px;
+        padding: 32px 18px 1px 27px;
         max-width: 757px;
         height: 585px;
     }
@@ -67,4 +74,28 @@
     .comment {
         margin-right: 59px;
     }
+}
+
+
+.transactionsScroll {
+    max-height: 415px;
+    overflow-y: auto;
+    padding-right: 8px;
+    scroll-behavior: smooth;
+}
+
+
+.transactionsScroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.transactionsScroll::-webkit-scrollbar-thumb {
+    background-color: var(--main-light-green);
+    border-radius: 4px;
+}
+
+.transactionsScroll::-webkit-scrollbar-track {
+    background-image: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+    border-radius: 64px;
+
 }

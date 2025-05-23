@@ -1,6 +1,7 @@
 .wrapperTransaction {
     background-color: transparent;
     border-radius: 16px;
+
 }
 
 .transaction {
@@ -15,7 +16,8 @@
     font-size: 14px;
     color: #fcfcfc;
     font-family: "Inter", sans-serif;
-    padding: 15.5px 12px 15.5px 4px;
+    padding: 15.5px 12px 15.5px 8.5px;
+
 }
 
 .transaction li:nth-child(1) {
@@ -44,7 +46,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* gap: 24px; */
+    gap: 24px;
     padding: 11.5px 12px 11.5px 4px;
 }
 
