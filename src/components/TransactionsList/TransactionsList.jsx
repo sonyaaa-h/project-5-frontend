@@ -15,6 +15,12 @@ const TransactionsList = () => {
 
   console.log("transaction", transactions);
 
+  if (transactions.length === 0) {
+    return (
+      <p>You don't have any transactions yet. Start by adding a new one!</p>
+    );
+  }
+
   return (
     <div className={s.wrapper}>
       <ul className={s.titles}>
@@ -25,9 +31,9 @@ const TransactionsList = () => {
         <li className={s.sum}>Sum</li>
       </ul>
       <ul>
-      {(transactions || []).map((transaction) => (
-  <TransactionsItem key={transaction.id} {...transaction} />
-))}
+        {(transactions || []).map((transaction) => (
+          <TransactionsItem key={transaction.id} {...transaction} />
+        ))}
       </ul>
     </div>
   );

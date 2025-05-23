@@ -10,7 +10,6 @@ import { deleteTransaction } from "../../redux/transactions/operations.js";
 import logo from "../../assets/logo.svg";
 
 const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
-  //пусто
   const modalRef = useRef(null);
   const dispatch = useDispatch();
   //const token = useSelector((state) => state.auth.token);
