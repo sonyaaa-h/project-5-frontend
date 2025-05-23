@@ -4,12 +4,17 @@ import { useState } from "react";
 import LogoutModal from "../Modal/LogoutModal";
 import LogoIcon from "../tempIcons/LogoIcon";
 import ExitIcon from "../tempIcons/ExitIcon";
+import { UserModal } from "../UserModal/UserModal";
 
 export default function Header() {
   const username = useSelector((state) => state.auth.user.name);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
 
   const handleLogoutClick = () => setIsModalOpen(true);
+  const handleUpdateUserClick = () => setIsUserModalOpen(true);
+
+  const firstLetter = username.charAt(0);
 
   return (
     <header className={css.header}>
@@ -18,7 +23,9 @@ export default function Header() {
         <span className={css.textLogo}>Spendy</span>
       </div>
       <div className={css.userSection}>
-        <span className={css.username}>{username}</span>
+        <button onClick={handleUpdateUserClick} className={css.updateBtn}>
+          <span className={css.username}>{firstLetter}</span>
+        </button>
         <button onClick={handleLogoutClick} className={css.exitBtn}>
           <ExitIcon className={css.exitIcon} />
           <span className={css.exitText}>Exit</span>
@@ -26,6 +33,9 @@ export default function Header() {
       </div>
 
       {isModalOpen && <LogoutModal onClose={() => setIsModalOpen(false)} />}
+      {isUserModalOpen && (
+        <UserModal onClick={() => setIsUserModalOpen(false)} />
+      )}
     </header>
   );
 }
