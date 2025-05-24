@@ -19,11 +19,19 @@ const HomeTab = () => {
     setShowModal(true);
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div>
       <TransactionsList />
-      <AddTransactionButton onClick={handleOpenModal} />
-      {showModal && <ModalAddTransaction onClose={() => setShowModal(false)} />}
+      <AddTransactionButton openModal={handleOpenModal} />
+      <ModalAddTransaction
+        openModal={showModal}
+        closeModal={handleCloseModal}
+        setBalance={() => {}}
+      />
     </div>
   );
 };
