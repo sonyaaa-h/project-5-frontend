@@ -7,14 +7,14 @@ import ExitIcon from "../tempIcons/ExitIcon";
 import { UserModal } from "../UserModal/UserModal";
 
 export default function Header() {
-  const username = useSelector((state) => state.auth.user.name);
+  const username = useSelector((state) => state.auth.user?.name);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
 
   const handleLogoutClick = () => setIsModalOpen(true);
   const handleUpdateUserClick = () => setIsUserModalOpen(true);
 
-  const firstLetter = username.charAt(0);
+  const firstLetter = username ? username.charAt(0) : "";
 
   return (
     <header className={css.header}>
