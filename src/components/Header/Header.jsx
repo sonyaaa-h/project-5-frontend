@@ -18,18 +18,22 @@ export default function Header() {
 
   return (
     <header className={css.header}>
-      <div className={css.logo}>
-        <LogoIcon className={css.logoIcon} />
-        <span className={css.textLogo}>Spendy</span>
-      </div>
-      <div className={css.userSection}>
-        <button onClick={handleUpdateUserClick} className={css.updateBtn}>
-          <span className={css.username}>{firstLetter}</span>
-        </button>
-        <button onClick={handleLogoutClick} className={css.exitBtn}>
-          <ExitIcon className={css.exitIcon} />
-          <span className={css.exitText}>Exit</span>
-        </button>
+      <div className={css.container}>
+        <div className={css.logo}>
+          <LogoIcon className={css.logoIcon} />
+          <span className={css.textLogo}>Spendy</span>
+        </div>
+        <div className={css.userSection}>
+          <button onClick={handleUpdateUserClick} className={css.updateBtn}>
+            <span className={css.username}>{firstLetter}</span>
+          </button>
+          <div className={css.exitContainer}>
+            <button onClick={handleLogoutClick} className={css.exitBtn}>
+              <ExitIcon className={css.exitIcon} />
+              <span className={css.exitText}>Exit</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       {isModalOpen && <LogoutModal onClose={() => setIsModalOpen(false)} />}
