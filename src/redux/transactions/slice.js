@@ -26,7 +26,14 @@ const transactionsSlice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         console.log(action.payload);
         state.isLoading = false;
-        state.items = action.payload.data;
+        state.items = action.payload.data.data;
+        state.pageInfo = {
+          page: action.payload.data.page,
+          perPage: action.payload.data.perPage,
+          totalItems: action.payload.data.totalItems,
+          totalPages: action.payload.data.totalPages,
+          hasNextPage: action.payload.data.hasNextPage,
+        };
       })
       .addCase(deleteTransaction.pending, handlePending)
       .addCase(deleteTransaction.fulfilled, (state, action) => {

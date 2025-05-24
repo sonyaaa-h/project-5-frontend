@@ -5,7 +5,7 @@ const initialState = {
   user: {
     name: null,
     email: null,
-    balance: 0
+    balance: 0,
   },
   accessToken: null,
   isLoggedIn: false,
@@ -23,7 +23,8 @@ const slice = createSlice({
         state.user.name = action.payload.name;
         state.user.email = action.payload.email;
         state.user.balance = action.payload.balance;
-        state.token = action.payload.accessToken;
+        // state.token = action.payload.accessToken;
+        state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
         state.isAuthLoading = false;
       })

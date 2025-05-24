@@ -37,7 +37,7 @@ const TransactionsList = () => {
       <div className={s.transactionsScroll}>
         <ul className={s.wrapperTransactions}>
           {(transactions || []).map((transaction) => (
-            <TransactionsItem key={transaction.id} {...transaction} />
+            <TransactionsItem key={transaction._id} {...transaction} />
           ))}
         </ul>
       </div>
