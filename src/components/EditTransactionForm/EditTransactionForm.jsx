@@ -177,3 +177,5 @@ EditTransactionForm.propTypes = {
   onClose: PropTypes.func,
   onSave: PropTypes.func,
 };
+
+export default EditTransactionForm;
