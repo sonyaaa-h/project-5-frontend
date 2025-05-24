@@ -3,9 +3,9 @@ import {api} from "../auth/operations"
 
 export const fetchCategories = createAsyncThunk(
     "categories/fetchAll",
-    async (_, thunkAPI) => {
+    async ({signal}, thunkAPI) => {
         try {
-            const response = await api.get("/categories");
+            const response = await api.get("/categories", {signal});
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);

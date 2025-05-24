@@ -1,11 +1,12 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setUser, setIsRefreshing } from "./slice"; // setToken импортирован для будущего использования
 import toast from "react-hot-toast";
 
 export const api = axios.create({
   baseURL: "https://spendy-mu36.onrender.com",
+  withCredentials: true,
 });
+
 
 const setAuthHeader = (token) => {
   api.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -98,31 +99,24 @@ export const registerThunk = createAsyncThunk(
   }
 );
 
-export const refreshUser = createAsyncThunk(
-  "auth/refresh",
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.accessToken;
+export const refreshThunk = createAsyncThunk(
+  // "auth/refresh",
+  // async (_, thunkAPI) => {
+  //   try {
+  //     const refreshResponse = await api.post("/auth/refresh");
+  //     const newAccessToken = refreshResponse.data.data.accessToken;
 
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue("Unable to fetch user");
-    }
+  //     setAuthHeader(newAccessToken); // встановлюємо новий accessToken
+  //     const userResponse = await api.get("/users/current");
 
-    try {
-      setAuthHeader(persistedToken);
-      thunkAPI.dispatch(setIsRefreshing(true));
-      const response = await api.get("/auth/current");
-      thunkAPI.dispatch(
-        setUser({
-          user: response.data,
-          token: persistedToken,
-        })
-      );
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    } finally {
-      thunkAPI.dispatch(setIsRefreshing(false));
-    }
-  }
+  //     return {
+  //       user: userResponse.data.data,
+  //       accessToken: newAccessToken,
+  //     };
+  //   } catch (error) {
+  //     return thunkAPI.rejectWithValue(error.message);
+  //   }
+  // }
 );
+
+
