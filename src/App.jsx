@@ -13,10 +13,13 @@ import StatisticsTab from "./pages/StatisticsTab/StatisticsTab";
 import CurrencyTab from "./pages/CurrencyTab/CurrencyTab";
 import { refreshUser } from "./redux/auth/operations";
 import { selectIsRefreshing } from "./redux/auth/selectors.js";
+import { selectIsLoading } from "./redux/global/selectors";
+import MasterLoader from "./components/MasterLoader/MasterLoader";
 
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -26,30 +29,33 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route
-        path="register"
-        element={
-          <RestrictedRoute component={RegistrationPage} redirectTo="/" />
-        }
-      />
+    <>
+      <Routes>
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute component={RegistrationPage} redirectTo="/" />
+          }
+        />
 
-      <Route
-        path="login"
-        element={<RestrictedRoute component={LoginPage} redirectTo="/" />}
-      />
+        <Route
+          path="login"
+          element={<RestrictedRoute component={LoginPage} redirectTo="/" />}
+        />
 
-      <Route
-        path="/"
-        element={<PrivateRoute component={Layout} redirectTo="/login" />}
-      >
-        <Route index element={<HomeTab />} />
-        <Route path="statistics" element={<StatisticsTab />} />
-        <Route path="currency" element={<CurrencyTab />} />
-      </Route>
+        <Route
+          path="/"
+          element={<PrivateRoute component={Layout} redirectTo="/login" />}
+        >
+          <Route index element={<HomeTab />} />
+          <Route path="statistics" element={<StatisticsTab />} />
+          <Route path="currency" element={<CurrencyTab />} />
+        </Route>
 
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+      <MasterLoader open={isLoading} />
+    </>
   );
 }
 
