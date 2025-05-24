@@ -7,6 +7,7 @@ import { deleteTransaction } from "../../redux/transactions/operations.js";
 import { useDispatch } from "react-redux";
 
 const ModalDeleteTransaction = ({ _id, onClose, message }) => {
+  console.log(_id);
   const dispatch = useDispatch();
   const handleDeleteConfirm = async () => {
     try {

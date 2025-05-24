@@ -1,6 +1,6 @@
 import s from "./TransactionsItem.module.css";
 import EditIcon from "../../assets/icon-edit.svg?react";
-import logo from "../../assets/logo.svg";
+// import logo from "../../assets/logo.svg";
 import ModalDeleteTransaction from "../ModalDeleteTransaction/ModalDeleteTransaction.jsx";
 import { useState } from "react";
 import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
