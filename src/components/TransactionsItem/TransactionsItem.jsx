@@ -3,7 +3,9 @@ import EditIcon from "../../assets/icon-edit.svg?react";
 // import logo from "../../assets/logo.svg";
 import ModalDeleteTransaction from "../ModalDeleteTransaction/ModalDeleteTransaction.jsx";
 import { useState } from "react";
-import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
+import EditTransactionForm from "../EditTransactionForm/EditTransactionForm.jsx";
+// import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
+
 
 const formatDate = (isoDate) => {
   const dateObj = new Date(isoDate);
@@ -44,7 +46,7 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
         />
       )}
       {isModalEdit && (
-        <ModalEditTransaction
+        <EditTransactionForm
           _id={_id}
           data={date}
           type={type}
