@@ -12,6 +12,8 @@
   width: 280px;
   padding: 16px;
   background-color: #508f8c;
+  /* position: relative; */
+  margin-bottom: 20px;
 }
 
 .logo {
@@ -276,11 +278,11 @@ span {
 
   .wallet {
     display: flex;
-    position: absolute;
+    /* position: absolute; */
     width: 280px;
     height: auto;
     margin-left: 447px;
-    margin-top: 650px;
+    /* margin-top: 650px; */
   }
 
   .nameContainer {
