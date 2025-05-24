@@ -8,6 +8,7 @@
     display: flex;
     /* justify-content: space-between; */
     height: 48px;
+    align-items: center;
 }
 
 .transaction li {
@@ -42,11 +43,11 @@
 }
 
 .transaction li:nth-child(6) {
-    width: 105px;
+    width: 115px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 24px;
+    /* gap: 24px; */
     padding: 11.5px 12px 11.5px 4px;
 }
 
@@ -71,11 +72,4 @@
 
 .wrapperTransaction:nth-child(2n) {
     background-image: var(--background-gradient);
-}
-
-.modalDel {
-    border-radius: 16px;
-    width: 533px;
-    height: 387px;
-    background-image: var(--modal-color);
 }

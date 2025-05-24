@@ -1,0 +1,13 @@
+.deletetBtn {
+    background: var(--red-color);
+}
+
+.deleteModal {
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+}
