@@ -1,1 +1,1 @@
-export const selectIsLoading = (state) => state.global.isLoading;
+export const selectIsLoading = (state) => state.global.operationsCount !== 0;
