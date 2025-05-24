@@ -44,7 +44,7 @@ export const LoginForm = () => {
             },
           });
         } else {
-          toast.error("Login o password error.", {
+          toast.error("Login or password error.", {
             duration: 4000,
             style: {
               background: "rgb(206, 84, 84)",
@@ -157,6 +157,7 @@ export const LoginForm = () => {
                 Register
               </NavLink>
             </p>
+            <img className={s.walletMob} src={wallet} alt="wallet" />
           </Form>
         )}
       </Formik>

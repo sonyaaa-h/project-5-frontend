@@ -1,35 +1,101 @@
 .wrapper {
-    border-radius: 16px;
-    padding: 32px 27px;
-    max-width: 757px;
-    height: 585px;
-    background-image: var(--primary-gradient);
-    background-repeat: no-repeat;
-    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .titles {
-    font-family: "Poppins", sans-serif;
+    display: none;
+}
+
+.wrapperTransactions {
     display: flex;
-    flex-direction: row;
-    color: var(--white-color);
-    font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 16px;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.date {
-    margin-right: 74px;
+
+@media screen and (min-width: 768px) {
+    .wrapper {
+        border-radius: 16px;
+        padding: 32px 16px;
+        max-width: 704px;
+        height: 538px;
+        background-image: var(--primary-gradient);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .titles {
+        display: block;
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        flex-direction: row;
+        color: var(--white-color);
+        margin-bottom: 16px;
+    }
+
+    .date {
+        margin-right: 57px;
+    }
+
+    .type {
+        margin-right: 36px;
+    }
+
+    .category {
+        margin-right: 40px;
+    }
+
+    .comment {
+        margin-right: 58px;
+    }
 }
 
-.type {
-    margin-right: 55px;
+@media screen and (min-width: 1280px) {
+    .wrapper {
+        padding: 32px 18px 1px 27px;
+        max-width: 757px;
+        height: 585px;
+    }
+
+    .date {
+        margin-right: 74px;
+    }
+
+    .type {
+        margin-right: 55px;
+    }
+
+    .category {
+        margin-right: 48px;
+    }
+
+    .comment {
+        margin-right: 59px;
+    }
 }
 
-.category {
-    margin-right: 48px;
+
+.transactionsScroll {
+    max-height: 415px;
+    overflow-y: auto;
+    padding-right: 8px;
+    scroll-behavior: smooth;
 }
 
-.comment {
-    margin-right: 59px;
+
+.transactionsScroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.transactionsScroll::-webkit-scrollbar-thumb {
+    background-color: var(--main-light-green);
+    border-radius: 4px;
+}
+
+.transactionsScroll::-webkit-scrollbar-track {
+    background-image: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
+    border-radius: 64px;
+
 }

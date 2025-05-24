@@ -12,16 +12,21 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import StatisticsTab from "./pages/StatisticsTab/StatisticsTab";
 import CurrencyTab from "./pages/CurrencyTab/CurrencyTab";
 import { refreshUser } from "./redux/auth/operations";
+import { selectIsRefreshing } from "./redux/auth/selectors.js";
 import { selectIsLoading } from "./redux/global/selectors";
 import MasterLoader from "./components/MasterLoader/MasterLoader";
 
 function App() {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
   const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
+  if (isRefreshing) {
+    return <h1>Loading application...</h1>;
+  }
 
   return (
     <>

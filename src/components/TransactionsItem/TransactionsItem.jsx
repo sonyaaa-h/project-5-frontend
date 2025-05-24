@@ -1,19 +1,22 @@
 import s from "./TransactionsItem.module.css";
 import EditIcon from "../../assets/icon-edit.svg?react";
 import { useRef } from "react";
-import {
-  useDispatch,
-  // useSelector
-} from "react-redux";
+import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { deleteTransaction } from "../../redux/transactions/operations.js";
 import logo from "../../assets/logo.svg";
 
+const formatDate = (isoDate) => {
+  const dateObj = new Date(isoDate);
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // місяці з 0
+  const year = String(dateObj.getFullYear()).slice(-2); // останні дві цифри
+  return `${day}.${month}.${year}`;
+};
+
 const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
-  //пусто
   const modalRef = useRef(null);
   const dispatch = useDispatch();
-  //const token = useSelector((state) => state.auth.token);
 
   const handleDelete = () => {
     dispatch(deleteTransaction(id));
@@ -24,8 +27,7 @@ const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
   return (
     <li className={s.wrapperTransaction}>
       <ul className={s.transaction}>
-        <li>{date}</li>
-        {/* виправити формат відображення дати */}
+        <li>{formatDate(date)}</li>
         <li>{type}</li>
         <li>{category}</li>
         <li>{comment}</li>
@@ -40,7 +42,7 @@ const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
           </button>
         </li>
       </ul>
-      {console.log(id, "id")}
+
       <dialog ref={modalRef} className={s.modalDel}>
         <div className={s.modalContent}>
           <img className={s.logo} src={logo} alt="logo" />

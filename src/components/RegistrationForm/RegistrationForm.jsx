@@ -13,7 +13,7 @@ import { IoMdLock } from "react-icons/io";
 import { FaUser } from "react-icons/fa";
 import { RiEye2Line, RiEyeCloseFill } from "react-icons/ri";
 import PasswordStrengthBar from "react-password-strength-bar";
-import watch from "react-password-strength-bar";
+// import watch from "react-password-strength-bar";
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -21,6 +21,8 @@ const RegistrationForm = () => {
   const emailFieldId = useId();
   const passwordFieldId = useId();
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  //   const [passwordValue, setPasswordValue] = useState("");
 
   const registerValidationSchema = Yup.object().shape({
     name: Yup.string()
@@ -35,12 +37,16 @@ const RegistrationForm = () => {
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must be 64 characters or less")
       .required("Error: Password is required"),
+    // confirmPassword: Yup.string()
+    //   .oneOf([Yup.ref("password"), null], "Passwords must match")
+    //   .required("Error: Password is required"),
   });
 
   const initialValues = {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   };
   const handleSubmit = (values) => {
     dispatch(registerThunk(values))
@@ -50,7 +56,7 @@ const RegistrationForm = () => {
         navigate("/");
       })
       .catch((error) => {
-        if (error.includes("Email in use")) {
+        if (error && error.message && error.message.includes("Email in use")) {
           toast.error("Email in use. Please try different email address.", {
             duration: 2000,
             style: {
@@ -60,27 +66,31 @@ const RegistrationForm = () => {
               fontWeight: "500",
             },
           });
-        } else {
-          toast.error("Bad request error", {
-            duration: 2000,
-            style: {
-              background: "rgb(206, 84, 84)",
-              color: "#fff",
-              fontSize: "16px",
-              fontWeight: "500",
-            },
-            // options.resetForm();
-          });
         }
+        // else {
+        //   toast.error("Bad request error", {
+        //     duration: 2000,
+        //     style: {
+        //       background: "rgb(206, 84, 84)",
+        //       color: "#fff",
+        //       fontSize: "16px",
+        //       fontWeight: "500",
+        //     },
+        //     // options.resetForm();
+        //   });
+        // }
       });
   };
-  const formik = useFormik({
-    initialValues,
-    validationSchema: registerValidationSchema,
-    onSubmit: handleSubmit,
-  });
-  const passwordValue = formik.values.password;
-  //   const passwordValue = watch("password");
+  //   const formik = useFormik({
+  //     initialValues,
+  //     validationSchema: registerValidationSchema,
+  //     onSubmit: handleSubmit,
+  //   });
+  //   //   const passwordValue = formik.watch("password");
+  //   //   const passwordValue = watch("password");
+  //   const handlePasswordChange = (event) => {
+  //     formik.setFieldValue("password", event.target.value);
+  //   };
   return (
     <div className={s.div}>
       <Formik
@@ -88,7 +98,7 @@ const RegistrationForm = () => {
         validationSchema={registerValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, values }) => (
           <Form className={s.formWrapper}>
             <img className={s.logo} src={logo} alt="logo" />
             <div>
@@ -165,6 +175,7 @@ const RegistrationForm = () => {
                   autoComplete="password"
                   id={passwordFieldId}
                   required
+                  //   onChange={handlePasswordChange}
                 />
                 <button
                   className={s.toggleBtn}
@@ -199,7 +210,7 @@ const RegistrationForm = () => {
               >
                 <IoMdLock className={s.iconLock} />
                 <Field
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
                   className={s.input}
                   placeholder="Confirm password"
@@ -208,9 +219,9 @@ const RegistrationForm = () => {
                 <button
                   className={s.toggleBtn}
                   type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
+                  onClick={() => setShowConfirmPassword((prev) => !prev)}
                 >
-                  {showPassword ? (
+                  {showConfirmPassword ? (
                     <RiEye2Line className={s.icon} />
                   ) : (
                     <RiEyeCloseFill className={s.icon} />
@@ -225,8 +236,20 @@ const RegistrationForm = () => {
             </div>
             <PasswordStrengthBar
               className={s.passwordBar}
-              password={passwordValue}
-              colors={["#ff4d4f", "#ff7a45", "#faad14", "#52c41a", "#367c4d"]}
+              password={values.password}
+              barColors={[
+                "#508f8c",
+                "#ef4836",
+                "#f6b44d",
+                "#25c281",
+                "#0b6016",
+              ]}
+              scoreWords={["Weak", "Okay", "Good", "Strong", "Excellent"]}
+              minLength={8}
+              shortScoreWord="Weak"
+              onChangeScore={(score, feedback) =>
+                console.log("score", score, feedback)
+              }
             />
             <button type="submit" className={s.button}>
               Register
@@ -245,192 +268,3 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
-
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { Link, useNavigate } from "react-router-dom";
-// import css from "./RegistrationForm.module.css";
-// import * as yup from "yup";
-// import { nanoid } from "nanoid";
-// import { useDispatch } from "react-redux";
-// import { registerThunk } from "../../redux/auth/operations.js";
-// import { showToastErrorMessage } from "../../utils/showToastErrorMessage.js";
-// import PasswordStrengthBar from "react-password-strength-bar";
-
-// const schema = yup.object().shape({
-//   name: yup
-//     .string()
-//     .min(3, "Too short!")
-//     .max(24, "Too long!")
-//     .required("Name required!"),
-//   email: yup
-//     .string()
-//     .email("Invalid email format!")
-//     .required("Email required!"),
-//   password: yup
-//     .string()
-//     .min(6, "Too short!")
-//     .max(12, "Too long!")
-//     .required("Password required!"),
-// });
-
-// const nameFormId = nanoid();
-// const emailFormId = nanoid();
-// const passwordFormId = nanoid();
-// const passwordConfirmFormId = nanoid();
-
-// export const RegistrationForm = () => {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//     reset,
-//     watch,
-//   } = useForm({ resolver: yupResolver(schema) });
-
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   const onSubmit = async (payload) => {
-//     const data = {
-//       name: payload.name,
-//       email: payload.email,
-//       password: payload.password,
-//     };
-
-//     if (payload.password !== payload["confirm-password"]) {
-//       showToastErrorMessage("The passwords you entered do not match");
-//       return;
-//     }
-
-//     dispatch(registerThunk(data))
-//       .unwrap()
-//       .then(() => navigate("/"));
-
-//     reset();
-//   };
-
-//   const passwordValue = watch("password");
-
-//   return (
-//     <div className={css["register-form-container"]}>
-//       <form
-//         className={css.form}
-//         onSubmit={handleSubmit(onSubmit)}
-//         style={{ paddingBottom: 20 }}
-//       >
-//         <div className={`${css.fields}`}>
-//           <label htmlFor={nameFormId}>
-//             <img
-//               className={`${css.svg}`}
-//               src="/user.svg"
-//               width="24"
-//               height="24"
-//               alt="Letter picture"
-//             />
-//           </label>
-
-//           <input
-//             className={`${css.input} input`}
-//             placeholder="Name"
-//             id={nameFormId}
-//             {...register("name", {
-//               required: "Name required",
-//             })}
-//           />
-//           {errors.name && <p className={css.errors}>{errors.name.message}</p>}
-//         </div>
-
-//         <div className={`${css.fields}`}>
-//           <label htmlFor={emailFormId}>
-//             <img
-//               className={`${css.svg}`}
-//               src="/letter.svg"
-//               width="24"
-//               height="24"
-//               alt="Letter picture"
-//             />
-//           </label>
-
-//           <input
-//             className={`${css.input} input`}
-//             // type="email"
-//             placeholder="E-mail"
-//             id={emailFormId}
-//             {...register("email", {
-//               required: "Email required",
-//             })}
-//           />
-
-//           {errors.email && <p className={css.errors}>{errors.email.message}</p>}
-//         </div>
-
-//         <div className={`${css.fields}`}>
-//           <label htmlFor={passwordFormId}>
-//             <img
-//               className={`${css.svg}`}
-//               src="/lock.svg"
-//               width="24"
-//               height="24"
-//               alt="Lock picture"
-//             />
-//           </label>
-
-//           <input
-//             className={`${css.input} input`}
-//             type="password"
-//             placeholder="Password"
-//             id={passwordFormId}
-//             {...register("password", {
-//               required: "Password required",
-//             })}
-//           />
-
-//           {errors.password && (
-//             <p className={css.errors}>{errors.password.message}</p>
-//           )}
-//         </div>
-
-//         <div className={`${css.fields}`}>
-//           <label htmlFor={passwordConfirmFormId}>
-//             <img
-//               className={`${css.svg}`}
-//               src="/lock.svg"
-//               width="24"
-//               height="24"
-//               alt="Lock picture"
-//             />
-//           </label>
-
-//           <input
-//             className={`${css.input} input`}
-//             type="password"
-//             placeholder="Confirm password"
-//             id={passwordConfirmFormId}
-//             {...register("confirm-password", {
-//               required: "Password required",
-//             })}
-//           />
-//         </div>
-
-//         <PasswordStrengthBar
-//           className={css["password-bar"]}
-//           password={passwordValue}
-//           colors={["#ff4d4f", "#ff7a45", "#faad14", "#52c41a", "#367c4d"]}
-//         />
-
-//         <button
-//           className="btn-gradient"
-//           type="submit"
-//           style={{ marginTop: 32 }}
-//         >
-//           register
-//         </button>
-//       </form>
-
-//       <Link to="/login" className={`btn-classic`} style={{ display: "block" }}>
-//         log in
-//       </Link>
-//     </div>
-//   );
-// };
