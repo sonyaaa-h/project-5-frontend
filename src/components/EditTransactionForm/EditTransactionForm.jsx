@@ -6,9 +6,9 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./EditTransactionForm.module.css";
-import ColorSwitches from "../SwitchButton/SwitchButton";
 import { toast } from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
+import Toggle from '../Toggle/Toggle';
 
 const validationSchema = Yup.object().shape({
   amount: Yup.number()
@@ -88,7 +88,7 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
                 Income
               </div>
 
-              <ColorSwitches
+              <Toggle
                 isIncome={values.type === "income"}
                 setIsIncome={(checked) => setFieldValue("type", checked ? "income" : "expense")}
               />
