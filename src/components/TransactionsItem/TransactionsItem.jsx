@@ -1,10 +1,9 @@
 import s from "./TransactionsItem.module.css";
 import EditIcon from "../../assets/icon-edit.svg?react";
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import toast from "react-hot-toast";
-import { deleteTransaction } from "../../redux/transactions/operations.js";
-import logo from "../../assets/logo.svg";
+// import logo from "../../assets/logo.svg";
+import ModalDeleteTransaction from "../ModalDeleteTransaction/ModalDeleteTransaction.jsx";
+import { useState } from "react";
+import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
 
 const formatDate = (isoDate) => {
   const dateObj = new Date(isoDate);
@@ -14,15 +13,12 @@ const formatDate = (isoDate) => {
   return `${day}.${month}.${year}`;
 };
 
-const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
-  const modalRef = useRef(null);
-  const dispatch = useDispatch();
+const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
+  const [isModalDelete, setIsModalDelete] = useState(false);
+  const [isModalEdit, setIsModalEdit] = useState(false);
 
-  const handleDelete = () => {
-    dispatch(deleteTransaction(id));
-    toast.error(`Transaction "${comment}" is deleted!`);
-    modalRef.current.close();
-  };
+  const handleDeleteClick = () => setIsModalDelete(true);
+  const handleEditClick = () => setIsModalEdit(true);
 
   return (
     <li className={s.wrapperTransaction}>
@@ -33,30 +29,33 @@ const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
         <li>{comment}</li>
         <li>{sum}</li>
         <li>
-          <EditIcon className={s.icon} />
-          <button
-            className={s.btnDelete}
-            onClick={() => modalRef.current.showModal()}
-          >
+          <EditIcon className={s.icon} onClick={handleEditClick} />
+          <button className={s.btnDelete} onClick={handleDeleteClick}>
             Delete
           </button>
         </li>
       </ul>
-
-      <dialog ref={modalRef} className={s.modalDel}>
-        <div className={s.modalContent}>
-          <img className={s.logo} src={logo} alt="logo" />
-          <p>
-            Are you sure you want to delete?
-            {/* <span className={s.modalName}>"{name}"</span>? */}
-          </p>
-          <div className={s.modalBtn}>
-            <button onClick={handleDelete}>Delete</button>
-            <button onClick={() => modalRef.current.close()}>Cancel</button>
-          </div>
-        </div>
-      </dialog>
+      {isModalDelete && (
+        <ModalDeleteTransaction
+          _id={_id}
+          message="Are you sure you want to delete this transaction ?"
+          comment={comment}
+          onClose={() => setIsModalDelete(false)}
+        />
+      )}
+      {isModalEdit && (
+        <ModalEditTransaction
+          _id={_id}
+          data={date}
+          type={type}
+          category={category}
+          comment={comment}
+          sum={sum}
+          onClose={() => setIsModalEdit(false)}
+        />
+      )}
     </li>
   );
 };
+
 export default TransactionsItem;

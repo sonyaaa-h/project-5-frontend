@@ -1,35 +1,27 @@
 .div {
-  position: relative;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 1280px;
-  height: 720px;
-  padding-top: 75px;
+  padding-top: 26px;
 }
 
 .formWrapper {
   border-radius: 16px;
-  width: 533px;
-  /* height: 519px; */
-  padding: 53px 62px 82px 62px;
+  width: 280px;
+  padding: 16px;
   background-color: #508f8c;
 }
 
 .logo {
   margin: 0 auto;
   display: block;
-  margin-bottom: 37px;
+  margin-bottom: 16px;
 }
 
 .wallet {
-  position: absolute;
-  bottom: 35px;
-  right: 16px;
-  width: 320px;
-  height: auto;
+  display: none;
 }
 
 .nameContainer {
@@ -38,7 +30,7 @@
   align-items: center;
   border-radius: 8px;
   padding: 10px 14px;
-  width: 409px;
+  width: 248px;
   height: 44px;
   background-color: transparent;
   border: 1px solid #081222;
@@ -56,9 +48,9 @@
   align-items: center;
   border-radius: 8px;
   padding: 10px 14px;
-  width: 409px;
+  width: 248px;
   height: 44px;
-  margin-top: 24px;
+  margin-top: 16px;
   background-color: transparent;
   border: 1px solid #081222;
   outline: transparent;
@@ -77,9 +69,9 @@
   align-items: center;
   border-radius: 8px;
   padding: 10px 14px;
-  width: 409px;
+  width: 248px;
   height: 44px;
-  margin-top: 24px;
+  margin-top: 16px;
   background-color: transparent;
   border: 1px solid #081222;
   outline: transparent;
@@ -91,10 +83,10 @@
   align-items: center;
   border-radius: 8px;
   padding: 10px 14px;
-  width: 409px;
+  width: 248px;
   height: 44px;
-  margin-top: 24px;
-  margin-bottom: 20px;
+  margin-top: 16px;
+  margin-bottom: 10px;
   background-color: transparent;
   border: 1px solid #081222;
   outline: transparent;
@@ -160,7 +152,7 @@
 .input {
   border: none;
   background: transparent;
-  margin-left: 40px;
+  margin-left: 30px;
   outline: transparent;
   width: 80%;
 }
@@ -172,7 +164,6 @@ input::placeholder {
   transition: color 0.3s ease;
 }
 
-/* щоб при автозаповненні був фон імпуту */
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px var(--bg-color) inset !important;
   -webkit-text-fill-color: var(--text-color) !important;
@@ -187,10 +178,8 @@ input:-webkit-autofill {
   font-size: 10px;
   color: #b20202;
   display: flex;
-  margin-top: 4px;
 }
 
-/* Error state */
 .errorState {
   border-color: #b20202 !important;
 }
@@ -205,7 +194,6 @@ input:-webkit-autofill {
   color: #b20202 !important;
 }
 
-/* Success state */
 .successState {
   border-color: #0b6016 !important;
 }
@@ -225,22 +213,23 @@ input:-webkit-autofill {
   display: block;
   border-radius: 8px;
   padding: 11px 79px;
-  width: 410px;
+  width: 248px;
   height: 44px;
-  margin-top: 36px;
-  margin-bottom: 21px;
+  margin-top: -5px;
+  margin-bottom: 16px;
   background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
   border: none;
-  font-size: 18px;
-  font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.3s ease, background-color 0.2s ease;
   font-weight: 500;
   font-size: 18px;
   text-align: center;
   color: #fcfcfc;
 }
-
+.button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
 .link {
   font-weight: 500;
   font-size: 18px;
@@ -254,7 +243,88 @@ input:-webkit-autofill {
   border-radius: 8px;
   padding: 11px 68px;
   background-color: transparent;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  width: 410px;
+  width: 248px;
   height: 44px;
+}
+.link:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+span {
+  font-weight: 400;
+  font-size: 10px;
+  color: #b20202;
+  display: flex;
+}
+@media screen and (min-width: 768px) {
+  .div {
+    position: relative;
+    margin-top: 10px;
+  }
+
+  .formWrapper {
+    width: 533px;
+    /* height: 631px; */
+    padding: 40px 61px 82px 62px;
+  }
+
+  .logo {
+    margin-bottom: 32px;
+  }
+
+  .wallet {
+    display: flex;
+    position: absolute;
+    width: 280px;
+    height: auto;
+    margin-left: 447px;
+    margin-top: 650px;
+  }
+
+  .nameContainer {
+    width: 409px;
+    margin-bottom: 24px;
+  }
+  .emailContainer {
+    width: 409px;
+    margin-bottom: 24px;
+  }
+
+  .pwdContainer {
+    width: 409px;
+    margin-bottom: 24px;
+  }
+  .pwdConfContainer {
+    width: 409px;
+    margin-top: 24px;
+    margin-bottom: 20px;
+  }
+  span {
+    margin-top: -20px;
+  }
+  .button {
+    width: 409px;
+    margin-bottom: 21px;
+    margin-top: 5px;
+  }
+
+  .link {
+    width: 409px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .div {
+    margin-top: 75px;
+  }
+
+  .wallet {
+    margin-left: 914px;
+    margin-top: 390px;
+    width: 320px;
+  }
+  span {
+    margin-top: -20px;
+  }
 }

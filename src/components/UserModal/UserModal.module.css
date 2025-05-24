@@ -1,0 +1,37 @@
+.Backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(46, 47, 66, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 16px;
+  padding: 16px;
+  width: 280px;
+  background-color: var(--modal-color);
+  animation: fadeIn 300ms ease-in-out;
+}
+
+.avatar {
+  width: 68px;
+  height: 68px;
+  padding: 0;
+  display: flex;
+  border: none;
+  background-color: #081222;
+  font-family: inherit;
+  color: #e9a949;
+  border-radius: 8px;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+}

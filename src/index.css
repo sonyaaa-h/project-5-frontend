@@ -9,7 +9,7 @@
   --primary-gradient: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
   --red-color: #b20202;
   --pink-color: #f23a3a;
-  --main-light-green: #508F8C;
+  --main-light-green: #508f8c;
 }
 
 html {
@@ -23,6 +23,12 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 h1,

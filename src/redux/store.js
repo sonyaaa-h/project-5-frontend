@@ -14,6 +14,7 @@ import storage from "redux-persist/lib/storage";
 
 import { categoriesReducer } from "./categories/slise.js";
 import { statisticsReducer } from "./statistics/slice.js";
+import { globalReducer } from "./global/slice.js";
 import { transactionsReducer } from "./transactions/slice.js";
 
 const persistConfig = {
@@ -29,6 +30,7 @@ export const store = configureStore({
     categories: categoriesReducer,
     auth: persistReducer(persistConfig, authReducer),
     statistics: statisticsReducer,
+    global: globalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
