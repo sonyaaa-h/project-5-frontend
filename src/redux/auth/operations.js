@@ -126,3 +126,33 @@ export const refreshUser = createAsyncThunk(
     }
   }
 );
+
+export const updateUserThunk = createAsyncThunk(
+  "auth",
+  async (body, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState();
+      const token = state.auth.accessToken;
+
+      console.log("Token before PATCH:", token);
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token provided");
+      }
+
+      setAuthHeader(token);
+
+      const response = await api.patch("/users/current", body);
+      console.log("Update response:", response.data);
+
+      const userResponse = await api.get("/users/current");
+      const user = userResponse.data.data;
+
+      return { user, accessToken: token };
+    } catch (error) {
+      console.error("Update error:", error);
+      const message = error?.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);

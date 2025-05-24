@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerThunk, loginThunk, logoutThunk } from "./operations";
+import {
+  registerThunk,
+  loginThunk,
+  logoutThunk,
+  updateUserThunk,
+} from "./operations";
 
 const initialState = {
   user: {
     name: null,
     email: null,
     balance: 0,
+    photo: "",
   },
   accessToken: null,
   isLoggedIn: false,
@@ -33,6 +39,14 @@ const slice = createSlice({
         state.user.name = action.payload.user.name;
         state.user.email = action.payload.user.email;
         state.user.balance = action.payload.user.balance;
+        state.accessToken = action.payload.accessToken;
+        state.isLoggedIn = true;
+      })
+      .addCase(updateUserThunk.fulfilled, (state, action) => {
+        console.log("Update successful:", action.payload);
+        state.user.name = action.payload.user.name;
+        state.user.email = action.payload.user.email;
+        state.user.photo = action.payload.user.photo;
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
       })
