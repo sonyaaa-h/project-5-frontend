@@ -8,6 +8,7 @@ import { selectTransactions } from "../../redux/transactions/selectors.js";
 const TransactionsList = () => {
   const dispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
+  // const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchTransactions());
@@ -20,6 +21,9 @@ const TransactionsList = () => {
       <p>You don't have any transactions yet. Start by adding a new one!</p>
     );
   }
+  // if (error) {
+  //   return <p>Error loading transactions: {error.message}</p>;
+  // }
 
   return (
     <div className={s.wrapper}>
