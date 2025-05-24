@@ -3,16 +3,16 @@ import { deleteTransaction, fetchTransactions } from "./operations";
 
 const initialState = {
   items: [],
-  isLoading: false,
+  // loading: false,
   error: null,
 };
 
-const handlePending = (state) => {
-  state.loading = true;
-};
+// const handlePending = (state) => {
+// //   state.loading = true;
+// };
 
 const handleRejected = (state, action) => {
-  state.loading = false;
+  //   state.loading = false;
   state.error = action.payload;
 };
 
@@ -21,12 +21,14 @@ const transactionsSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTransactions.pending, handlePending)
+      //   .addCase(fetchTransactions.pending, handlePending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.items = action.payload;
+        console.log(action.payload);
+
+        // state.loading = false;
+        state.items = action.payload.data;
       })
-      .addCase(deleteTransaction.pending, handlePending)
+      //   .addCase(deleteTransaction.pending, handlePending)
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
       })

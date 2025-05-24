@@ -1,41 +1,43 @@
+import { useDispatch, useSelector } from "react-redux";
 import TransactionsItem from "../TransactionsItem/TransactionsItem";
 import s from "./TransactionsList.module.css";
-
-const initialTransactions = [
-    {
-        id: 1,
-        date: "2025-05-18",
-        type: "+",
-        category: "Salary",
-        comment: "Monthly salary",
-        sum: 5000,
-    },
-    {
-        id: 2,
-        date: "2025-05-17",
-        type: "-",
-        category: "Groceries",
-        comment: "Bought food",
-        sum: 120,
-    },
-];
+import { useEffect } from "react";
+import { fetchTransactions } from "../../redux/transactions/operations.js";
+import { selectTransactions } from "../../redux/transactions/selectors.js";
 
 const TransactionsList = () => {
+  const dispatch = useDispatch();
+  const transactions = useSelector(selectTransactions);
+
+  useEffect(() => {
+    dispatch(fetchTransactions());
+  }, [dispatch]);
+
+  console.log("transaction", transactions);
+
+  if (transactions.length === 0) {
     return (
-        <div className={s.wrapper}>
-            <ul className={s.titles}>
-                <li className={s.date}>Date</li>
-                <li className={s.type}>Type</li>
-                <li className={s.category}>Category</li>
-                <li className={s.comment}>Comment</li>
-                <li className={s.sum}>Sum</li>
-            </ul>
-            <ul>
-                {initialTransactions.map((transaction) => (
-                    <TransactionsItem key={transaction.id} {...transaction} />
-                ))}
-            </ul>
-        </div>
+      <p>You don't have any transactions yet. Start by adding a new one!</p>
     );
+  }
+
+  return (
+    <div className={s.wrapper}>
+      <ul className={s.titles}>
+        <li className={s.date}>Date</li>
+        <li className={s.type}>Type</li>
+        <li className={s.category}>Category</li>
+        <li className={s.comment}>Comment</li>
+        <li className={s.sum}>Sum</li>
+      </ul>
+      <div className={s.transactionsScroll}>
+        <ul className={s.wrapperTransactions}>
+          {(transactions || []).map((transaction) => (
+            <TransactionsItem key={transaction.id} {...transaction} />
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 };
 export default TransactionsList;

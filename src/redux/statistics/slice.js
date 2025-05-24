@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchStatistics } from "./operations.js";
 
 const initialState = {
-  data: null,
+  data: [],
   isLoading: false,
   error: null,
 };
