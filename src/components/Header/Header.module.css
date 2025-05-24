@@ -51,7 +51,7 @@
   gap: 8px;
   border: none;
   border-radius: 8px;
-  padding: 5px 9px;
+  padding: 0;
   width: 32px;
   height: 32px;
   background-color: #6c3db5;
@@ -130,6 +130,14 @@
 .exitText:hover,
 .exitText:focus {
   color: var(--pink-color);
+}
+
+.avatarImage {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
 }
 
 @media screen and (min-width: 768px) {
