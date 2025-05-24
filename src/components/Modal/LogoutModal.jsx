@@ -16,9 +16,9 @@ export default function LogoutModal({ onClose }) {
     } catch (error) {
       toast.error(`Logout failed: ${error.message || error}`);
     } finally {
+      onClose();
       localStorage.clear();
       navigate("/login", { replace: true });
-      onClose();
     }
   };
 
