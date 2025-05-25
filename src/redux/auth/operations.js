@@ -127,8 +127,6 @@ export const refreshUser = createAsyncThunk(
   }
 );
 
-
-
 export const getCurrentUserThunk = createAsyncThunk(
   "auth/getCurrentUser",
   async (_, thunkAPI) => {
@@ -142,13 +140,11 @@ export const getCurrentUserThunk = createAsyncThunk(
 );
 
 export const updateUserThunk = createAsyncThunk(
-  "auth",
+  "auth/updateCurrentUser",
   async (body, thunkAPI) => {
     try {
       const state = thunkAPI.getState();
       const token = state.auth.accessToken;
-
-      console.log("Token before PATCH:", token);
 
       if (!token) {
         return thunkAPI.rejectWithValue("No token provided");
@@ -157,7 +153,6 @@ export const updateUserThunk = createAsyncThunk(
       setAuthHeader(token);
 
       const response = await api.patch("/users/current", body);
-      console.log("Update response:", response.data);
 
       const userResponse = await api.get("/users/current");
       const user = userResponse.data.data;

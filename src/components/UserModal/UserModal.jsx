@@ -16,7 +16,7 @@ export const UserModal = ({ onClick }) => {
 
   const username = useSelector((state) => state.auth.user.name);
   const useremail = useSelector((state) => state.auth.user.email);
-  // const userphoto = useSelector((state) => state.auth.user.photo);
+  const userphoto = useSelector((state) => state.auth.user.photo);
 
   const firstLetter = username ? username.charAt(0) : "?";
 
@@ -90,39 +90,36 @@ export const UserModal = ({ onClick }) => {
   return (
     <div className={styles.Backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
+        <button onClick={onClick} type="button" className={styles.closeBtn}>
+          <CloseIconModal className={styles.closeIcon} />
+        </button>
+
+        {preview ? (
+          <img src={preview} alt="Preview" className={styles.avatarImage} />
+        ) : userphoto ? (
+          <img src={userphoto} alt={username} className={styles.avatarImage} />
+        ) : (
+          <p className={styles.avatar}>{firstLetter}</p>
+        )}
+
+        <div className={styles.photoBox}>
+          <label htmlFor="avatar-upload" className={styles.uploadButton}>
+            <PlusIconModal className={styles.plusIcon} />
+            <input
+              id="avatar-upload"
+              name="photo"
+              type="file"
+              onChange={handleFileChange}
+              className={styles.fileInput}
+            />
+          </label>
+        </div>
         <Formik
           initialValues={initialValues}
           validationSchema={updateValidationSchema}
           onSubmit={handleSubmit}
         >
           <Form encType="multipart/form-data" className={styles.form}>
-            <button onClick={onClick} type="button" className={styles.closeBtn}>
-              <CloseIconModal className={styles.closeIcon} />
-            </button>
-
-            {photo ? (
-              <img
-                src={preview}
-                alt={username}
-                className={styles.avatarImage}
-              />
-            ) : (
-              <p className={styles.avatar}>{firstLetter}</p>
-            )}
-
-            <div className={styles.photoBox}>
-              <label htmlFor="avatar-upload" className={styles.uploadButton}>
-                <PlusIconModal className={styles.plusIcon} />
-                <Field
-                  id="avatar-upload"
-                  name="photo"
-                  type="file"
-                  onChange={handleFileChange}
-                  className={styles.fileInput}
-                />
-              </label>
-            </div>
-
             <div className={styles.inputBox}>
               <Field name="name">
                 {({ field, meta }) => {

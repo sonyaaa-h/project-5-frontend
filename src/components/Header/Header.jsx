@@ -15,7 +15,7 @@ export default function Header() {
   const handleUpdateUserClick = () => setIsUserModalOpen(true);
 
   const firstLetter = username ? username.charAt(0) : "";
-  const userphoto = useSelector((state) => state.auth.user.photo);
+  const userphoto = useSelector((state) => state.auth.user?.photo);
 
   return (
     <header className={css.header}>

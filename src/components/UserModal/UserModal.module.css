@@ -16,9 +16,9 @@
   gap: 16px;
   background-color: #508f8c;
   border-radius: 16px;
-  padding: 32px 16px;
+  padding: 136px 16px 32px 16px;
   width: 287px;
-  height: 328px;
+  max-height: 360px;
   position: relative;
 }
 
@@ -88,7 +88,10 @@
   font-size: 30px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 36px;
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .avatarImage {
@@ -97,7 +100,10 @@
   object-fit: cover;
   display: block;
   border-radius: 8px;
-  margin-bottom: 36px;
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .saveBtn {
@@ -182,9 +188,17 @@
 
 @media screen and (min-width: 768px) {
   .modal {
-    padding: 64px 32px;
+    padding: 170px 32px 64px 32px;
     width: 458px;
-    height: 394px;
+    max-height: 426px;
+  }
+
+  .avatar {
+    top: 64px;
+  }
+
+  .avatarImage {
+    top: 64px;
   }
 
   .closeBtn {
@@ -195,14 +209,6 @@
   .input {
     width: 394px;
     height: 42px;
-  }
-
-  .avatar {
-    margin-bottom: 38px;
-  }
-
-  .avatarImage {
-    margin-bottom: 38px;
   }
 
   .saveBtn {
