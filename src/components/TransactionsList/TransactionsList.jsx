@@ -3,18 +3,25 @@ import TransactionsItem from "../TransactionsItem/TransactionsItem";
 import s from "./TransactionsList.module.css";
 import { useEffect } from "react";
 import { fetchTransactions } from "../../redux/transactions/operations.js";
-import { selectTransactions } from "../../redux/transactions/selectors.js";
+import { selectPagination, selectTransactions } from "../../redux/transactions/selectors.js";
 
 const TransactionsList = () => {
   const dispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
+  const paginationInfo = useSelector(selectPagination);
+  const { page, hasNextPage } = paginationInfo || {};
   // const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchTransactions());
+    dispatch(fetchTransactions(1));
   }, [dispatch]);
 
+  console.log("pageInfo", page);
   console.log("transaction", transactions);
+
+  const handleLoadMore = () => {
+    dispatch(fetchTransactions(page + 1));
+  };
 
   if (transactions.length === 0) {
     return (
@@ -41,6 +48,9 @@ const TransactionsList = () => {
           ))}
         </ul>
       </div>
+      {hasNextPage && (
+        <button onClick={handleLoadMore}>Load more</button>
+      )}
     </div>
   );
 };
