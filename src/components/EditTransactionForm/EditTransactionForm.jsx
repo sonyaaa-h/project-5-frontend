@@ -1,4 +1,3 @@
-// import React from "react";
 import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
@@ -9,6 +8,17 @@ import styles from "./EditTransactionForm.module.css";
 import { toast } from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 import Toggle from '../Toggle/Toggle';
+
+const categories = [
+  "Main expenses",
+  "Products",
+  "Car",
+  "Self care",
+  "Child care",
+  "Household products",
+  "Education",
+  "Leisure"
+];
 
 const validationSchema = Yup.object().shape({
   amount: Yup.number()
@@ -29,7 +39,7 @@ const initialValues = {
   date: new Date(),
   category: "",
   comment: "",
-  type: "expense",
+  type: "income",
 };
 
 export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
@@ -37,7 +47,6 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      // Here we'll add the dispatch logic later
       console.log("Form values:", values);
       if (onSave) {
         await onSave(values);
@@ -71,7 +80,7 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, errors, touched, setFieldValue, isSubmitting, resetForm }) => (
+        {({ values, errors, touched, setFieldValue, isSubmitting }) => (
           <Form className={styles.modal}>
             <button type="button" className={styles.closeButton} onClick={handleCloseClick}>
               <IoClose size={24} />
@@ -100,6 +109,21 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
               </div>
             </div>
 
+            {values.type === "expense" && (
+              <Field
+                name="category"
+                as="select"
+                className={`${styles.categorySelect} ${errors.category && touched.category ? styles.error : ""}`}
+              >
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </Field>
+            )}
+
             <div className={styles.inputGroup}>
               <Field
                 name="amount"
@@ -123,18 +147,6 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
                 <div className={styles.errorText}>{errors.date}</div>
               )}
             </div>
-
-            <Field
-              name="category"
-              as="select"
-              className={`${styles.descriptionInput} ${errors.category && touched.category ? styles.error : ""}`}
-            >
-              <option value="">Select category</option>
-              {/* Add categories here */}
-            </Field>
-            {errors.category && touched.category && (
-              <div className={styles.errorText}>{errors.category}</div>
-            )}
 
             <Field
               name="comment"
