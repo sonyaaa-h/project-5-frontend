@@ -17,6 +17,7 @@ import { statisticsReducer } from "./statistics/slice.js";
 import { globalReducer } from "./global/slice.js";
 import { transactionsReducer } from "./transactions/slice.js";
 
+
 const persistConfig = {
   key: "auth",
   version: 1,
@@ -31,6 +32,7 @@ export const store = configureStore({
     auth: persistReducer(persistConfig, authReducer),
     statistics: statisticsReducer,
     global: globalReducer,
+   
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

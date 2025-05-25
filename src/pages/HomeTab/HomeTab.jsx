@@ -10,12 +10,12 @@ const HomeTab = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.accessToken);
-  console.log(token);
 
   useEffect(() => {
-    if (!token) return;
-    dispatch(fetchTransactions());
-    dispatch(fetchCategories());
+    if (token) {
+      dispatch(fetchTransactions());
+      dispatch(fetchCategories());
+    }
   }, [dispatch, token]);
 
   const handleOpenModal = () => {
