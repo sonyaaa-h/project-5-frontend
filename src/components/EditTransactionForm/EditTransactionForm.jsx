@@ -1,72 +1,66 @@
 import PropTypes from 'prop-types';
-import { useDispatch } from "react-redux";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import styles from "./EditTransactionForm.module.css";
-import { toast } from "react-hot-toast";
-import { IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import styles from './EditTransactionForm.module.css';
+import { toast } from 'react-hot-toast';
+import { IoClose } from 'react-icons/io5';
 import Toggle from '../Toggle/Toggle';
-
-const categories = [
-  "Main expenses",
-  "Products",
-  "Car",
-  "Self care",
-  "Child care",
-  "Household products",
-  "Education",
-  "Leisure"
-];
+import { fetchCategories } from '../../redux/categories/operations'; // Импортируем операцию получения категорий
 
 const validationSchema = Yup.object().shape({
   amount: Yup.number()
-    .required("Amount is required")
-    .positive("Amount must be positive")
-    .typeError("Amount must be a number"),
+    .required('Amount is required')
+    .positive('Amount must be positive')
+    .typeError('Amount must be a number'),
   date: Yup.date()
-    .required("Date is required")
-    .max(new Date(), "Date cannot be in the future"),
-  category: Yup.string()
-    .required("Category is required"),
-  comment: Yup.string()
-    .max(100, "Comment must be less than 100 characters"),
+    .required('Date is required')
+    .max(new Date(), 'Date cannot be in the future'),
+  category: Yup.string().required('Category is required'),
+  comment: Yup.string().max(100, 'Comment must be less than 100 characters'),
 });
 
 const initialValues = {
-  amount: "",
+  amount: '',
   date: new Date(),
-  category: "",
-  comment: "",
-  type: "income",
+  category: '',
+  comment: '',
+  type: 'income',
 };
 
 export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
   const dispatch = useDispatch();
+  const categories = useSelector(state => state.categories.items.data || []); // Получаем категории из Redux
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      console.log("Form values:", values);
+      console.log('Form values:', values);
       if (onSave) {
         await onSave(values);
       }
-      toast.success("Transaction saved successfully!");
+      toast.success('Transaction saved successfully!');
       if (onClose) onClose();
     } catch (error) {
-      toast.error(error.message || "Failed to save transaction");
+      toast.error(error.message || 'Failed to save transaction');
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleOverlayClick = (e) => {
+  const handleOverlayClick = e => {
     if (e.target === e.currentTarget && onClose) {
       onClose();
     }
   };
 
-  const handleCloseClick = (e) => {
+  const handleCloseClick = e => {
     e.stopPropagation();
     if (onClose) {
       onClose();
@@ -82,7 +76,11 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
       >
         {({ values, errors, touched, setFieldValue, isSubmitting }) => (
           <Form className={styles.modal}>
-            <button type="button" className={styles.closeButton} onClick={handleCloseClick}>
+            <button
+              type="button"
+              className={styles.closeButton}
+              onClick={handleCloseClick}
+            >
               <IoClose size={24} />
             </button>
 
@@ -92,33 +90,41 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
 
             <div className={styles.toggleGroup}>
               <div
-                className={`${styles.toggleOption} ${values.type === "income" ? styles.active : ""}`}
+                className={`${styles.toggleOption} ${
+                  values.type === 'income' ? styles.active : ''
+                }`}
               >
                 Income
               </div>
 
               <Toggle
-                isIncome={values.type === "income"}
-                setIsIncome={(checked) => setFieldValue("type", checked ? "income" : "expense")}
+                isIncome={values.type === 'income'}
+                setIsIncome={checked =>
+                  setFieldValue('type', checked ? 'income' : 'expense')
+                }
               />
 
               <div
-                className={`${styles.toggleOption} ${values.type === "expense" ? styles.active : ""}`}
+                className={`${styles.toggleOption} ${
+                  values.type === 'expense' ? styles.active : ''
+                }`}
               >
                 Expense
               </div>
             </div>
 
-            {values.type === "expense" && (
+            {values.type === 'expense' && (
               <Field
                 name="category"
                 as="select"
-                className={`${styles.categorySelect} ${errors.category && touched.category ? styles.error : ""}`}
+                className={`${styles.categorySelect} ${
+                  errors.category && touched.category ? styles.error : ''
+                }`}
               >
                 <option value="">Select a category</option>
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
+                {categories.map(category => (
+                  <option key={category._id} value={category.name}>
+                    {category.name}
                   </option>
                 ))}
               </Field>
@@ -128,7 +134,9 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
               <Field
                 name="amount"
                 type="text"
-                className={`${styles.amountInput} ${errors.amount && touched.amount ? styles.error : ""}`}
+                className={`${styles.amountInput} ${
+                  errors.amount && touched.amount ? styles.error : ''
+                }`}
                 placeholder="Amount"
               />
               {errors.amount && touched.amount && (
@@ -137,8 +145,10 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
 
               <DatePicker
                 selected={values.date}
-                onChange={(date) => setFieldValue("date", date)}
-                className={`${styles.datePicker} ${errors.date && touched.date ? styles.error : ""}`}
+                onChange={date => setFieldValue('date', date)}
+                className={`${styles.datePicker} ${
+                  errors.date && touched.date ? styles.error : ''
+                }`}
                 dateFormat="dd/MM/yyyy"
                 showIcon
                 toggleCalendarOnIconClick
@@ -150,7 +160,9 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
 
             <Field
               name="comment"
-              className={`${styles.descriptionInput} ${errors.comment && touched.comment ? styles.error : ""}`}
+              className={`${styles.descriptionInput} ${
+                errors.comment && touched.comment ? styles.error : ''
+              }`}
               placeholder="Comment"
             />
             {errors.comment && touched.comment && (
@@ -163,15 +175,15 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
                 className={styles.saveButton}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Saving..." : "Save"}
+                {isSubmitting ? 'Saving...' : 'Save'}
               </button>
 
               <button
                 type="button"
                 className={styles.cancelButton}
                 onClick={() => {
-                  setFieldValue("amount", "");
-                  setFieldValue("comment", "");
+                  setFieldValue('amount', '');
+                  setFieldValue('comment', '');
                 }}
               >
                 Cancel
