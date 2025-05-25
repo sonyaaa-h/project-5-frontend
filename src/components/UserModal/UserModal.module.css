@@ -15,7 +15,6 @@
   flex-direction: column;
   gap: 16px;
   background-color: #508f8c;
-  /* animation: fadeIn 300ms ease-in-out; */
   border-radius: 16px;
   padding: 32px 16px;
   width: 287px;
@@ -40,7 +39,6 @@
   display: block;
   padding: 0;
   background-color: transparent;
-  /* position: relative; */
 }
 
 .closeIcon {
@@ -62,12 +60,13 @@
   height: 42px;
   background-color: transparent;
   font-family: inherit;
-  /* font-family: "Inter", sans-serif; */
   font-weight: 500;
   font-size: 18px;
   color: #081222;
   border: 1px solid #081222;
   outline: none;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .input:hover,
@@ -108,21 +107,22 @@
   width: 255px;
   outline: none;
   font-family: inherit;
-  padding: 11px;
+  padding: 10px;
   font-weight: 500;
   font-size: 18px;
   text-align: center;
   color: #fcfcfc;
   border-radius: 8px;
-  background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
-  transition: background 250ms cubic-bezier(0.4, 0, 0.2, 1),
-    color 250ms cubic-bezier(0.4, 0, 0.2, 1),
-    border 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #355359;
+  border: 1px solid #355359;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .saveBtn:hover,
 .saveBtn:focus {
-  background: transparent;
+  background-color: transparent;
   border: 1px solid #081222;
   color: #081222;
 }
@@ -145,10 +145,6 @@
   color: #b20202;
 }
 
-/* .photoBox {
-  position: relative;
-} */
-
 .uploadButton {
   position: absolute;
   top: 87px;
@@ -164,6 +160,12 @@
   text-align: center;
   cursor: pointer;
   z-index: 2;
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.uploadButton:hover,
+.uploadButton:focus {
+  box-shadow: 0 0 10px rgba(15, 9, 26, 0.6);
 }
 
 .fileInput {
@@ -183,5 +185,31 @@
     padding: 64px 32px;
     width: 458px;
     height: 394px;
+  }
+
+  .closeBtn {
+    top: 24px;
+    right: 24px;
+  }
+
+  .input {
+    width: 394px;
+    height: 42px;
+  }
+
+  .avatar {
+    margin-bottom: 38px;
+  }
+
+  .avatarImage {
+    margin-bottom: 38px;
+  }
+
+  .saveBtn {
+    width: 394px;
+  }
+
+  .uploadButton {
+    top: 119px;
   }
 }
