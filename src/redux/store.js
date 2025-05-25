@@ -1,5 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { authReducer } from "./auth/slice";
+import { configureStore } from '@reduxjs/toolkit';
+import { authReducer } from './auth/slice';
 import {
   persistStore,
   persistReducer,
@@ -9,20 +9,19 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import { categoriesReducer } from "./categories/slise.js";
-import { statisticsReducer } from "./statistics/slice.js";
-import { globalReducer } from "./global/slice.js";
-import { transactionsReducer } from "./transactions/slice.js";
-
+import { categoriesReducer } from './categories/sliсe.js';
+import { statisticsReducer } from './statistics/slice.js';
+import { globalReducer } from './global/slice.js';
+import { transactionsReducer } from './transactions/slice.js';
 
 const persistConfig = {
-  key: "auth",
+  key: 'auth',
   version: 1,
   storage,
-  whitelist: ["accessToken", "isLoggedIn", "user"],
+  whitelist: ['accessToken', 'isLoggedIn', 'user'],
 };
 
 export const store = configureStore({
@@ -32,9 +31,8 @@ export const store = configureStore({
     auth: persistReducer(persistConfig, authReducer),
     statistics: statisticsReducer,
     global: globalReducer,
-   
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
