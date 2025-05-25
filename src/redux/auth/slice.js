@@ -11,6 +11,7 @@ const initialState = {
     name: null,
     email: null,
     balance: 0,
+    photo: "",
   },
   accessToken: null,
   isLoggedIn: false,
