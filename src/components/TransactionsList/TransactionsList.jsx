@@ -16,16 +16,13 @@ const TransactionsList = () => {
     dispatch(fetchTransactions(1));
   }, [dispatch]);
 
-  console.log("pageInfo", page);
-  console.log("transaction", transactions);
-
   const handleLoadMore = () => {
     dispatch(fetchTransactions(page + 1));
   };
 
   if (transactions.length === 0) {
     return (
-      <p>You don't have any transactions yet. Start by adding a new one!</p>
+        <p className={s.noneTransText}>You don't have any transactions yet. Start by adding a new one!</p>
     );
   }
   // if (error) {
@@ -49,7 +46,7 @@ const TransactionsList = () => {
         </ul>
       </div>
       {hasNextPage && (
-        <button onClick={handleLoadMore}>Load more</button>
+        <button className={s.moreBtn} onClick={handleLoadMore}>Load more</button>
       )}
     </div>
   );
