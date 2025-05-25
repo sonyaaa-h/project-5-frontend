@@ -23,14 +23,15 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
   const handleEditClick = () => setIsModalEdit(true);
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const sumClass = type === "+" ? s.sumIncome : s.sumExpense;
+  const sumClass = type == "+" ? s.sumIncome : s.sumExpense;
+  const isIncome = type === "+";
 
   return (
     <li
       className={isMobile ? s.mobileWrapperTransaction : s.wrapperTransaction}
+      data-type={isIncome ? "+" : "-"}
     >
       {isMobile ? (
-    
         <>
           <div className={s.mobileRow}>
             <span className={s.label}>Date</span>
@@ -75,28 +76,28 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
               Delete
             </button>
           </li>
-        </ul>)}
-      
-        {isModalDelete && (
-          <ModalDeleteTransaction
-            _id={_id}
-            message="Are you sure you want to delete this transaction ?"
-            comment={comment}
-            onClose={() => setIsModalDelete(false)}
-          />
-        )}
-        {isModalEdit && (
-          <EditTransactionForm
-            _id={_id}
-            data={date}
-            type={type}
-            category={category}
-            comment={comment}
-            sum={sum}
-            onClose={() => setIsModalEdit(false)}
-          />
-        )}
-      
+        </ul>
+      )}
+
+      {isModalDelete && (
+        <ModalDeleteTransaction
+          _id={_id}
+          message="Are you sure you want to delete this transaction ?"
+          comment={comment}
+          onClose={() => setIsModalDelete(false)}
+        />
+      )}
+      {isModalEdit && (
+        <EditTransactionForm
+          _id={_id}
+          data={date}
+          type={type}
+          category={category}
+          comment={comment}
+          sum={sum}
+          onClose={() => setIsModalEdit(false)}
+        />
+      )}
     </li>
   );
 };

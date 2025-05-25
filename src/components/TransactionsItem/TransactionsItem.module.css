@@ -1,24 +1,15 @@
 /* mobile */
-
-.wrapperTransaction,
-s.mobileWrapperTransaction {
-    background-color: transparent;
-    border-radius: 16px;
+.mobileWrapperTransaction {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    background-image: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
     padding-left: 5px;
-}
-
-.mobileWrapperTransaction:nth-child(2n) {
-    background-image: var(--background-gradient);
-}
-
-.wrapperTransaction[data-type="+"]::before {
-    background-color: var(--chart-green);
-}
-
-.wrapperTransaction[data-type="-"]::before {
-    background-color: var(--main-yellow);
 }
 
 .mobileWrapperTransaction[data-type="+"]::before {
@@ -29,86 +20,20 @@ s.mobileWrapperTransaction {
     background-color: var(--main-yellow);
 }
 
-.wrapperTransaction::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 5px;
-    height: 100%;
-}
-
-
-.icon {
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-    transition: fill 0.2s ease-in-out;
-}
-
-.icon:hover,
-.icon:active {
-    fill: #5cf429;
-}
-
-.btnEdit:hover,
-.btnEdit:active {
-    background-color: #5cf429;
-    color: #ff8a65
-}
-
-
-.btnDelete {
-    background-color: transparent;
-    border: 1px solid #fcfcfc;
-    border-radius: 8px;
-    padding: 4px 12px;
-    width: 67px;
-    height: 25px;
-    font-weight: 400;
-    font-size: 14px;
-    text-align: center;
-    color: #fcfcfc;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-}
-
-.btnDelete:hover {
-    background-color: #fcfcfc;
-    color: #0ff257;
-}
-
-
-.mobileWrapperTransaction {
-    display: flex;
-    flex-direction: column;
-    padding: 0px;
-    background-image: var(--background-gradient);
-    border-radius: 8px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-
-
-
 .mobileWrapperTransaction::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 5px;
-    /* Ширина смуги */
     height: 100%;
+    z-index: 1;
 }
-
 
 .mobileRow {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px 10px 20px;
+    padding: 12px 17px 12px 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--main-white);
     font-size: 16px;
@@ -121,8 +46,7 @@ s.mobileWrapperTransaction {
 }
 
 .label {
-    font-weight: 700;
-    color: #bdbdbd;
+    font-weight: 600;
     flex-basis: 40%;
     text-align: left;
 }
@@ -147,71 +71,74 @@ s.mobileWrapperTransaction {
     font-weight: 600;
 }
 
+.icon {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    transition: fill 0.2s ease-in-out;
+}
 
 .mobileActions {
     display: flex;
-    justify-content: space-evenly;
-
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
-    /* Паддінги для ко.sumIncome {
-    color: var(--chart-green);
-    font-weight: 600;
-}
-
-.sumExpense {
-    color: var(--main-yellow);
-    font-weight: 600;
-}нтейнера кнопок */
-    gap: 10px;
-
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-
 }
 
 
-.btnDelete,
-.btnEdit {
-    background-color: transparent;
-    border: 1px solid #fcfcfc;
+.btnDelete {
+    border: 1px solid var(--main-white);
     border-radius: 8px;
     padding: 4px 12px;
+    width: 68px;
     height: 25px;
+    background-color: transparent;
     font-weight: 400;
     font-size: 14px;
     text-align: center;
-    color: #fcfcfc;
+    color: var(--main-white);
     cursor: pointer;
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    flex-grow: 1;
-
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .btnDelete:hover,
-.btnEdit:hover {
-    background-color: #fcfcfc;
-    color: #4a56e2;
+.btnDelete:active,
+.btnDelete:focus {
+
+    font-weight: 500;
+    transform: scale(1.04);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+
+.btnEdit {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    color: var(--main-white);
+}
+
 
 .btnEdit .icon {
     width: 14px;
     height: 14px;
-    fill: #fcfcfc;
     transition: fill 0.2s ease-in-out;
 }
 
 .btnEdit:hover .icon {
-    fill: #4a56e2;
+    width: 15px;
+    height: 15px;
+}
+
+.btnEdit:hover {
+    font-weight: 500;
+    transform: scale(1.04);
 }
 
 
-
-
-
+/* tablet */
 @media screen and (min-width: 768px) {
     .wrapperTransaction {
         background-color: transparent;
@@ -267,15 +194,18 @@ s.mobileWrapperTransaction {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        /* gap: 24px; */
         padding: 11.5px 12px 11.5px 4px;
     }
 
     .icon {
-
         width: 14px;
         height: 14px;
         cursor: pointer;
+    }
+
+    .icon:hover,
+    .icon:active {
+        transform: scale(1.07);
     }
 
     .btnDelete {
@@ -294,3 +224,4 @@ s.mobileWrapperTransaction {
     .wrapperTransaction:nth-child(2n) {
         background-image: var(--background-gradient);
     }
+}
