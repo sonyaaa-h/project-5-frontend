@@ -6,12 +6,11 @@ import { useState } from "react";
 import EditTransactionForm from "../EditTransactionForm/EditTransactionForm.jsx";
 // import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
 
-
 const formatDate = (isoDate) => {
   const dateObj = new Date(isoDate);
   const day = String(dateObj.getDate()).padStart(2, "0");
-  const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // місяці з 0
-  const year = String(dateObj.getFullYear()).slice(-2); // останні дві цифри
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const year = String(dateObj.getFullYear()).slice(-2);
   return `${day}.${month}.${year}`;
 };
 
