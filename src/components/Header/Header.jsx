@@ -15,6 +15,7 @@ export default function Header() {
   const handleUpdateUserClick = () => setIsUserModalOpen(true);
 
   const firstLetter = username ? username.charAt(0) : "";
+  const userphoto = useSelector((state) => state.auth.user?.photo);
 
   return (
     <header className={css.header}>
@@ -25,7 +26,11 @@ export default function Header() {
         </div>
         <div className={css.userSection}>
           <button onClick={handleUpdateUserClick} className={css.updateBtn}>
-            <span className={css.username}>{firstLetter}</span>
+            {userphoto ? (
+              <img src={userphoto} alt={username} className={css.avatarImage} />
+            ) : (
+              <span className={css.username}>{firstLetter}</span>
+            )}
           </button>
           <div className={css.exitContainer}>
             <button onClick={handleLogoutClick} className={css.exitBtn}>

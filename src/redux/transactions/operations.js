@@ -3,9 +3,9 @@ import { api, getCurrentUserThunk } from "../auth/operations.js";
 
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
-  async (data, thunkAPI) => {
+  async (page = 1, thunkAPI) => {
     try {
-      const response = await api.get("/transactions");
+      const response = await api.get(`transactions?page=${page}`);
       return response.data;
     } catch (error) {
       // return thunkAPI.rejectWithValue(error.message);

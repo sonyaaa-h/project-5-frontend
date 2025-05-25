@@ -3,24 +3,34 @@ import TransactionsItem from "../TransactionsItem/TransactionsItem";
 import s from "./TransactionsList.module.css";
 import { useEffect } from "react";
 import { fetchTransactions } from "../../redux/transactions/operations.js";
+import {
+  selectPagination,
+  selectTransactions,
+} from "../../redux/transactions/selectors.js";
 import { selectTransactions } from "../../redux/transactions/selectors.js";
 import { useMediaQuery } from "react-responsive";
 
 const TransactionsList = () => {
   const dispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
+  const paginationInfo = useSelector(selectPagination);
+  const { page, hasNextPage } = paginationInfo || {};
   // const error = useSelector(selectError);
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {
-    dispatch(fetchTransactions());
+    dispatch(fetchTransactions(1));
   }, [dispatch]);
 
-  console.log("transaction", transactions);
+  const handleLoadMore = () => {
+    dispatch(fetchTransactions(page + 1));
+  };
 
   if (transactions.length === 0) {
     return (
-      <p>You don't have any transactions yet. Start by adding a new one!</p>
+      <p className={s.noneTransText}>
+        You don't have any transactions yet. Start by adding a new one!
+      </p>
     );
   }
 
@@ -47,6 +57,11 @@ const TransactionsList = () => {
           ))}
         </ul>
       </div>
+      {hasNextPage && (
+        <button className={s.moreBtn} onClick={handleLoadMore}>
+          Load more
+        </button>
+      )}
     </div>
   );
 };

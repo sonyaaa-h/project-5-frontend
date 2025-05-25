@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./UserModal.module.css";
 import * as Yup from "yup";
-import { Field, Form, Formik, ErrorMessage } from "formik";
+import { Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 import { updateUserThunk } from "../../redux/auth/operations";
+import CloseIconModal from "../tempIcons/CloseIcon";
+import PlusIconModal from "../tempIcons/PlusIcon";
 
 export const UserModal = ({ onClick }) => {
   const dispatch = useDispatch();
@@ -14,6 +16,7 @@ export const UserModal = ({ onClick }) => {
 
   const username = useSelector((state) => state.auth.user.name);
   const useremail = useSelector((state) => state.auth.user.email);
+  const userphoto = useSelector((state) => state.auth.user.photo);
 
   const firstLetter = username ? username.charAt(0) : "?";
 
@@ -87,50 +90,93 @@ export const UserModal = ({ onClick }) => {
   return (
     <div className={styles.Backdrop} onClick={handleBackdropClick}>
       <div className={styles.modal}>
+        <button onClick={onClick} type="button" className={styles.closeBtn}>
+          <CloseIconModal className={styles.closeIcon} />
+        </button>
+
+        {preview ? (
+          <img src={preview} alt="Preview" className={styles.avatarImage} />
+        ) : userphoto ? (
+          <img src={userphoto} alt={username} className={styles.avatarImage} />
+        ) : (
+          <p className={styles.avatar}>{firstLetter}</p>
+        )}
+
+        <div className={styles.photoBox}>
+          <label htmlFor="avatar-upload" className={styles.uploadButton}>
+            <PlusIconModal className={styles.plusIcon} />
+            <input
+              id="avatar-upload"
+              name="photo"
+              type="file"
+              onChange={handleFileChange}
+              className={styles.fileInput}
+            />
+          </label>
+        </div>
         <Formik
           initialValues={initialValues}
           validationSchema={updateValidationSchema}
           onSubmit={handleSubmit}
         >
-          <Form encType="multipart/form-data">
-            <button onClick={onClick} type="button">
-              Cancel
+          <Form encType="multipart/form-data" className={styles.form}>
+            <div className={styles.inputBox}>
+              <Field name="name">
+                {({ field, meta }) => {
+                  const inputClass =
+                    meta.touched && meta.error
+                      ? `${styles.input} ${styles.invalid}`
+                      : meta.touched && !meta.error
+                      ? `${styles.input} ${styles.valid}`
+                      : styles.input;
+
+                  return (
+                    <>
+                      <input
+                        {...field}
+                        type="text"
+                        placeholder="Name"
+                        className={inputClass}
+                      />
+                      {meta.touched && meta.error && (
+                        <div className={styles.error}>{meta.error}</div>
+                      )}
+                    </>
+                  );
+                }}
+              </Field>
+            </div>
+
+            <div className={styles.inputBox}>
+              <Field name="email">
+                {({ field, meta }) => {
+                  const inputClass =
+                    meta.touched && meta.error
+                      ? `${styles.input} ${styles.invalid}`
+                      : meta.touched && !meta.error
+                      ? `${styles.input} ${styles.valid}`
+                      : styles.input;
+
+                  return (
+                    <>
+                      <input
+                        {...field}
+                        type="email"
+                        placeholder="Email"
+                        className={inputClass}
+                      />
+                      {meta.touched && meta.error && (
+                        <div className={styles.error}>{meta.error}</div>
+                      )}
+                    </>
+                  );
+                }}
+              </Field>
+            </div>
+
+            <button type="submit" className={styles.saveBtn}>
+              Save
             </button>
-
-            {photo ? (
-              <img src={preview} alt={name} className={styles.avatarImage} />
-            ) : (
-              <p className={styles.avatar}>{firstLetter}</p>
-            )}
-
-            <div className={styles.formGroup}>
-              <Field name="photo" type="file" onChange={handleFileChange} />
-              <ErrorMessage
-                name="photo"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <Field name="name" type="text" />
-              <ErrorMessage
-                name="name"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <Field name="email" type="email" />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className={styles.error}
-              />
-            </div>
-
-            <button type="submit">Save</button>
           </Form>
         </Formik>
       </div>

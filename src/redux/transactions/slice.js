@@ -5,6 +5,12 @@ const initialState = {
   items: [],
   isLoading: false,
   error: null,
+  pageInfo: {
+    page: 1,
+    perPage: 1,
+    totalPages: 0,
+    hasNextPage: false,
+  },
 };
 
 const handlePending = (state) => {
@@ -26,13 +32,22 @@ const transactionsSlice = createSlice({
       .addCase(fetchTransactions.fulfilled, (state, action) => {
         console.log(action.payload);
         state.isLoading = false;
-        state.items = action.payload.data.data;
+
+        const { data, page, perPage, totalItems, totalPages, hasNextPage } =
+          action.payload.data;
+
+        if (page === 1) {
+          state.items = data;
+        } else {
+          state.items = [...state.items, ...data];
+        }
+
         state.pageInfo = {
-          page: action.payload.data.page,
-          perPage: action.payload.data.perPage,
-          totalItems: action.payload.data.totalItems,
-          totalPages: action.payload.data.totalPages,
-          hasNextPage: action.payload.data.hasNextPage,
+          page,
+          perPage,
+          totalItems,
+          totalPages,
+          hasNextPage,
         };
       })
       .addCase(deleteTransaction.pending, handlePending)
