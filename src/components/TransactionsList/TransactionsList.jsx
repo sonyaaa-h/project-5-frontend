@@ -7,7 +7,7 @@ import {
   selectPagination,
   selectTransactions,
 } from "../../redux/transactions/selectors.js";
-import { selectTransactions } from "../../redux/transactions/selectors.js";
+
 import { useMediaQuery } from "react-responsive";
 
 const TransactionsList = () => {

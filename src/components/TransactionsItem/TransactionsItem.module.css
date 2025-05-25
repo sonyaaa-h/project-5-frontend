@@ -1,4 +1,7 @@
-.wrapperTransaction {
+/* mobile */
+
+.wrapperTransaction,
+s.mobileWrapperTransaction {
     background-color: transparent;
     border-radius: 16px;
     position: relative;
@@ -6,14 +9,24 @@
     padding-left: 5px;
 }
 
-.wrapperTransaction[data-type="+"]::before {
-    background-color: #81c784;
+.mobileWrapperTransaction:nth-child(2n) {
+    background-image: var(--background-gradient);
+}
 
+.wrapperTransaction[data-type="+"]::before {
+    background-color: var(--chart-green);
 }
 
 .wrapperTransaction[data-type="-"]::before {
-    background-color: #ff8a65;
+    background-color: var(--main-yellow);
+}
 
+.mobileWrapperTransaction[data-type="+"]::before {
+    background-color: var(--chart-green);
+}
+
+.mobileWrapperTransaction[data-type="-"]::before {
+    background-color: var(--main-yellow);
 }
 
 .wrapperTransaction::before {
@@ -22,59 +35,11 @@
     top: 0;
     left: 0;
     width: 5px;
-
     height: 100%;
 }
 
-.transaction {
-    display: flex;
-
-    height: 48px;
-    align-items: center;
-}
-
-.transaction li {
-    text-align: left;
-    font-weight: 400;
-    font-size: 14px;
-    color: #fcfcfc;
-    font-family: "Inter", sans-serif;
-    padding: 15.5px 12px 15.5px 8.5px;
-}
-
-.transaction li:nth-child(1) {
-    width: 64px;
-    padding-left: 15px;
-}
-
-.transaction li:nth-child(2) {
-    width: 147px;
-    text-align: center;
-}
-
-.transaction li:nth-child(3) {
-    width: 124px;
-}
-
-.transaction li:nth-child(4) {
-    width: 142px;
-}
-
-.transaction li:nth-child(5) {
-    width: 100px;
-}
-
-.transaction li:nth-child(6) {
-    width: 115px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* gap: 24px; */
-    padding: 11.5px 12px 11.5px 4px;
-}
 
 .icon {
-
     width: 14px;
     height: 14px;
     cursor: pointer;
@@ -84,7 +49,6 @@
 .icon:hover,
 .icon:active {
     fill: #5cf429;
-
 }
 
 .btnEdit:hover,
@@ -114,158 +78,198 @@
     color: #0ff257;
 }
 
-.wrapperTransaction:nth-child(2n) {
+
+.mobileWrapperTransaction {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
     background-image: var(--background-gradient);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+
+.mobileWrapperTransaction::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    /* Ширина смуги */
+    height: 100%;
+}
+
+
+.mobileRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--main-white);
+    font-size: 16px;
+    box-sizing: border-box;
+
+}
+
+.mobileRow:last-of-type {
+    border-bottom: none;
+}
+
+.label {
+    font-weight: 700;
+    color: #bdbdbd;
+    flex-basis: 40%;
+    text-align: left;
+}
+
+.value {
+    flex-basis: 60%;
+    text-align: right;
+    font-weight: 400;
+}
+
+.sumRow .value {
+    font-size: 1.1em;
 }
 
 .sumIncome {
-    color: #81c784;
-    font-weight: 700;
+    color: var(--chart-green);
+    font-weight: 600;
 }
 
 .sumExpense {
-    color: #ff8a65;
-
-    font-weight: 700;
+    color: var(--main-yellow);
+    font-weight: 600;
 }
 
 
-/* Мобільна верстка */
-@media (max-width: 767px) {
-    .mobileWrapperTransaction {
-        display: flex;
-        flex-direction: column;
-        padding: 0px;
-        /* Приберемо внутрішній паддінг, щоб контролювати його в mobileRow */
-        background-image: var(--background-gradient);
+.mobileActions {
+    display: flex;
+    justify-content: space-evenly;
 
-        border-radius: 8px;
+    padding: 10px 20px;
+    /* Паддінги для ко.sumIncome {
+    color: var(--chart-green);
+    font-weight: 600;
+}
 
-        margin-bottom: 16px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.sumExpense {
+    color: var(--main-yellow);
+    font-weight: 600;
+}нтейнера кнопок */
+    gap: 10px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+
+.btnDelete,
+.btnEdit {
+    background-color: transparent;
+    border: 1px solid #fcfcfc;
+    border-radius: 8px;
+    padding: 4px 12px;
+    height: 25px;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+    color: #fcfcfc;
+    cursor: pointer;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    flex-grow: 1;
+
+}
+
+.btnDelete:hover,
+.btnEdit:hover {
+    background-color: #fcfcfc;
+    color: #4a56e2;
+}
+
+.btnEdit .icon {
+    width: 14px;
+    height: 14px;
+    fill: #fcfcfc;
+    transition: fill 0.2s ease-in-out;
+}
+
+.btnEdit:hover .icon {
+    fill: #4a56e2;
+}
+
+
+
+
+
+@media screen and (min-width: 768px) {
+    .wrapperTransaction {
+        background-color: transparent;
+        border-radius: 16px;
         position: relative;
         overflow: hidden;
+        padding-left: 5px;
     }
 
-    /* Динамічний колір смуги для мобільного - перевизначаємо */
-    .mobileWrapperTransaction[data-type="+"]::before {
-        background-color: #81c784;
-        /* Зелений для доходу */
+    .wrapperTransaction:nth-child(2n) {
+        background-image: var(--background-gradient);
     }
 
-    .mobileWrapperTransaction[data-type="-"]::before {
-        background-color: #ff8a65;
-        /* Помаранчевий для витрат */
+    .transaction {
+        display: flex;
+        height: 48px;
+        align-items: center;
     }
 
-    .mobileWrapperTransaction::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 5px;
-        /* Ширина смуги */
-        height: 100%;
+    .transaction li {
+        text-align: left;
+        font-weight: 400;
+        font-size: 14px;
+        color: #fcfcfc;
+        font-family: "Inter", sans-serif;
+        padding: 15.5px 12px 15.5px 8.5px;
     }
 
+    .transaction li:nth-child(1) {
+        width: 64px;
+        padding-left: 15px;
+    }
 
-    .mobileRow {
+    .transaction li:nth-child(2) {
+        width: 147px;
+        text-align: center;
+    }
+
+    .transaction li:nth-child(3) {
+        width: 124px;
+    }
+
+    .transaction li:nth-child(4) {
+        width: 142px;
+    }
+
+    .transaction li:nth-child(5) {
+        width: 100px;
+    }
+
+    .transaction li:nth-child(6) {
+        width: 115px;
         display: flex;
         justify-content: space-between;
-        padding: 10px 20px 10px 20px;
-
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        color: #fcfcfc;
-
-
-        font-size: 14px;
-        box-sizing: border-box;
-
-    }
-
-    .mobileRow:last-of-type {
-        border-bottom: none;
-    }
-
-    .label {
-        font-weight: 700;
-
-        color: #bdbdbd;
-
-        flex-basis: 40%;
-        text-align: left;
-    }
-
-    .value {
-        flex-basis: 60%;
-        text-align: right;
-        font-weight: 400;
-    }
-
-    .sumRow .value {
-        font-size: 1.1em;
-        /* Трохи більший розмір для суми */
-    }
-
-    .mobileActions {
-        display: flex;
-        justify-content: space-evenly;
-        /* Рівномірний розподіл кнопок */
-        padding: 10px 20px;
-        /* Паддінги для контейнера кнопок */
-        gap: 10px;
-
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-    }
-
-
-    .btnDelete,
-    .btnEdit {
-        background-color: transparent;
-        border: 1px solid #fcfcfc;
-        border-radius: 8px;
-        padding: 4px 12px;
-        height: 25px;
-        font-weight: 400;
-        font-size: 14px;
-        text-align: center;
-        color: #fcfcfc;
-        cursor: pointer;
-        display: flex;
-
         align-items: center;
-        justify-content: center;
-        gap: 5px;
-
-        flex-grow: 1;
-
-    }
-
-    .btnDelete:hover,
-    .btnEdit:hover {
-        background-color: #fcfcfc;
-        color: #4a56e2;
-    }
-
-    .btnEdit .icon {
-        width: 14px;
-        height: 14px;
-        fill: #fcfcfc;
-        transition: fill 0.2s ease-in-out;
-    }
-
-    .btnEdit:hover .icon {
-        fill: #4a56e2;
-    }
-
-    .sumIncome {
-        color: #81c784;
-        font-weight: 700;
-    }
-
-    .sumExpense {
-        color: #ff8a65;
-        font-weight: 700;
+        /* gap: 24px; */
+        padding: 11.5px 12px 11.5px 4px;
     }
 }
+
+@media screen and (min-width: 1280px) {}
