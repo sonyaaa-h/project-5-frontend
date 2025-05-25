@@ -3,7 +3,12 @@ import TransactionsItem from "../TransactionsItem/TransactionsItem";
 import s from "./TransactionsList.module.css";
 import { useEffect } from "react";
 import { fetchTransactions } from "../../redux/transactions/operations.js";
-import { selectPagination, selectTransactions } from "../../redux/transactions/selectors.js";
+import {
+  selectPagination,
+  selectTransactions,
+} from "../../redux/transactions/selectors.js";
+
+import { useMediaQuery } from "react-responsive";
 
 const TransactionsList = () => {
   const dispatch = useDispatch();
@@ -11,6 +16,7 @@ const TransactionsList = () => {
   const paginationInfo = useSelector(selectPagination);
   const { page, hasNextPage } = paginationInfo || {};
   // const error = useSelector(selectError);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {
     dispatch(fetchTransactions(1));
@@ -22,22 +28,28 @@ const TransactionsList = () => {
 
   if (transactions.length === 0) {
     return (
-        <p className={s.noneTransText}>You don't have any transactions yet. Start by adding a new one!</p>
+      <p className={s.noneTransText}>
+        You don't have any transactions yet. Start by adding a new one!
+      </p>
     );
   }
+
   // if (error) {
   //   return <p>Error loading transactions: {error.message}</p>;
   // }
 
   return (
     <div className={s.wrapper}>
-      <ul className={s.titles}>
-        <li className={s.date}>Date</li>
-        <li className={s.type}>Type</li>
-        <li className={s.category}>Category</li>
-        <li className={s.comment}>Comment</li>
-        <li className={s.sum}>Sum</li>
-      </ul>
+      {!isMobile && (
+        <ul className={s.titles}>
+          <li className={s.date}>Date</li>
+          <li className={s.type}>Type</li>
+          <li className={s.category}>Category</li>
+          <li className={s.comment}>Comment</li>
+          <li className={s.sum}>Sum</li>
+        </ul>
+      )}
+
       <div className={s.transactionsScroll}>
         <ul className={s.wrapperTransactions}>
           {(transactions || []).map((transaction) => (
@@ -46,7 +58,9 @@ const TransactionsList = () => {
         </ul>
       </div>
       {hasNextPage && (
-        <button className={s.moreBtn} onClick={handleLoadMore}>Load more</button>
+        <button className={s.moreBtn} onClick={handleLoadMore}>
+          Load more
+        </button>
       )}
     </div>
   );
