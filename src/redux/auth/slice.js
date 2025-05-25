@@ -4,7 +4,6 @@ import {
   loginThunk,
   logoutThunk,
   getCurrentUserThunk,
-  refreshUser,
 } from "./operations";
 
 const initialState = {
@@ -54,7 +53,7 @@ const slice = createSlice({
       })
       .addCase(logoutThunk.fulfilled, () => initialState)
       .addCase(getCurrentUserThunk.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user.balance = action.payload.balance;
       })
 
       .addCase(getCurrentUserThunk.pending, handlePending)
