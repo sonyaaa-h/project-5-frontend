@@ -23,8 +23,10 @@ const categoriesSlice = createSlice({
         builder
             .addCase(fetchCategories.pending, handlePending)
             .addCase(fetchCategories.fulfilled, (state, action) => {
+                console.log(action.payload);
+                
                 state.isLoading = false;
-                state.items = action.payload;
+                state.items = action.payload.data;
             })
             .addCase(fetchCategories.rejected, handleRejected);
     },

@@ -16,7 +16,7 @@ import Select from "react-select";
 import customSelectStyles from "./customSelectStyles";
 import "izitoast/dist/css/iziToast.min.css";
 import iziToast from "izitoast";
-import { api } from "../../redux/auth/operations";
+import { api } from "../../redux/auth/api";
 
 
 const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
@@ -28,7 +28,7 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await api.get("/example");
+        const response = await api.get("/categories");
         const categoriesArray = response.data.data.expenseCategories || [];
 
         const options = categoriesArray.map((item) => ({

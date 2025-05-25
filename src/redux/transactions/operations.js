@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api, getCurrentUserThunk } from "../auth/operations.js";
+import {  getCurrentUserThunk } from "../auth/operations.js";
+import { api } from "../auth/api.js";
 
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
