@@ -270,6 +270,27 @@ s.mobileWrapperTransaction {
         /* gap: 24px; */
         padding: 11.5px 12px 11.5px 4px;
     }
-}
 
-@media screen and (min-width: 1280px) {}
+    .icon {
+
+        width: 14px;
+        height: 14px;
+        cursor: pointer;
+    }
+
+    .btnDelete {
+        background-color: transparent;
+        border: 1px solid #fcfcfc;
+        border-radius: 8px;
+        padding: 4px 12px;
+        width: 67px;
+        height: 25px;
+        font-weight: 400;
+        font-size: 14px;
+        text-align: center;
+        color: #fcfcfc;
+    }
+
+    .wrapperTransaction:nth-child(2n) {
+        background-image: var(--background-gradient);
+    }
