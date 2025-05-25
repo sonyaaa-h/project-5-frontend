@@ -177,3 +177,11 @@
   transform: translate(-50%, -50%);
   stroke: #fff;
 }
+
+@media screen and (min-width: 768px) {
+  .modal {
+    padding: 64px 32px;
+    width: 458px;
+    height: 394px;
+  }
+}
