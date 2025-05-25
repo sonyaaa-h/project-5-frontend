@@ -15,7 +15,7 @@
   position: relative;
   width: 540px;
   height: 511px;
-  background-color: #508f8c;
+  background-color: var(--modal-color);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -47,7 +47,7 @@
   left: 80px;
   font-family: sans-serif;
   font-weight: bold;
-  color: #081222;
+  color: var(--text-color);
   font-size: 30px;
   text-align: center;
 }
@@ -70,10 +70,10 @@
   padding: 11px 79px;
   width: 100%;
   border-radius: 8px;
-  background: linear-gradient(180deg, rgba(53,83,89,1) 0%, rgba(59,93,99,1) 100%);
+  background: var(--primary-gradient);
   font-family: sans-serif;
   font-weight: 500;
-  color: #fcfcfc;
+  color: var(--white-color);
   font-size: 18px;
   border: none;
   cursor: pointer;
@@ -92,10 +92,10 @@
   padding: 11px 68px;
   width: 100%;
   border-radius: 8px;
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   font-family: sans-serif;
   font-weight: 500;
-  color: #081222;
+  color: var(--text-color);
   font-size: 18px;
   background: transparent;
   cursor: pointer;
@@ -107,10 +107,29 @@
   height: 42px;
   top: 276px;
   left: 65px;
-  background-color: #fcfcfc;
+  background-color: var(--white-color);
   border-radius: 4px;
   border: 1px solid #E0E0E0;
   padding: 0 12px;
+}
+
+.categorySelect {
+  position: absolute;
+  width: 409px;
+  height: 42px;
+  top: 152px;
+  left: 65px;
+  background-color: var(--white-color);
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  padding: 0 12px;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: var(--text-color);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%23081222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
 
 .inputGroup {
@@ -125,7 +144,7 @@
 .amountInput {
   height: 44px;
   width: 192.5px;
-  background-color: #fcfcfc;
+  background-color: var(--white-color);
   border-radius: 4px;
   border: 1px solid #E0E0E0;
   padding: 0 12px;
@@ -134,9 +153,9 @@
 .datePicker {
   height: 44px;
   width: 192.5px !important;
-  background-color: #fcfcfc;
+  background-color: var(--white-color);
   border-radius: 4px;
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   padding: 0 12px;
 }
 
@@ -153,7 +172,7 @@
   position: absolute;
   width: 252px;
   height: 44px;
-  top: 120px;
+  top: 80px;
   left: 146px;
   display: flex;
   align-items: center;
@@ -162,15 +181,17 @@
 
 .toggleOption {
   font-family: sans-serif;
-  font-weight: 600;
-  color: #081222;
+  font-weight: 400;
+  color: var(--text-color);
   font-size: 16px;
   cursor: pointer;
   opacity: 0.5;
+  transition: all 0.3s ease;
 }
 
 .toggleOption.active {
   opacity: 1;
+  font-weight: 600;
 }
 
 .error {
@@ -183,4 +204,25 @@
   margin-top: 4px;
   position: absolute;
   bottom: -20px;
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 100%;
+    max-width: 540px;
+    margin: 20px;
+  }
+  
+  .buttonGroup,
+  .inputGroup,
+  .descriptionInput,
+  .categorySelect {
+    width: calc(100% - 40px);
+    left: 20px;
+  }
+  
+  .toggleGroup {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
