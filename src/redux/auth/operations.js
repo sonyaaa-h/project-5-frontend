@@ -4,7 +4,7 @@ import { setUser, setIsRefreshing } from "./slice"; // setToken импортир
 import toast from "react-hot-toast";
 
 export const api = axios.create({
-  baseURL: "https://spendy-mu36.onrender.com",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 const setAuthHeader = (token) => {
@@ -152,7 +152,6 @@ export const updateUserThunk = createAsyncThunk(
 
       setAuthHeader(token);
 
-      const response = await api.patch("/users/current", body);
 
       const userResponse = await api.get("/users/current");
       const user = userResponse.data.data;

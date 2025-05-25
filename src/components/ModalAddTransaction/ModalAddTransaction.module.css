@@ -37,7 +37,7 @@
   border-radius: 30px;
   width: 80px;
   height: 40px;
-  background-color: #fff;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;
@@ -101,6 +101,7 @@
   font-weight: 600;
   font-size: 18px;
   color: rgba(255, 255, 255, 0.6);
+  background-color: #508F8C;
   border-bottom: 2px solid gray;
   padding-left: 20px;
   padding-bottom: 8px;
@@ -141,6 +142,7 @@ input[type="number"] {
   position: absolute;
   right: 8px;
   top: 0px;
+  background-color: #508F8C;
   /* transform: translateY(-50%); */
   fill: #081222;
   height: 24px;
@@ -207,7 +209,6 @@ input[type="number"] {
   flex-direction: column;
   justify-content: center;
   background:#508F8C;
-  background-color: #508F8C;
   border: none;
   z-index: 1000;
   padding-bottom: 60px;
@@ -265,7 +266,7 @@ input[type="number"] {
   }
   .closeIcon {
     display: block;
-    color: #fff;
+    background-color: #508F8C;
     width: 30px;
     height: 30px;
   }

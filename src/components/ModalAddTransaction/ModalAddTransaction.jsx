@@ -1,3 +1,4 @@
+import { selectCategories } from "../../redux/categories/selectors";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
@@ -18,36 +19,16 @@ import "izitoast/dist/css/iziToast.min.css";
 import iziToast from "izitoast";
 import { api } from "../../redux/auth/operations";
 
-
 const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [transactionType, setTransactionType] = useState("expense");
-  const token = useSelector((state) => state.auth.token);
   const [expenseOptions, setExpenseOptions] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await api.get("/example");
-        const categoriesArray = response.data.data.expenseCategories || [];
-
-        const options = categoriesArray.map((item) => ({
-          value: item,
-          label: item,
-        }));
-
-        setExpenseOptions(options);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-        setExpenseOptions([]);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
+  const token = useSelector((state) => state.auth.token);
+  const categories = useSelector(selectCategories);
   const dispatch = useDispatch();
 
+  // Валідація
   const schema = yup.object().shape({
     money: yup
       .number()
@@ -65,12 +46,22 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     reset,
-    control,
   } = useForm({
     resolver: yupResolver(schema),
+    context: { transactionType },
   });
+
+  // Формуємо список категорій у вигляді options
+  useEffect(() => {
+    const options = categories.map((cat) => ({
+      value: typeof cat === "string" ? cat : cat.name,
+      label: typeof cat === "string" ? cat : cat.name,
+    }));
+    setExpenseOptions(options);
+  }, [categories]);
 
   const onSubmit = async (data) => {
     if (transactionType === "expense" && !data.category) {
@@ -87,6 +78,7 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
       });
       return;
     }
+
     const payload = {
       type: transactionType === "income" ? "+" : "-",
       category: transactionType === "income" ? "Income" : data.category,
@@ -121,6 +113,7 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
       });
     }
   };
+
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = "hidden";
@@ -134,15 +127,14 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
     };
   }, [openModal]);
 
-  if (!openModal) {
-    return null;
-  }
+  if (!openModal) return null;
 
   return (
     <div className={css.backdrop} onClick={closeModal}>
       <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={css.addModalWrapp}>
           <p className={css.addTransaction}>Add transaction</p>
+
           <div className={css.typeTransaction}>
             <p
               onClick={() => setTransactionType("income")}
@@ -181,6 +173,7 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
                 )}
               </button>
             </div>
+
             <p
               onClick={() => setTransactionType("expense")}
               className={clsx(
@@ -191,6 +184,7 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
               Expense
             </p>
           </div>
+
           <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
             {transactionType === "expense" && (
               <div className={css.selectWrapp}>
@@ -216,18 +210,20 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
                 )}
               </div>
             )}
+
             <div className={css.tabletWrap}>
               <div className={css.moneyWrapp}>
                 <input
                   type="number"
-                  {...register("money", { required: "This is required" })}
+                  {...register("money")}
                   className={css.money}
                   placeholder="0.00"
                 />
                 {errors.money?.message && (
-                  <p className={css.errMoney}>{errors.money?.message}</p>
+                  <p className={css.errMoney}>{errors.money.message}</p>
                 )}
               </div>
+
               <div className={css.dateWrapp}>
                 <DatePicker
                   selected={startDate}
@@ -238,16 +234,18 @@ const ModalAddTransaction = ({ openModal, closeModal, setBalance }) => {
                 <FaRegCalendarAlt className={css.calendarIcon} />
               </div>
             </div>
+
             <div className={css.moneyWrapp}>
               <textarea
-                {...register("comment", { required: "This is required" })}
+                {...register("comment")}
                 className={css.comment}
                 placeholder="Comment"
               />
               {errors.comment?.message && (
-                <p className={css.errMoney}>{errors.comment?.message}</p>
+                <p className={css.errMoney}>{errors.comment.message}</p>
               )}
             </div>
+
             <div className={css.btnWrapp}>
               <button type="submit" className={css.btnAdd}>
                 Add
