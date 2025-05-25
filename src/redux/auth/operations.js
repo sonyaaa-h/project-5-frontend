@@ -127,6 +127,20 @@ export const refreshUser = createAsyncThunk(
   }
 );
 
+
+
+export const getCurrentUserThunk = createAsyncThunk(
+  "auth/getCurrentUser",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get("/users/current");
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const updateUserThunk = createAsyncThunk(
   "auth",
   async (body, thunkAPI) => {

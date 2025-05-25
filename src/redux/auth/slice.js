@@ -3,7 +3,7 @@ import {
   registerThunk,
   loginThunk,
   logoutThunk,
-  updateUserThunk,
+  getCurrentUserThunk,
 } from "./operations";
 
 const initialState = {
@@ -16,6 +16,16 @@ const initialState = {
   accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
+};
+
+const handlePending = (state) => {
+  state.isLoading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
 };
 
 const slice = createSlice({
@@ -42,15 +52,13 @@ const slice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
       })
-      .addCase(updateUserThunk.fulfilled, (state, action) => {
-        console.log("Update successful:", action.payload);
-        state.user.name = action.payload.user.name;
-        state.user.email = action.payload.user.email;
-        state.user.photo = action.payload.user.photo;
-        state.accessToken = action.payload.accessToken;
-        state.isLoggedIn = true;
+      .addCase(logoutThunk.fulfilled, () => initialState)
+      .addCase(getCurrentUserThunk.fulfilled, (state, action) => {
+        state.user.balance = action.payload.balance;
       })
-      .addCase(logoutThunk.fulfilled, () => initialState);
+
+      .addCase(getCurrentUserThunk.pending, handlePending)
+      .addCase(getCurrentUserThunk.rejected, handleRejected);
   },
 });
 
