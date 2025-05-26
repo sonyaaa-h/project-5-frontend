@@ -4,18 +4,20 @@ import s from "./TransactionsList.module.css";
 import { useEffect } from "react";
 import { fetchTransactions } from "../../redux/transactions/operations.js";
 import {
+    selectIsLoading,
     selectPagination,
     selectTransactions,
 } from "../../redux/transactions/selectors.js";
 
 import { useMediaQuery } from "react-responsive";
+import Loader from "../Loader/Loader.jsx";
 
 const TransactionsList = () => {
     const dispatch = useDispatch();
     const transactions = useSelector(selectTransactions);
     const paginationInfo = useSelector(selectPagination);
+    const isLoading = useSelector(selectIsLoading);
     const { page, hasNextPage } = paginationInfo || {};
-    // const error = useSelector(selectError);
     const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
     useEffect(() => {
@@ -26,19 +28,20 @@ const TransactionsList = () => {
         dispatch(fetchTransactions(page + 1));
     };
 
-    if (transactions.length === 0) {
+    if (isLoading) {
         return (
-            <p className={s.noneTransText}>
-                You don't have any transactions yet. Start by adding a new one!
-            </p>
+            <div className={s.loaderWrapper}>
+                <Loader />
+            </div>
         );
     }
 
-    // if (error) {
-    //   return <p>Error loading transactions: {error.message}</p>;
-    // }
-
-    return (
+    return transactions.length === 0 ?
+        <div className={s.loaderWrapper}>
+            <p className={s.noneTransText}>
+                You don't have any transactions yet. Start by adding a new one!
+            </p>
+        </div> :
         <div className={s.wrapper}>
             {!isMobile && (
                 <ul className={s.titles}>
@@ -63,6 +66,5 @@ const TransactionsList = () => {
                 </button>
             )}
         </div>
-    );
 };
 export default TransactionsList;
