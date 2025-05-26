@@ -8,7 +8,7 @@ import { useMediaQuery } from "react-responsive";
 
 const Navigation = () => {
   const isMobile = useMediaQuery({
-    query: "(max-width: 768px)",
+    query: "(max-width: 767px)",
   });
 
   const buildLinkClass = ({ isActive }) => {
@@ -24,11 +24,11 @@ const Navigation = () => {
         <GraphIcon className={css.icon} />
         <span>Statistics</span>
       </NavLink>
-      {isMobile &&
+      {isMobile && (
         <NavLink className={buildLinkClass} to="/currency">
           <DollarIcon className={css.icon} />
         </NavLink>
-      }
+      )}
     </div>
   );
 };
