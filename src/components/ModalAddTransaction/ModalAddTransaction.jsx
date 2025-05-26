@@ -56,7 +56,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
   });
 
   useEffect(() => {
-    const options = categories?.data?.map((cat) => ({
+    const options = categories?.map((cat) => ({
       value: typeof cat === "string" ? cat : cat.name,
       label: typeof cat === "string" ? cat : cat.name,
     }));
@@ -83,7 +83,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
       const day = String(data.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     };
-    const selectedCategory = categories.data.find(
+    const selectedCategory = categories?.find(
       (cat) => cat._id === data.category
     );
     const categoryName = selectedCategory ? selectedCategory.name : "Other";
@@ -133,8 +133,8 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
 
   if (!openModal) return null;
 
-  const categoryOptions = Array.isArray(categories.data)
-    ? categories.data
+  const categoryOptions = Array.isArray(categories)
+    ? categories
         .filter((category) => category.type === transactionType)
         .map((category) => ({
           value: category._id,
