@@ -18,6 +18,7 @@ import "izitoast/dist/css/iziToast.min.css";
 import iziToast from "izitoast";
 import { fetchCategories } from "../../redux/categories/operations";
 import { getCurrentUserThunk } from "../../redux/auth/operations";
+import toast from "react-hot-toast";
 
 const ModalAddTransaction = ({ openModal, closeModal }) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -62,6 +63,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     }));
     setExpenseOptions(options);
   }, [categories]);
+  
   const onSubmit = async (data) => {
     if (transactionType === "expense" && !data.category) {
       iziToast.error({
@@ -99,6 +101,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     try {
       await dispatch(addTransaction(payload)).unwrap();
       await dispatch(getCurrentUserThunk()).unwrap();
+      toast.success(`Transaction is added successfully!`);
       reset();
       closeModal();
     } catch (err) {
