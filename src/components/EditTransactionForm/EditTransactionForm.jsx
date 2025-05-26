@@ -1,3 +1,5 @@
+// src/components/EditTransactionForm/EditTransactionForm.jsx
+
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -8,8 +10,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import styles from './EditTransactionForm.module.css';
 import { toast } from 'react-hot-toast';
 import { IoClose } from 'react-icons/io5';
-import Toggle from '../Toggle/Toggle';
-import { fetchCategories } from '../../redux/categories/operations'; // Импортируем операцию получения категорий
+import ToggleForEdit from '../ToggleForEdit/ToggleForEdit';
+import { fetchCategories } from '../../redux/categories/operations';
 
 const validationSchema = Yup.object().shape({
   amount: Yup.number()
@@ -19,34 +21,50 @@ const validationSchema = Yup.object().shape({
   date: Yup.date()
     .required('Date is required')
     .max(new Date(), 'Date cannot be in the future'),
-  category: Yup.string().required('Category is required'),
+  category: Yup.string().when('type', { // Category is required only if type is 'expense'
+    is: 'expense',
+    then: Yup.string().required('Category is required'),
+    otherwise: Yup.string().notRequired(),
+  }),
   comment: Yup.string().max(100, 'Comment must be less than 100 characters'),
 });
 
-const initialValues = {
-  amount: '',
-  date: new Date(),
-  category: '',
-  comment: '',
-  type: 'income',
-};
-
-export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
+const EditTransactionForm = ({ mode = 'add', onClose, onSave, _id, date, type, category, comment, sum }) => {
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.categories.items.data || []); // Получаем категории из Redux
+  const categories = useSelector(state => state.categories.items.data || []);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  // Инициализация значений формы согласно последним уточнениям:
+  // Amount, Category, Comment - подгружаются из пропсов для 'edit' или пустые для 'add'.
+  // Дата: сегодняшняя для 'add', дата транзакции для 'edit'.
+  const initialFormValues = {
+    amount: mode === 'edit' ? sum : '', // Подгружается sum для редактирования, пусто для добавления
+    date: mode === 'edit' && date ? new Date(date) : new Date(), // <-- ИЗМЕНЕНО: Возвращаем логику даты
+    type: mode === 'edit' ? (type === '+' ? 'income' : 'expense') : 'income', // Это остается, так как связано с состоянием переключателя
+    category: mode === 'edit' ? category : '', // Подгружается category для редактирования, пусто для добавления
+    comment: mode === 'edit' ? comment : '', // Подгружается comment для редактирования, пусто для добавления
+  };
+
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      console.log('Form values:', values);
+      // console.log('Form values on submit:', values); // Для отладки отправляемых значений
+
+      // Преобразуем type обратно в '+' или '-' перед сохранением, если это нужно для бэкенда
+      const transformedValues = {
+        ...values,
+        type: values.type === 'income' ? '+' : '-',
+        // Если тип 'income', то категория не нужна, отправляем пустую строку
+        category: values.type === 'income' ? '' : values.category,
+      };
+
       if (onSave) {
-        await onSave(values);
+        await onSave(transformedValues);
       }
       toast.success('Transaction saved successfully!');
-      if (onClose) onClose();
+      if (onClose) onClose(); // Модальное окно закрывается при успешном сохранении
     } catch (error) {
       toast.error(error.message || 'Failed to save transaction');
     } finally {
@@ -56,23 +74,24 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
 
   const handleOverlayClick = e => {
     if (e.target === e.currentTarget && onClose) {
-      onClose();
+      onClose(); // Закрываем модальное окно при клике на оверлей
     }
   };
 
   const handleCloseClick = e => {
     e.stopPropagation();
     if (onClose) {
-      onClose();
+      onClose(); // Закрываем модальное окно при клике на крестик
     }
   };
 
   return (
     <div className={styles.overlay} onClick={handleOverlayClick}>
       <Formik
-        initialValues={initialValues}
+        initialValues={initialFormValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
+        enableReinitialize={true} // Важно для обновления initialValues при изменении пропсов
       >
         {({ values, errors, touched, setFieldValue, isSubmitting }) => (
           <Form className={styles.modal}>
@@ -97,7 +116,7 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
                 Income
               </div>
 
-              <Toggle
+              <ToggleForEdit
                 isIncome={values.type === 'income'}
                 setIsIncome={checked =>
                   setFieldValue('type', checked ? 'income' : 'expense')
@@ -113,24 +132,35 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
               </div>
             </div>
 
+            {/* Поле Category отображается только если тип 'expense' */}
             {values.type === 'expense' && (
-              <Field
-                name="category"
-                as="select"
-                className={`${styles.categorySelect} ${
-                  errors.category && touched.category ? styles.error : ''
-                }`}
-              >
-                <option value="">Select a category</option>
-                {categories.map(category => (
-                  <option key={category._id} value={category.name}>
-                    {category.name}
-                  </option>
-                ))}
-              </Field>
+              <>
+                <Field
+                  name="category"
+                  as="select"
+                  className={`${styles.categorySelect} ${
+                    errors.category && touched.category ? styles.error : ''
+                  }`}
+                >
+                  <option value="">Select a category</option> {/* Плейсхолдер */}
+                  {categories.map(categoryItem => (
+                    <option key={categoryItem._id} value={categoryItem.name}>
+                      {categoryItem.name}
+                    </option>
+                  ))}
+                </Field>
+                {errors.category && touched.category && values.type === 'expense' && (
+                  <div className={styles.errorText}>{errors.category}</div>
+                )}
+              </>
             )}
 
-            <div className={styles.inputGroup}>
+
+            <div
+              className={`${styles.inputGroup} ${
+                values.type === 'income' ? styles.incomeMode : ''
+              }`}
+            >
               <Field
                 name="amount"
                 type="text"
@@ -139,10 +169,6 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
                 }`}
                 placeholder="Amount"
               />
-              {errors.amount && touched.amount && (
-                <div className={styles.errorText}>{errors.amount}</div>
-              )}
-
               <DatePicker
                 selected={values.date}
                 onChange={date => setFieldValue('date', date)}
@@ -153,10 +179,13 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
                 showIcon
                 toggleCalendarOnIconClick
               />
-              {errors.date && touched.date && (
-                <div className={styles.errorText}>{errors.date}</div>
-              )}
             </div>
+            {errors.amount && touched.amount && ( // Отдельно выводим ошибки для amount
+              <div className={styles.errorText}>{errors.amount}</div>
+            )}
+            {errors.date && touched.date && ( // Отдельно выводим ошибки для date
+              <div className={styles.errorText}>{errors.date}</div>
+            )}
 
             <Field
               name="comment"
@@ -182,8 +211,9 @@ export const EditTransactionForm = ({ mode = 'edit', onClose, onSave }) => {
                 type="button"
                 className={styles.cancelButton}
                 onClick={() => {
-                  setFieldValue('amount', '');
-                  setFieldValue('comment', '');
+                  setFieldValue('amount', ''); // Очищаем поле Amount
+                  setFieldValue('comment', ''); // Очищаем поле Comment
+                  // Модальное окно не закрывается при отмене
                 }}
               >
                 Cancel
@@ -200,6 +230,12 @@ EditTransactionForm.propTypes = {
   mode: PropTypes.oneOf(['edit', 'add']),
   onClose: PropTypes.func,
   onSave: PropTypes.func,
+  _id: PropTypes.string,
+  date: PropTypes.string,
+  type: PropTypes.oneOf(['+', '-']),
+  category: PropTypes.string,
+  comment: PropTypes.string,
+  sum: PropTypes.number,
 };
 
 export default EditTransactionForm;
