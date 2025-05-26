@@ -72,6 +72,6 @@
 @media screen and (min-width: 1280px) {
   .block {
     padding: 16px 32px;
-    gap: 12px;
+    gap: 14px;
   }
 }

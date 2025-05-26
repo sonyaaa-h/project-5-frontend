@@ -34,7 +34,7 @@
     gap: 24px;
   }
   .secondBlock {
-    padding: 24px;
+    padding: 24px 24px 26px;
     border-radius: 16px;
     background-image: var(--primary-gradient);
   }
