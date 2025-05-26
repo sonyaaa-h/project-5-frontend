@@ -5,6 +5,12 @@ import ModalDeleteTransaction from "../ModalDeleteTransaction/ModalDeleteTransac
 import { useState } from "react";
 import EditTransactionForm from "../EditTransactionForm/EditTransactionForm.jsx";
 import { useMediaQuery } from "react-responsive";
+import {
+  fetchTransactions,
+  updateTransaction,
+} from "../../redux/transactions/operations.js";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 // import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
 
 const formatDate = (isoDate) => {
@@ -25,6 +31,23 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const sumClass = type == "+" ? s.sumIncome : s.sumExpense;
   const isIncome = type === "+";
+
+  //оновлення транзакцій
+  const dispatch = useDispatch();
+  const handleSave = async (data) => {
+    console.log("Data received in handleSave:", data);
+    try {
+      const { _id, ...updatedData } = data; // виділяємо id
+      await dispatch(
+        updateTransaction({ id: _id, updatedTransactionData: updatedData })
+      );
+      toast.success("Transaction updated successfully");
+      dispatch(fetchTransactions());
+      setIsModalEdit(false);
+    } catch (err) {
+      toast.error("Failed to update transaction", err);
+    }
+  };
 
   return (
     <li
@@ -87,7 +110,7 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
           onClose={() => setIsModalDelete(false)}
         />
       )}
-      
+
       {isModalEdit && (
         <EditTransactionForm
           mode="edit" // <-- ДОДАВ ЦЕЙ РЯДОК
@@ -98,9 +121,9 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
           comment={comment}
           sum={sum}
           onClose={() => setIsModalEdit(false)}
+          onSave={handleSave}
         />
       )}
-    
     </li>
   );
 };

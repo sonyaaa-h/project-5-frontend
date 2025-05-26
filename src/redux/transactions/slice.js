@@ -3,6 +3,7 @@ import {
   addTransaction,
   deleteTransaction,
   fetchTransactions,
+  updateTransaction,
 } from "./operations";
 
 const initialState = {
@@ -64,7 +65,17 @@ const transactionsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(addTransaction.pending, handlePending)
-      .addCase(addTransaction.rejected, handleRejected);
+      .addCase(addTransaction.rejected, handleRejected)
+      .addCase(updateTransaction.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (item) => item._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+      })
+      .addCase(updateTransaction.pending, handlePending)
+      .addCase(updateTransaction.rejected, handleRejected);
   },
 });
 
