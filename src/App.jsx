@@ -1,14 +1,15 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
-import { refreshUser } from "./redux/auth/operations";
-import { selectIsRefreshing } from "./redux/auth/selectors.js";
+// import { refreshUser } from "./redux/auth/operations";
+import { selectIsRefreshing, selectToken } from "./redux/auth/selectors.js";
 import { selectIsLoading } from "./redux/global/selectors";
 import { lazy, Suspense } from 'react';
 import MasterLoader from "./components/MasterLoader/MasterLoader";
+import { setAuthHeader } from "./redux/auth/api.js";
 const RegistrationPage = lazy(() => import('./pages/RegistrationPage/RegistrationPage'))
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'))
 const Layout = lazy(() => import('./Layout/Layout'))
@@ -19,13 +20,16 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'))
 
 
 function App() {
-  const dispatch = useDispatch();
+  const token = useSelector(selectToken)
   const isRefreshing = useSelector(selectIsRefreshing);
   const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
-    dispatch(refreshUser());
-  }, [dispatch]);
+    if (token) {
+      setAuthHeader(token);
+    }
+  }, [token]);
+
   if (isRefreshing) {
     return <h1>Loading application...</h1>;
   }
