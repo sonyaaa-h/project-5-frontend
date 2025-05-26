@@ -40,7 +40,7 @@ const Statistics = () => {
 
   const dataWithColor = Object.entries(groupedByCategory).map(
     ([categoryName, sum]) => {
-      const category = categories?.data?.find(
+      const category = categories?.find(
         (cat) => cat.name === categoryName
       );
       return {
