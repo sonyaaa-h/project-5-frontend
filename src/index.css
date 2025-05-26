@@ -10,15 +10,13 @@
   --red-color: #b20202;
   --pink-color: #f23a3a;
   --main-light-green: #508f8c;
+  --main-white: #fcfcfc;
+  --main-yellow: #dfad3f;
+  --chart-green: #24cca7;
 }
 
 html {
-  /* height: 150%; */
-  /* background-size: cover; */
   height: 100%;
-  /* height: fit-content; */
-  /* height: var(--background-gradient); */
-  /* min-height: auto; */
 }
 
 body {
@@ -28,7 +26,13 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
-  /* height: fit-content; */
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 h1,

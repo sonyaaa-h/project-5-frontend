@@ -1,0 +1,228 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  width: 540px;
+  height: 511px;
+  background-color: var(--modal-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.closeButton:hover {
+  color: var(--red-color);
+}
+
+.title {
+  position: absolute;
+  width: 380px;
+  height: 40px;
+  top: 39px;
+  left: 80px;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: var(--text-color);
+  font-size: 30px;
+  text-align: center;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  width: 410px;
+  gap: 21px;
+  position: absolute;
+  top: 356px;
+  left: 65px;
+}
+
+.saveButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 79px;
+  width: 100%;
+  border-radius: 8px;
+  background: var(--primary-gradient);
+  font-family: sans-serif;
+  font-weight: 500;
+  color: var(--white-color);
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.saveButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 68px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--text-color);
+  font-family: sans-serif;
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 18px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.descriptionInput {
+  position: absolute;
+  width: 409px;
+  height: 42px;
+  top: 276px;
+  left: 65px;
+  background-color: var(--white-color);
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  padding: 0 12px;
+}
+
+.categorySelect {
+  position: absolute;
+  width: 409px;
+  height: 42px;
+  top: 152px;
+  left: 65px;
+  background-color: var(--white-color);
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  padding: 0 12px;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: var(--text-color);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%23081222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.inputGroup {
+  display: flex;
+  width: 410px;
+  gap: 24px;
+  position: absolute;
+  top: 196px;
+  left: 65px;
+}
+
+.amountInput {
+  height: 44px;
+  width: 192.5px;
+  background-color: var(--white-color);
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  padding: 0 12px;
+}
+
+.datePicker {
+  height: 44px;
+  width: 192.5px !important;
+  background-color: var(--white-color);
+  border-radius: 4px;
+  border: 1px solid var(--text-color);
+  padding: 0 12px;
+}
+
+:global(.react-datepicker__calendar-icon) {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.toggleGroup {
+  position: absolute;
+  width: 252px;
+  height: 44px;
+  top: 80px;
+  left: 146px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggleOption {
+  font-family: sans-serif;
+  font-weight: 400;
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.toggleOption.active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.error {
+  border-color: var(--red-color);
+}
+
+.errorText {
+  color: var(--red-color);
+  font-size: 12px;
+  margin-top: 4px;
+  position: absolute;
+  bottom: -20px;
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 100%;
+    max-width: 540px;
+    margin: 20px;
+  }
+  
+  .buttonGroup,
+  .inputGroup,
+  .descriptionInput,
+  .categorySelect {
+    width: calc(100% - 40px);
+    left: 20px;
+  }
+  
+  .toggleGroup {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

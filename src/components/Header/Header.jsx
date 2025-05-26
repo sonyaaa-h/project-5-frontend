@@ -4,28 +4,47 @@ import { useState } from "react";
 import LogoutModal from "../Modal/LogoutModal";
 import LogoIcon from "../tempIcons/LogoIcon";
 import ExitIcon from "../tempIcons/ExitIcon";
+import { UserModal } from "../UserModal/UserModal";
 
 export default function Header() {
-  const username = useSelector((state) => state.auth.user.name);
+  const username = useSelector((state) => state.auth.user?.name);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
 
   const handleLogoutClick = () => setIsModalOpen(true);
+  const handleUpdateUserClick = () => setIsUserModalOpen(true);
+
+  const firstLetter = username ? username.charAt(0) : "";
+  const userphoto = useSelector((state) => state.auth.user?.photo);
 
   return (
     <header className={css.header}>
-      <div className={css.logo}>
-        <LogoIcon className={css.logoIcon} />
-        <span className={css.textLogo}>Spendy</span>
-      </div>
-      <div className={css.userSection}>
-        <span className={css.username}>{username}</span>
-        <button onClick={handleLogoutClick} className={css.exitBtn}>
-          <ExitIcon className={css.exitIcon} />
-          <span className={css.exitText}>Exit</span>
-        </button>
+      <div className={css.container}>
+        <div className={css.logo}>
+          <LogoIcon className={css.logoIcon} />
+          <span className={css.textLogo}>Spendy</span>
+        </div>
+        <div className={css.userSection}>
+          <button onClick={handleUpdateUserClick} className={css.updateBtn}>
+            {userphoto ? (
+              <img src={userphoto} alt={username} className={css.avatarImage} />
+            ) : (
+              <span className={css.username}>{firstLetter}</span>
+            )}
+          </button>
+          <div className={css.exitContainer}>
+            <button onClick={handleLogoutClick} className={css.exitBtn}>
+              <ExitIcon className={css.exitIcon} />
+              <span className={css.exitText}>Exit</span>
+            </button>
+          </div>
+        </div>
       </div>
 
       {isModalOpen && <LogoutModal onClose={() => setIsModalOpen(false)} />}
+      {isUserModalOpen && (
+        <UserModal onClick={() => setIsUserModalOpen(false)} />
+      )}
     </header>
   );
 }

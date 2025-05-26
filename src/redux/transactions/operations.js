@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../auth/operations.js";
+import { api, getCurrentUserThunk } from "../auth/operations.js";
 
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
-  async (data, thunkAPI) => {
+  async (page = 1, thunkAPI) => {
     try {
-      const response = await api.get("/transactions");
+      const response = await api.get(`transactions?page=${page}`);
       return response.data;
     } catch (error) {
       // return thunkAPI.rejectWithValue(error.message);
@@ -19,6 +19,7 @@ export const addTransaction = createAsyncThunk(
   async (newTransactionData, thunkAPI) => {
     try {
       const response = await api.post("/transactions", newTransactionData);
+      thunkAPI.dispatch(getCurrentUserThunk()); //оновлення балансу
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -33,6 +34,7 @@ export const updateTransaction = createAsyncThunk(
         `/transactions/${id}`,
         updatedTransactionData
       );
+      thunkAPI.dispatch(getCurrentUserThunk()); //оновлення балансу
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -44,6 +46,7 @@ export const deleteTransaction = createAsyncThunk(
   async (transactionId, thunkAPI) => {
     try {
       await api.delete(`/transactions/${transactionId}`);
+      thunkAPI.dispatch(getCurrentUserThunk());
       return transactionId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

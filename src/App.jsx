@@ -2,21 +2,26 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Layout from "./Layout/Layout";
 import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
-import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import HomeTab from "./pages/HomeTab/HomeTab";
-import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import StatisticsTab from "./pages/StatisticsTab/StatisticsTab";
-import CurrencyTab from "./pages/CurrencyTab/CurrencyTab";
 import { refreshUser } from "./redux/auth/operations";
 import { selectIsRefreshing } from "./redux/auth/selectors.js";
+import { selectIsLoading } from "./redux/global/selectors";
+import { lazy, Suspense } from 'react';
+import MasterLoader from "./components/MasterLoader/MasterLoader";
+const RegistrationPage = lazy(() => import('./pages/RegistrationPage/RegistrationPage'))
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'))
+const Layout = lazy(() => import('./Layout/Layout'))
+const HomeTab = lazy(() => import('./pages/HomeTab/HomeTab'))
+const StatisticsTab = lazy(() => import('./pages/StatisticsTab/StatisticsTab'))
+const CurrencyTab = lazy(() => import('./pages/CurrencyTab/CurrencyTab'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'))
+
 
 function App() {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -26,30 +31,35 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route
-        path="register"
-        element={
-          <RestrictedRoute component={RegistrationPage} redirectTo="/" />
-        }
-      />
+    <>
+      <Suspense fallback={<MasterLoader open={isLoading} />}>
+      <Routes>
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute component={RegistrationPage} redirectTo="/" />
+          }
+        />
 
-      <Route
-        path="login"
-        element={<RestrictedRoute component={LoginPage} redirectTo="/" />}
-      />
+        <Route
+          path="login"
+          element={<RestrictedRoute component={LoginPage} redirectTo="/" />}
+        />
+{/* //// */}
+        <Route
+          path="/"
+          element={<PrivateRoute component={Layout} redirectTo="/login" />}
+        >
+          <Route index element={<HomeTab />} />
+          <Route path="statistics" element={<StatisticsTab />} />
+          <Route path="currency" element={<CurrencyTab />} />
+        </Route>
 
-      <Route
-        path="/"
-        element={<PrivateRoute component={Layout} redirectTo="/login" />}
-      >
-        <Route index element={<HomeTab />} />
-        <Route path="statistics" element={<StatisticsTab />} />
-        <Route path="currency" element={<CurrencyTab />} />
-      </Route>
-
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+        </Suspense>
+      
+    </>
   );
 }
 
