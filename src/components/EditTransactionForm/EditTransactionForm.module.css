@@ -109,7 +109,7 @@
   left: 65px;
   background-color: var(--white-color);
   border-radius: 4px;
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   padding: 0 12px;
 }
 
@@ -121,7 +121,7 @@
   left: 65px;
   background-color: var(--white-color);
   border-radius: 4px;
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   padding: 0 12px;
   font-family: sans-serif;
   font-size: 16px;
@@ -146,7 +146,7 @@
   width: 192.5px;
   background-color: var(--white-color);
   border-radius: 4px;
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   padding: 0 12px;
 }
 
@@ -206,13 +206,13 @@
   bottom: -20px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .modal {
     width: 100%;
     max-width: 540px;
     margin: 20px;
   }
-  
+
   .buttonGroup,
   .inputGroup,
   .descriptionInput,
@@ -220,7 +220,7 @@
     width: calc(100% - 40px);
     left: 20px;
   }
-  
+
   .toggleGroup {
     left: 50%;
     transform: translateX(-50%);

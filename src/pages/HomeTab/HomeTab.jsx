@@ -5,6 +5,8 @@ import { fetchCategories } from "../../redux/categories/operations";
 import TransactionsList from "../../components/TransactionsList/TransactionsList";
 import AddTransactionButton from "../../components/buttonadd/ButtonAddTransaction";
 import ModalAddTransaction from "../../components/ModalAddTransaction/ModalAddTransaction";
+import { useMediaQuery } from "react-responsive";
+import Ballance from "../../components/Ballance/Ballance";
 
 const HomeTab = () => {
   const dispatch = useDispatch();
@@ -26,8 +28,13 @@ const HomeTab = () => {
     setShowModal(false);
   };
 
+  const isMobile = useMediaQuery({
+    query: "(max-width: 767px)",
+  });
+
   return (
     <div>
+      {isMobile && <Ballance />}
       <TransactionsList />
       <AddTransactionButton openModal={handleOpenModal} />
       <ModalAddTransaction
