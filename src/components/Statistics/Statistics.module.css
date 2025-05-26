@@ -5,6 +5,7 @@
     padding: 16px 12px;
     background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
     flex-direction: column;
+    height: 741px;
   }
   .pStatistics {
     display: flex;
@@ -120,6 +121,19 @@
     padding-right: 23px;
     padding-left: 16px;
   }
+  .noDataContainer {
+    font-weight: 600;
+    font-size: 25px;
+    color: #fcfcfc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 }
 @media screen and (min-width: 768px) {
   .statistics {
@@ -128,6 +142,7 @@
     padding: 16px 16px;
     background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
     justify-content: space-between;
+    height: 540px;
   }
   .pStatistics {
     display: flex;
@@ -244,6 +259,19 @@
     padding-right: 23px;
     padding-left: 16px;
   }
+  .noDataContainer {
+    font-weight: 600;
+    font-size: 32px;
+    color: #fcfcfc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 @media screen and (min-width: 1280px) {
@@ -354,5 +382,54 @@
     justify-content: space-between;
     padding-right: 29px;
     padding-left: 29px;
+  }
+  .noDataContainer {
+    font-weight: 600;
+    font-size: 32px;
+    color: #fcfcfc;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+.statistics {
+  position: relative;
+}
+.income {
+  transition: transform 0.9s ease;
+}
+.income:hover {
+  transform: scale(1.1);
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(90deg, #00ff7f, #32cd32, #00ff7f);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.expense {
+  transition: transform 0.9s ease;
+}
+.expense:hover {
+  transform: scale(1.1);
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(90deg, #ff4d4d, #ff0000, #ff4d4d);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
   }
 }

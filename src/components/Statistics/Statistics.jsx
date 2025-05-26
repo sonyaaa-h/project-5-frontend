@@ -4,11 +4,16 @@ import s from "./Statistics.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStatistics } from "../../redux/statistics/operations";
 import Toggle from "../Toggle/Toggle";
-
+import Loader from "../Loader/Loader";
+import wallet from "../../assets/thumbupwallet.svg";
 const Statistics = () => {
   const dispatch = useDispatch();
-  const [month, setMonth] = useState("01");
-  const [year, setYear] = useState("2025");
+  const currentDate = new Date();
+  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const currentYear = String(currentDate.getFullYear());
+
+  const [month, setMonth] = useState(currentMonth);
+  const [year, setYear] = useState(currentYear);
   const [isIncome, setIsIncome] = useState(true);
 
   const { data, isLoading, error } = useSelector((state) => state.statistics);
@@ -40,9 +45,7 @@ const Statistics = () => {
 
   const dataWithColor = Object.entries(groupedByCategory).map(
     ([categoryName, sum]) => {
-      const category = categories?.find(
-        (cat) => cat.name === categoryName
-      );
+      const category = categories?.find((cat) => cat.name === categoryName);
       return {
         category: categoryName,
         sum,
@@ -59,10 +62,13 @@ const Statistics = () => {
     <section id="statistic" className={s.statistics}>
       <div className={s.firstBlock}>
         <div className={s.pStatistics}>
-          Income <Toggle isIncome={isIncome} setIsIncome={setIsIncome} />{" "}
-          Expense
+          <span className={s.income}>Income</span>
+          <Toggle isIncome={isIncome} setIsIncome={setIsIncome} />
+          <span className={s.expense}>Expense</span>
         </div>
-        <PieChartWithPaddingAngle data={dataWithColor} total={total} />
+        {dataWithColor.length > 0 && (
+          <PieChartWithPaddingAngle data={dataWithColor} total={total} />
+        )}
       </div>
       <div className={s.secondBlock}>
         <div className={s.selectBlock}>
@@ -138,9 +144,24 @@ const Statistics = () => {
           </select>
         </div>
         {isLoading ? (
-          <p>Loading...</p>
+          <div
+            style={{
+              display: "flex",
+              margin: "0 auto",
+              position: "absolute",
+              right: "30%",
+              top: "30%",
+            }}
+          >
+            <Loader />
+          </div>
         ) : error ? (
           <p>Error: {error}</p>
+        ) : dataWithColor.length === 0 ? (
+          <div className={s.noDataContainer}>
+            <img src={wallet} alt="No data" className={s.noDataImage} />
+            <p className={s.noDataText}>No transactions for this period </p>
+          </div>
         ) : (
           <table className={s.tableStatistics}>
             <thead className={s.theadStatistics}>
@@ -154,9 +175,7 @@ const Statistics = () => {
                 <tr key={index} className={s.trStatistics}>
                   <td className={s.tdStatistics}>
                     <span
-                      style={{
-                        backgroundColor: item.color,
-                      }}
+                      style={{ backgroundColor: item.color }}
                       className={s.spanStatistic}
                     ></span>
                     {item.category}
