@@ -5,10 +5,9 @@ import { store } from "../store";
 import { logoutThunk } from "./logoutThunk";
 import { api, clearAuthHeader, setAuthHeader } from "./api";
 
-
 api.interceptors.response.use(
-  response => response,
-  error => {
+  (response) => response,
+  (error) => {
     if (error.response?.status === 401) {
       clearAuthHeader();
       store.dispatch(logoutThunk());
@@ -113,7 +112,7 @@ export const updateUserThunk = createAsyncThunk(
 
       setAuthHeader(token);
 
-      // const response = await api.patch("/users/current", body);
+      await api.patch("/users/current", body);
 
       const userResponse = await api.get("/users/current");
       const user = userResponse.data.data;
