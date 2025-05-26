@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import * as Yup from "yup";
 import logo from "../../assets/logo.svg";
-import thumbupwallet from "../../assets/thumbupwallet.svg";
+import thumbupwallet from "../../assets/thumbupwallet.png";
 import { MdEmail } from "react-icons/md";
 import { IoMdLock } from "react-icons/io";
 import { FaUser } from "react-icons/fa";

@@ -10,7 +10,7 @@ import { RiEye2Line, RiEyeCloseFill } from "react-icons/ri";
 import { IoMdLock } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import logo from "../../assets/logo.svg";
-import wallet from "../../assets/wallet.svg";
+import wallet from "../../assets/wallet.png";
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
