@@ -13,7 +13,7 @@
   padding: 16px;
   background-color: #508f8c;
   /* position: relative; */
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .logo {
@@ -269,7 +269,7 @@ span {
   .formWrapper {
     width: 533px;
     /* height: 631px; */
-    padding: 40px 61px 82px 62px;
+    padding: 20px 61px 82px 62px;
   }
 
   .logo {
@@ -315,6 +315,9 @@ span {
   .link {
     width: 409px;
   }
+  html {
+    height: 100%;
+  }
 }
 @media screen and (min-width: 1280px) {
   .div {
@@ -325,8 +328,12 @@ span {
     margin-left: 914px;
     margin-top: 390px;
     width: 320px;
+    position: absolute;
   }
   span {
     margin-top: -20px;
+  }
+  html {
+    height: 100%;
   }
 }
