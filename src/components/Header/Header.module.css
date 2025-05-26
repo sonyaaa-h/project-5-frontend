@@ -1,15 +1,25 @@
 .header {
+  padding: 8px 0;
+  background: var(--primary-gradient);
+}
+
+.container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 16px;
-  background: var(--primary-gradient);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
 }
 
 .logo {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   flex-direction: column;
+  gap: 0px;
 }
 
 .logoIcon {
@@ -24,6 +34,7 @@
   text-align: center;
   color: var(--white-color);
   user-select: none;
+  margin: 0;
 }
 
 .userSection {
@@ -32,12 +43,51 @@
   gap: 12px;
 }
 
+.updateBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  background-color: #6c3db5;
+  font-family: inherit;
+  text-align: center;
+  color: var(--yellow-color);
+  transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.updateBtn:hover,
+.updateBtn:focus {
+  box-shadow: 0 0 10px rgba(15, 9, 26, 0.6);
+}
+
 .username {
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  font-size: 16px;
-  text-align: right;
+  font-size: 14px;
+  text-align: center;
+  color: #e9a949;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0;
+}
+
+.updateBtn:hover .username,
+.updateBtn:focus .username {
   color: var(--white-color);
+}
+
+.exitContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 69px;
+  height: 30px;
+  border-left: 2px solid var(--white-color);
 }
 
 .exitBtn {
@@ -68,19 +118,45 @@
   user-select: none;
 }
 
+.exitText {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: inherit;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0;
+}
+
+.exitText:hover,
+.exitText:focus {
+  color: var(--pink-color);
+}
+
+.avatarImage {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
 @media screen and (min-width: 768px) {
   .header {
-    padding: 13px 30px;
+    padding: 13px 0;
   }
 
-  .logoIcon {
-    width: 32px;
-    height: 31px;
+  .container {
+    padding: 0 11px;
+  }
+
+  .logo {
+    width: 104px;
+    height: 53px;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .header {
-    padding: 8px 27px;
+    padding: 8px 0;
   }
 }

@@ -1,60 +1,105 @@
 import s from "./TransactionsItem.module.css";
 import EditIcon from "../../assets/icon-edit.svg?react";
-import { useRef } from "react";
-import {
-  useDispatch,
-  // useSelector
-} from "react-redux";
-import toast from "react-hot-toast";
-import { deleteTransaction } from "../../redux/transactions/operations.js";
-import logo from "../../assets/logo.svg";
 
-const TransactionsItem = ({ id, date, type, category, comment, sum }) => {
-  //пусто
-  const modalRef = useRef(null);
-  const dispatch = useDispatch();
-  //const token = useSelector((state) => state.auth.token);
+import ModalDeleteTransaction from "../ModalDeleteTransaction/ModalDeleteTransaction.jsx";
+import { useState } from "react";
+import EditTransactionForm from "../EditTransactionForm/EditTransactionForm.jsx";
+import { useMediaQuery } from "react-responsive";
+// import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
 
-  const handleDelete = () => {
-    dispatch(deleteTransaction(id));
-    toast.error(`Transaction "${comment}" is deleted!`);
-    modalRef.current.close();
-  };
+const formatDate = (isoDate) => {
+  const dateObj = new Date(isoDate);
+  const day = String(dateObj.getDate()).padStart(2, "0");
+  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const year = String(dateObj.getFullYear()).slice(-2);
+  return `${day}.${month}.${year}`;
+};
+
+const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
+  const [isModalDelete, setIsModalDelete] = useState(false);
+  const [isModalEdit, setIsModalEdit] = useState(false);
+
+  const handleDeleteClick = () => setIsModalDelete(true);
+  const handleEditClick = () => setIsModalEdit(true);
+
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const sumClass = type == "+" ? s.sumIncome : s.sumExpense;
+  const isIncome = type === "+";
 
   return (
-    <li className={s.wrapperTransaction}>
-      <ul className={s.transaction}>
-        <li>{date}</li>
-        {/* виправити формат відображення дати */}
-        <li>{type}</li>
-        <li>{category}</li>
-        <li>{comment}</li>
-        <li>{sum}</li>
-        <li>
-          <EditIcon className={s.icon} />
-          <button
-            className={s.btnDelete}
-            onClick={() => modalRef.current.showModal()}
-          >
-            Delete
-          </button>
-        </li>
-      </ul>
-      {console.log(id, "id")}
-      <dialog ref={modalRef} className={s.modalDel}>
-        <div className={s.modalContent}>
-          <img className={s.logo} src={logo} alt="logo" />
-          <p>
-            Are you sure you want to delete?
-            {/* <span className={s.modalName}>"{name}"</span>? */}
-          </p>
-          <div className={s.modalBtn}>
-            <button onClick={handleDelete}>Delete</button>
-            <button onClick={() => modalRef.current.close()}>Cancel</button>
+    <li
+      className={isMobile ? s.mobileWrapperTransaction : s.wrapperTransaction}
+      data-type={isIncome ? "+" : "-"}
+    >
+      {isMobile ? (
+        <>
+          <div className={s.mobileRow}>
+            <span className={s.label}>Date</span>
+            <span className={s.value}>{formatDate(date)}</span>
           </div>
-        </div>
-      </dialog>
+          <div className={s.mobileRow}>
+            <span className={s.label}>Type</span>
+            <span className={s.value}>{type}</span>
+          </div>
+          <div className={s.mobileRow}>
+            <span className={s.label}>Category</span>
+            <span className={s.value}>{category}</span>
+          </div>
+          <div className={s.mobileRow}>
+            <span className={s.label}>Comment</span>
+            <span className={s.value}>{comment}</span>
+          </div>
+          <div className={`${s.mobileRow} ${s.sumRow}`}>
+            <span className={s.label}>Sum</span>
+            <span className={`${s.value} ${sumClass}`}>{sum.toFixed(2)}</span>
+          </div>
+          <div className={s.mobileActions}>
+            <button className={s.btnDelete} onClick={handleDeleteClick}>
+              Delete
+            </button>
+            <button className={s.btnEdit} onClick={handleEditClick}>
+              <EditIcon className={s.icon} />
+              Edit
+            </button>
+          </div>
+        </>
+      ) : (
+        <ul className={s.transaction}>
+          <li>{formatDate(date)}</li>
+          <li>{type}</li>
+          <li>{category}</li>
+          <li>{comment}</li>
+          <li>{sum.toFixed(2)}</li>
+          <li>
+            <EditIcon className={s.icon} onClick={handleEditClick} />
+            <button className={s.btnDelete} onClick={handleDeleteClick}>
+              Delete
+            </button>
+          </li>
+        </ul>
+      )}
+
+      {isModalDelete && (
+        <ModalDeleteTransaction
+          _id={_id}
+          message="Are you sure you want to delete this transaction ?"
+          comment={comment}
+          onClose={() => setIsModalDelete(false)}
+        />
+      )}
+      {isModalEdit && (
+        <EditTransactionForm
+          _id={_id}
+          data={date}
+          type={type}
+          category={category}
+          comment={comment}
+          sum={sum}
+          onClose={() => setIsModalEdit(false)}
+        />
+      )}
     </li>
   );
 };
+
 export default TransactionsItem;

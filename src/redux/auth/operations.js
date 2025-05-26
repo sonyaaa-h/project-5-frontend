@@ -1,19 +1,22 @@
-import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setUser, setIsRefreshing } from "./slice"; // setToken импортирован для будущего использования
+// import { setUser, setIsRefreshing } from "./slice"; // setToken импортирован для будущего использования
 import toast from "react-hot-toast";
+import { store } from "../store";
+import { logoutThunk } from "./logoutThunk";
+import { api, clearAuthHeader, setAuthHeader } from "./api";
 
-export const api = axios.create({
-  baseURL: "https://spendy-mu36.onrender.com",
-});
 
-const setAuthHeader = (token) => {
-  api.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-const clearAuthHeader = () => {
-  api.defaults.headers.common.Authorization = "";
-};
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      clearAuthHeader();
+      store.dispatch(logoutThunk());
+      // Редірект видалений з інтерсептора
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const loginThunk = createAsyncThunk(
   "auth/login",
@@ -30,19 +33,6 @@ export const loginThunk = createAsyncThunk(
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
       return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
-export const logoutThunk = createAsyncThunk(
-  "auth/logout",
-  async (_, thunkAPI) => {
-    try {
-      await api.post("/auth/logout");
-      clearAuthHeader();
-      return;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -98,31 +88,41 @@ export const registerThunk = createAsyncThunk(
   }
 );
 
-export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+export const getCurrentUserThunk = createAsyncThunk(
+  "auth/getCurrentUser",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
-
-    if (persistedToken === null) {
-      return thunkAPI.rejectWithValue("Unable to fetch user");
-    }
-
     try {
-      setAuthHeader(persistedToken);
-      thunkAPI.dispatch(setIsRefreshing(true));
-      const response = await axios.get("/auth/current");
-      thunkAPI.dispatch(
-        setUser({
-          user: response.data,
-          token: persistedToken,
-        })
-      );
-      return response.data;
+      const response = await api.get("/users/current");
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
-    } finally {
-      thunkAPI.dispatch(setIsRefreshing(false));
+    }
+  }
+);
+
+export const updateUserThunk = createAsyncThunk(
+  "auth/updateCurrentUser",
+  async (body, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState();
+      const token = state.auth.accessToken;
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No token provided");
+      }
+
+      setAuthHeader(token);
+
+      // const response = await api.patch("/users/current", body);
+
+      const userResponse = await api.get("/users/current");
+      const user = userResponse.data.data;
+
+      return { user, accessToken: token };
+    } catch (error) {
+      console.error("Update error:", error);
+      const message = error?.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );

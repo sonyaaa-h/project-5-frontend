@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import { logoutThunk } from "../../redux/auth/operations";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import css from "./LogoutModal.module.css";
 import LogoIconModal from "../tempIcons/LogoIconModal";
+import { logoutThunk } from "../../redux/auth/logoutThunk";
 
 export default function LogoutModal({ onClose }) {
   const dispatch = useDispatch();
@@ -16,9 +16,9 @@ export default function LogoutModal({ onClose }) {
     } catch (error) {
       toast.error(`Logout failed: ${error.message || error}`);
     } finally {
+      onClose();
       localStorage.clear();
       navigate("/login", { replace: true });
-      onClose();
     }
   };
 

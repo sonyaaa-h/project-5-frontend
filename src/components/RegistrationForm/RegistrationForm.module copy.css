@@ -1,0 +1,56 @@
+.div {
+  width: 1280px;
+  height: 720px;
+}
+.formWrapper {
+  padding: 53px 62px 82px 62px;
+}
+.logo {
+  margin-bottom: 37px;
+}
+.wallet {
+  position: absolute;
+  bottom: 35px;
+  right: 16px;
+  width: 320px;
+  height: auto;
+}
+
+.pwdConfContainer {
+  margin-top: 24px;
+  margin-bottom: 20px;
+}
+
+/* .toggleBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #081222;
+}
+
+.icon {
+  outline: transparent;
+  border: none;
+} */
+
+.input {
+  margin-left: 40px;
+}
+
+/* Error state */
+
+.button {
+  width: 410px;
+  margin-top: 36px;
+  margin-bottom: 21px;
+  font-weight: bold;
+}
+
+.link {
+  width: 410px;
+}

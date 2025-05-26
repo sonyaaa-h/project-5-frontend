@@ -9,6 +9,10 @@
   --primary-gradient: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
   --red-color: #b20202;
   --pink-color: #f23a3a;
+  --main-light-green: #508f8c;
+  --main-white: #fcfcfc;
+  --main-yellow: #dfad3f;
+  --chart-green: #24cca7;
 }
 
 html {
@@ -22,6 +26,13 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 h1,
