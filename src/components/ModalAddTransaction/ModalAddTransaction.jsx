@@ -237,7 +237,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
               </div>
 
               <div className={css.dateWrapp}>
-                <DatePicker
+                <DatePicker className={css.date}
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
                   dateFormat="dd/MM/yyyy"
