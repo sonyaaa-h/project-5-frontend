@@ -55,8 +55,10 @@ const transactionsSlice = createSlice({
       })
       .addCase(deleteTransaction.rejected, handleRejected)
       .addCase(addTransaction.fulfilled, (state, action) => {
-        state.items.push(action.payload);
+        state.items.push(action.payload)
       })
+      .addCase(addTransaction.pending, handlePending)
+      .addCase(addTransaction.rejected, handleRejected)
   },
 });
 
