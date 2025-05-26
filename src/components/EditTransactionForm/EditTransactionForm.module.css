@@ -17,20 +17,25 @@
 
 .modal {
   position: relative;
-  width: calc(100% - 40px); /* Например, 100% ширины минус 20px с каждой стороны */
-  max-width: 540px; /* Ограничиваем максимальную ширину, чтобы не растягивалась на больших экранах */
+  width: calc(100% - 40px);
+  /* Например, 100% ширины минус 20px с каждой стороны */
+  max-width: 540px;
+  /* Ограничиваем максимальную ширину, чтобы не растягивалась на больших экранах */
   background-color: var(--modal-color);
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  padding: 20px; /* Уменьшаем padding для мобильных */
-  margin: 20px auto; /* Центрируем и даем отступы от краев экрана */
+  padding: 20px;
+  /* Уменьшаем padding для мобильных */
+  margin: 20px auto;
+  /* Центрируем и даем отступы от краев экрана */
   box-sizing: border-box;
 }
 
 .closeButton {
   position: absolute;
-  top: 10px; /* Смещаем ближе к краю */
+  top: 10px;
+  /* Смещаем ближе к краю */
   right: 10px;
   background: transparent;
   border: none;
@@ -51,19 +56,23 @@
   font-family: sans-serif;
   font-weight: bold;
   color: var(--text-color);
-  font-size: 24px; /* Уменьшаем шрифт для мобильных */
+  font-size: 24px;
+  /* Уменьшаем шрифт для мобильных */
   text-align: center;
   /* margin-bottom будет зависеть от режима, поэтому уберем его отсюда */
-  margin-top: 20px; /* Отступ от верхнего padding модалки */
+  margin-top: 20px;
+  /* Отступ от верхнего padding модалки */
 }
 
 .toggleGroup {
-  width: 100%; /* На всю ширину модалки */
+  width: 100%;
+  /* На всю ширину модалки */
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px; /* Отступ от заголовка для мобильных */
+  margin-top: 20px;
+  /* Отступ от заголовка для мобильных */
   align-self: center;
 }
 
@@ -71,7 +80,8 @@
   font-family: sans-serif;
   font-weight: 400;
   color: var(--text-color);
-  font-size: 14px; /* Уменьшаем шрифт для мобильных */
+  font-size: 14px;
+  /* Уменьшаем шрифт для мобильных */
   cursor: pointer;
   opacity: 0.5;
   transition: all 0.3s ease;
@@ -81,6 +91,7 @@
 .toggleOption.active {
   opacity: 1;
   font-weight: 600;
+}
 
 .descriptionInput {
   position: absolute;
@@ -110,24 +121,31 @@
   background-repeat: no-repeat;
   background-position: right 12px center;
   box-sizing: border-box;
-  margin-top: 20px; /* Отступ от toggleGroup для мобильных */
-  margin-bottom: 20px; /* Отступ до inputGroup для мобильных */
+  margin-top: 20px;
+  /* Отступ от toggleGroup для мобильных */
+  margin-bottom: 20px;
+  /* Отступ до inputGroup для мобильных */
   align-self: center;
 }
 
 .inputGroup {
   display: flex;
-  flex-direction: column; /* Поля Amount и Date друг под другом на мобильных */
+  flex-direction: column;
+  /* Поля Amount и Date друг под другом на мобильных */
   width: 100%;
-  gap: 16px; /* Меньший зазор */
+  gap: 16px;
+  /* Меньший зазор */
   align-self: center;
-  margin-top: 20px; /* Базовый отступ от categorySelect ИЛИ toggleGroup */
+  margin-top: 20px;
+  /* Базовый отступ от categorySelect ИЛИ toggleGroup */
 }
 
 
 /* Стили для inputGroup, когда categorySelect отсутствует (режим Income) на мобильных */
 .inputGroup.incomeMode {
-  margin-top: 20px; /* Отступ от toggleGroup для income mode на мобильных */
+  margin-top: 20px;
+  /* Отступ от toggleGroup для income mode на мобильных */
+}
 
 .amountInput {
   height: 44px;
@@ -142,7 +160,8 @@
 .amountInput,
 .datePicker {
   height: 44px;
-  width: 100% !important; /* На всю ширину */
+  width: 100% !important;
+  /* На всю ширину */
   background-color: var(--white-color);
   border-radius: 4px;
   border: 1px solid #E0E0E0;
@@ -167,7 +186,8 @@
   border: 1px solid #E0E0E0;
   padding: 0 12px;
   box-sizing: border-box;
-  margin-top: 20px; /* Отступ от inputGroup для мобильных */
+  margin-top: 20px;
+  /* Отступ от inputGroup для мобильных */
   align-self: center;
 }
 
@@ -175,8 +195,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 16px; /* Меньший зазор для кнопок на мобильных */
-  margin-top: 20px; /* Отступ от поля Comment для мобильных */
+  gap: 16px;
+  /* Меньший зазор для кнопок на мобильных */
+  margin-top: 20px;
+  /* Отступ от поля Comment для мобильных */
   align-self: center;
 }
 
@@ -185,7 +207,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 11px 0; /* padding по бокам не нужен, если width: 100% */
+  padding: 11px 0;
+  /* padding по бокам не нужен, если width: 100% */
   width: 100%;
   border-radius: 8px;
   background: var(--primary-gradient);
@@ -207,7 +230,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 11px 0; /* padding по бокам не нужен */
+  padding: 11px 0;
+  /* padding по бокам не нужен */
   width: 100%;
   border-radius: 8px;
   border: 1px solid var(--text-color);
@@ -227,8 +251,10 @@
   color: var(--red-color);
   font-size: 12px;
   margin-top: 4px;
-  display: block; /* Убеждаемся, что ошибка занимает свою строку */
-  align-self: flex-start; /* Чтобы ошибка выравнивалась по левому краю в flex-контейнере */
+  display: block;
+  /* Убеждаемся, что ошибка занимает свою строку */
+  align-self: flex-start;
+  /* Чтобы ошибка выравнивалась по левому краю в flex-контейнере */
   /* Margin-left/right: auto здесь не нужен, так как хотим выровнять по левому краю поля */
 }
 
@@ -239,15 +265,21 @@
 /* ==================================================================== */
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .modal {
-    width: 540px; /* Задаем фиксированную ширину для планшета, как для десктопа */
-    padding: 40px 65px 48px 65px; /* Большие паддинги */
-    margin: auto; /* Центрируем */
+    width: 540px;
+    /* Задаем фиксированную ширину для планшета, как для десктопа */
+    padding: 40px 65px 48px 65px;
+    /* Большие паддинги */
+    margin: auto;
+    /* Центрируем */
   }
 
   .title {
-    font-size: 30px; /* Увеличиваем шрифт обратно */
-    margin-bottom: 40px; /* Отступ до переключателя */
-    margin-top: 0; /* Сбрасываем mobile-first отступ, используем padding modal */
+    font-size: 30px;
+    /* Увеличиваем шрифт обратно */
+    margin-bottom: 40px;
+    /* Отступ до переключателя */
+    margin-top: 0;
+    /* Сбрасываем mobile-first отступ, используем padding modal */
   }
 
   .closeButton {
@@ -256,14 +288,17 @@
   }
 
   .toggleGroup {
-    width: 252px; /* Возвращаем фиксированную ширину для планшета */
-    margin-top: 40px; /* Отступ от заголовка */
+    width: 252px;
+    /* Возвращаем фиксированную ширину для планшета */
+    margin-top: 40px;
+    /* Отступ от заголовка */
   }
 
   .toggleOption {
-    font-size: 16px; /* Возвращаем шрифт */
+    font-size: 16px;
+    /* Возвращаем шрифт */
   }
-
+}
 
 @media screen and (max-width: 767px) {
   .modal {
@@ -277,42 +312,53 @@
   .descriptionInput,
 
   .categorySelect {
-    margin-top: 32px; /* Отступ от toggleGroup */
-    margin-bottom: 36px; /* Отступ до inputGroup */
+    margin-top: 32px;
+    /* Отступ от toggleGroup */
+    margin-bottom: 36px;
+    /* Отступ до inputGroup */
     width: 409px;
   }
 
   .inputGroup {
-    flex-direction: row; /* Поля Amount и Date в ряд на планшетах */
+    flex-direction: row;
+    /* Поля Amount и Date в ряд на планшетах */
     width: 410px;
-    gap: 24px; /* Увеличиваем зазор */
-    margin-top: 36px; /* Базовый отступ от categorySelect */
+    gap: 24px;
+    /* Увеличиваем зазор */
+    margin-top: 36px;
+    /* Базовый отступ от categorySelect */
   }
 
   .inputGroup.incomeMode {
-    margin-top: 36px; /* Отступ от toggleGroup для income mode */
+    margin-top: 36px;
+    /* Отступ от toggleGroup для income mode */
   }
 
   .amountInput,
   .datePicker {
-    width: 192.5px !important; /* Фиксированная ширина */
+    width: 192.5px !important;
+    /* Фиксированная ширина */
   }
 
 
   .descriptionInput {
-    margin-top: 36px; /* Отступ от inputGroup */
+    margin-top: 36px;
+    /* Отступ от inputGroup */
     width: 409px;
   }
 
   .buttonGroup {
-    gap: 21px; /* Возвращаем больший зазор */
-    margin-top: 30px; /* Отступ от поля Comment */
+    gap: 21px;
+    /* Возвращаем больший зазор */
+    margin-top: 30px;
+    /* Отступ от поля Comment */
     width: 410px;
   }
 
   .saveButton,
   .cancelButton {
-    padding: 11px 68px; /* Восстанавливаем паддинги */
+    padding: 11px 68px;
+    /* Восстанавливаем паддинги */
   }
 }
 
@@ -321,15 +367,21 @@
 /* ==================================================================== */
 @media screen and (min-width: 769px) {
   .modal {
-    width: 540px; /* Фиксированная ширина для десктопа */
-    padding: 40px 65px 48px 65px; /* Большие паддинги */
-    margin: auto; /* Центрируем */
+    width: 540px;
+    /* Фиксированная ширина для десктопа */
+    padding: 40px 65px 48px 65px;
+    /* Большие паддинги */
+    margin: auto;
+    /* Центрируем */
   }
 
   .title {
-    font-size: 30px; /* Размер шрифта */
-    margin-bottom: 40px; /* Отступ до переключателя */
-    margin-top: 0; /* Сбрасываем mobile-first отступ, используем padding modal */
+    font-size: 30px;
+    /* Размер шрифта */
+    margin-bottom: 40px;
+    /* Отступ до переключателя */
+    margin-top: 0;
+    /* Сбрасываем mobile-first отступ, используем padding modal */
   }
 
   .closeButton {
@@ -339,44 +391,57 @@
 
 
   .toggleGroup {
-    width: 252px; /* Фиксированная ширина */
-    margin-top: 40px; /* Отступ от заголовка */
+    width: 252px;
+    /* Фиксированная ширина */
+    margin-top: 40px;
+    /* Отступ от заголовка */
   }
 
   .toggleOption {
-    font-size: 16px; /* Размер шрифта */
+    font-size: 16px;
+    /* Размер шрифта */
   }
 
   .categorySelect {
-    margin-top: 32px; /* Отступ от toggleGroup */
-    margin-bottom: 36px; /* Отступ до inputGroup */
+    margin-top: 32px;
+    /* Отступ от toggleGroup */
+    margin-bottom: 36px;
+    /* Отступ до inputGroup */
     width: 409px;
   }
 
   .inputGroup {
-    flex-direction: row; /* Поля Amount и Date в ряд */
+    flex-direction: row;
+    /* Поля Amount и Date в ряд */
     width: 410px;
-    gap: 24px; /* Зазор */
-    margin-top: 36px; /* Базовый отступ от categorySelect */
+    gap: 24px;
+    /* Зазор */
+    margin-top: 36px;
+    /* Базовый отступ от categorySelect */
   }
 
   .inputGroup.incomeMode {
-    margin-top: 36px; /* Отступ от toggleGroup для income mode */
+    margin-top: 36px;
+    /* Отступ от toggleGroup для income mode */
   }
 
   .amountInput,
   .datePicker {
-    width: 192.5px !important; /* Фиксированная ширина */
+    width: 192.5px !important;
+    /* Фиксированная ширина */
   }
 
   .descriptionInput {
-    margin-top: 36px; /* Отступ от inputGroup */
+    margin-top: 36px;
+    /* Отступ от inputGroup */
     width: 409px;
   }
 
   .buttonGroup {
-    gap: 21px; /* Зазор */
-    margin-top: 30px; /* Отступ от поля Comment */
+    gap: 21px;
+    /* Зазор */
+    margin-top: 30px;
+    /* Отступ от поля Comment */
     width: 410px;
   }
 
