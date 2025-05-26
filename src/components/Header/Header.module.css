@@ -8,7 +8,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  max-width: 1280px;
+  max-width: 320px;
   margin: 0 auto;
   padding: 0 16px;
   width: 100%;
@@ -147,6 +147,7 @@
 
   .container {
     padding: 0 11px;
+    max-width: 768px;
   }
 
   .logo {
@@ -158,5 +159,9 @@
 @media screen and (min-width: 1280px) {
   .header {
     padding: 8px 0;
+  }
+
+  .container {
+    max-width: 1280px;
   }
 }
