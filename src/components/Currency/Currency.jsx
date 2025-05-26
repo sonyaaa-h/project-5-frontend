@@ -55,6 +55,7 @@ const Currency = () => {
         setError(true);
       } finally {
         setLoading(false);
+        setError(false);
       }
     };
 
