@@ -49,7 +49,6 @@ function App() {
           path="login"
           element={<RestrictedRoute component={LoginPage} redirectTo="/" />}
         />
-{/* //// */}
         <Route
           path="/"
           element={<PrivateRoute component={Layout} redirectTo="/login" />}
