@@ -20,8 +20,8 @@ export const addTransaction = createAsyncThunk(
   async (newTransactionData, thunkAPI) => {
     try {
       const response = await api.post("/transactions", newTransactionData);
-      thunkAPI.dispatch(getCurrentUserThunk()); //оновлення балансу
-      return response.data;
+      thunkAPI.dispatch(getCurrentUserThunk()); //оновлення баланс      
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
