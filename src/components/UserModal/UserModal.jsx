@@ -7,12 +7,14 @@ import toast from "react-hot-toast";
 import { updateUserThunk } from "../../redux/auth/operations";
 import CloseIconModal from "../tempIcons/CloseIcon";
 import PlusIconModal from "../tempIcons/PlusIcon";
+import Loader from "../Loader/Loader";
 
 export const UserModal = ({ onClick }) => {
   const dispatch = useDispatch();
 
   const [photo, setPhoto] = useState("");
   const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const username = useSelector((state) => state.auth.user.name);
   const useremail = useSelector((state) => state.auth.user.email);
@@ -44,6 +46,8 @@ export const UserModal = ({ onClick }) => {
       formData.append("photo", photo);
     }
 
+    setLoading(true);
+
     dispatch(updateUserThunk(formData))
       .unwrap()
       .then(() => {
@@ -51,6 +55,7 @@ export const UserModal = ({ onClick }) => {
         onClick();
       })
       .catch((error) => {
+        setLoading(false);
         toast.error("Something went wrong. Try again!", {
           duration: 2000,
           style: {
@@ -74,6 +79,7 @@ export const UserModal = ({ onClick }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
+        setLoading(false);
         onClick();
       }
     };
@@ -83,102 +89,109 @@ export const UserModal = ({ onClick }) => {
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
+      setLoading(false);
       onClick();
     }
   };
 
   return (
-    <div className={styles.Backdrop} onClick={handleBackdropClick}>
-      <div className={styles.modal}>
-        <button onClick={onClick} type="button" className={styles.closeBtn}>
-          <CloseIconModal className={styles.closeIcon} />
-        </button>
-
-        {preview ? (
-          <img src={preview} alt="Preview" className={styles.avatarImage} />
-        ) : userphoto ? (
-          <img src={userphoto} alt={username} className={styles.avatarImage} />
-        ) : (
-          <p className={styles.avatar}>{firstLetter}</p>
-        )}
-
-        <div className={styles.photoBox}>
-          <label htmlFor="avatar-upload" className={styles.uploadButton}>
-            <PlusIconModal className={styles.plusIcon} />
-            <input
-              id="avatar-upload"
-              name="photo"
-              type="file"
-              onChange={handleFileChange}
-              className={styles.fileInput}
+    <div>
+      <div className={styles.Backdrop} onClick={handleBackdropClick}>
+        <div className={styles.modal}>
+          <button onClick={onClick} type="button" className={styles.closeBtn}>
+            <CloseIconModal className={styles.closeIcon} />
+          </button>
+          {preview ? (
+            <img src={preview} alt="Preview" className={styles.avatarImage} />
+          ) : userphoto ? (
+            <img
+              src={userphoto}
+              alt={username}
+              className={styles.avatarImage}
             />
-          </label>
+          ) : (
+            <p className={styles.avatar}>{firstLetter}</p>
+          )}
+          <div className={styles.photoBox}>
+            <label htmlFor="avatar-upload" className={styles.uploadButton}>
+              <PlusIconModal className={styles.plusIcon} />
+              <input
+                id="avatar-upload"
+                name="photo"
+                type="file"
+                onChange={handleFileChange}
+                className={styles.fileInput}
+              />
+            </label>
+          </div>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={updateValidationSchema}
+            onSubmit={handleSubmit}
+            className={styles.formik}
+          >
+            <Form encType="multipart/form-data" className={styles.form}>
+              <div className={styles.inputBox}>
+                <Field name="name">
+                  {({ field, meta }) => {
+                    const inputClass =
+                      meta.touched && meta.error
+                        ? `${styles.input} ${styles.invalid}`
+                        : meta.touched && !meta.error
+                        ? `${styles.input} ${styles.valid}`
+                        : styles.input;
+                    return (
+                      <>
+                        <input
+                          {...field}
+                          type="text"
+                          placeholder="Name"
+                          className={inputClass}
+                        />
+                        {meta.touched && meta.error && (
+                          <div className={styles.error}>{meta.error}</div>
+                        )}
+                      </>
+                    );
+                  }}
+                </Field>
+              </div>
+              <div className={styles.inputBox}>
+                <Field name="email">
+                  {({ field, meta }) => {
+                    const inputClass =
+                      meta.touched && meta.error
+                        ? `${styles.input} ${styles.invalid}`
+                        : meta.touched && !meta.error
+                        ? `${styles.input} ${styles.valid}`
+                        : styles.input;
+                    return (
+                      <>
+                        <input
+                          {...field}
+                          type="email"
+                          placeholder="Email"
+                          className={inputClass}
+                        />
+                        {meta.touched && meta.error && (
+                          <div className={styles.error}>{meta.error}</div>
+                        )}
+                      </>
+                    );
+                  }}
+                </Field>
+              </div>
+              <button type="submit" className={styles.saveBtn}>
+                Save
+              </button>
+            </Form>
+          </Formik>
+          {loading && (
+            <div className={styles.loader}>
+              <Loader />
+            </div>
+          )}
         </div>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={updateValidationSchema}
-          onSubmit={handleSubmit}
-        >
-          <Form encType="multipart/form-data" className={styles.form}>
-            <div className={styles.inputBox}>
-              <Field name="name">
-                {({ field, meta }) => {
-                  const inputClass =
-                    meta.touched && meta.error
-                      ? `${styles.input} ${styles.invalid}`
-                      : meta.touched && !meta.error
-                      ? `${styles.input} ${styles.valid}`
-                      : styles.input;
-
-                  return (
-                    <>
-                      <input
-                        {...field}
-                        type="text"
-                        placeholder="Name"
-                        className={inputClass}
-                      />
-                      {meta.touched && meta.error && (
-                        <div className={styles.error}>{meta.error}</div>
-                      )}
-                    </>
-                  );
-                }}
-              </Field>
-            </div>
-
-            <div className={styles.inputBox}>
-              <Field name="email">
-                {({ field, meta }) => {
-                  const inputClass =
-                    meta.touched && meta.error
-                      ? `${styles.input} ${styles.invalid}`
-                      : meta.touched && !meta.error
-                      ? `${styles.input} ${styles.valid}`
-                      : styles.input;
-
-                  return (
-                    <>
-                      <input
-                        {...field}
-                        type="email"
-                        placeholder="Email"
-                        className={inputClass}
-                      />
-                      {meta.touched && meta.error && (
-                        <div className={styles.error}>{meta.error}</div>
-                      )}
-                    </>
-                  );
-                }}
-              </Field>
-            </div>
-
-            <button type="submit" className={styles.saveBtn}>
-              Save
-            </button>
-          </Form>
-        </Formik>
       </div>
     </div>
   );

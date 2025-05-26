@@ -63,7 +63,7 @@
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .block {
     background-image: var(--primary-gradient);
-    padding: 35px 16px;
+    padding: 37px 16px;
     gap: 24px;
     margin-bottom: 24px;
   }
@@ -72,7 +72,6 @@
 @media screen and (min-width: 1280px) {
   .block {
     padding: 16px 32px;
-    gap: 12px
+    gap: 14px;
   }
-
 }

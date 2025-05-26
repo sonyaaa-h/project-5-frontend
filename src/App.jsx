@@ -39,20 +39,18 @@ function App() {
               <RestrictedRoute component={RegistrationPage} redirectTo="/" />
             }
           />
-
-          <Route
-            path="login"
-            element={<RestrictedRoute component={LoginPage} redirectTo="/" />}
-          />
-          {/* //// */}
-          <Route
-            path="/"
-            element={<PrivateRoute component={Layout} redirectTo="/login" />}
-          >
-            <Route index element={<HomeTab />} />
-            <Route path="statistics" element={<StatisticsTab />} />
-            <Route path="currency" element={<CurrencyTab />} />
-          </Route>
+        <Route
+          path="login"
+          element={<RestrictedRoute component={LoginPage} redirectTo="/" />}
+        />
+        <Route
+          path="/"
+          element={<PrivateRoute component={Layout} redirectTo="/login" />}
+        >
+          <Route index element={<HomeTab />} />
+          <Route path="statistics" element={<StatisticsTab />} />
+          <Route path="currency" element={<CurrencyTab />} />
+        </Route>
 
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

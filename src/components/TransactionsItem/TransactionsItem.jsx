@@ -87,10 +87,12 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
           onClose={() => setIsModalDelete(false)}
         />
       )}
+      
       {isModalEdit && (
         <EditTransactionForm
+          mode="edit" // <-- ДОДАВ ЦЕЙ РЯДОК
           _id={_id}
-          data={date}
+          date={date} // <-- ЗМІНИВ data={date} НА date={date} для консистентності імен пропсів
           type={type}
           category={category}
           comment={comment}
@@ -98,6 +100,7 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
           onClose={() => setIsModalEdit(false)}
         />
       )}
+    
     </li>
   );
 };

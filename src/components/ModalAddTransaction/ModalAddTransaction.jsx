@@ -237,7 +237,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
               </div>
 
               <div className={css.dateWrapp}>
-                <DatePicker
+                <DatePicker className={css.date}
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
                   dateFormat="dd/MM/yyyy"
@@ -247,7 +247,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
             </div>
 
             <div className={css.moneyWrapp}>
-              <textarea
+              <input
                 {...register("comment")}
                 className={css.comment}
                 placeholder="Comment"

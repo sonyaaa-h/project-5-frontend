@@ -3,7 +3,7 @@ import axios from "axios";
 import styles from "./Currency.module.css";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
 import Loader from "../Loader/Loader.jsx";
-import wallet from "../../assets/wallet.svg";
+import wallet from "../../assets/wallet.png";
 
 const CURRENCY_API_URL = "https://api.monobank.ua/bank/currency";
 const CACHE_KEY = "monobank_currency_cache";
@@ -51,10 +51,12 @@ const Currency = () => {
 
         localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
         setRates(filtered);
+        setError(false);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
+        // setError(false);
       }
     };
 
