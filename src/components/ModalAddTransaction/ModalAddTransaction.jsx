@@ -244,7 +244,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
             </div>
 
             <div className={css.moneyWrapp}>
-              <textarea
+              <input
                 {...register("comment")}
                 className={css.comment}
                 placeholder="Comment"
