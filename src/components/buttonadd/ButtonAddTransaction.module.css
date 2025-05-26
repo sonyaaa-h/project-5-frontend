@@ -1,8 +1,8 @@
 .btnAddWrapp {
   position: fixed;
   z-index: 5;
-  right: 20px;
-  bottom: 20px;
+  right: 16px;
+  bottom: 16px;
 }
 
 .iconAdd {
@@ -16,6 +16,7 @@
   margin: 0;
   padding: 0;
 }
+
 .iconWrapp {
   width: 56px;
   height: 56px;
@@ -31,14 +32,17 @@
 
 @media screen and (min-width: 768px) {
   .btnAddWrapp {
-    right: calc((100vw - 704px) / 2);
-    bottom: 40px;
+    margin-top: -72px;
+    margin-right: 16px;
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .btnAddWrapp {
-    right: calc((100vw - 1265px) / 2);
-    bottom: 40px;
+    margin-top: -80px;
+    margin-right: 24px;
   }
 }

@@ -7,6 +7,7 @@ import AddTransactionButton from "../../components/buttonadd/ButtonAddTransactio
 import ModalAddTransaction from "../../components/ModalAddTransaction/ModalAddTransaction";
 import { useMediaQuery } from "react-responsive";
 import Ballance from "../../components/Ballance/Ballance";
+import c from "./HomeTab.module.css";
 
 const HomeTab = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const HomeTab = () => {
   });
 
   return (
-    <div>
+    <div className={c.wrapperHome}>
       {isMobile && <Ballance />}
       <TransactionsList />
       <AddTransactionButton openModal={handleOpenModal} />

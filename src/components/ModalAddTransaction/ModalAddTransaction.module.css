@@ -26,6 +26,7 @@
 .closeIconBtn {
   display: none;
 }
+
 .closeIcon {
   display: none;
 }
@@ -72,6 +73,7 @@
 .expenseActive {
   justify-content: flex-end;
 }
+
 .btnTypeExpense {
   background-color: #B20202;
 }
@@ -82,6 +84,7 @@
   color: #081222;
   transition: color 0.3s ease;
 }
+
 .active {
   color: #081222;
 }
@@ -110,6 +113,13 @@
   background: transparent;
 }
 
+/* .money:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px white;
+} */
+
+
+
 .money::placeholder {
   color: #3b5d63;
   opacity: 1;
@@ -122,6 +132,7 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -154,6 +165,8 @@ input[type="number"] {
   color: #081222;
   background-color: transparent;
 }
+
+
 
 .calendarIcon {
   fill: #081222;
@@ -229,6 +242,7 @@ input[type="number"] {
   justify-content: center;
   overflow-y: auto;
 }
+
 /* 
 .modalContent {
   position: relative;
@@ -254,12 +268,12 @@ input[type="number"] {
   }
 
   .addTransaction {
-    margin-bottom: 30px; 
+    margin-bottom: 30px;
   }
 
   .form {
     width: 271px;
-    gap: 12px; 
+    gap: 12px;
   }
 
 
@@ -268,12 +282,12 @@ input[type="number"] {
 
 
 
-  
+
 
   .tabletWrap {
     display: flex;
     flex-direction: column;
-    gap: 12px; 
+    gap: 12px;
   }
 
   .money {

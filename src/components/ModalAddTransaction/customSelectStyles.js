@@ -12,7 +12,14 @@ const customSelectStyles = {
     fontSize: "16px",
     fontWeight: "500",
     cursor: "pointer",
+    "&:hover": {
+      border: "2px solid #3b5d63",
+    },
+    "&:active": {
+      border: "2px solid rgb(190, 223, 228)",
+    },
   }),
+
   indicatorSeparator: () => ({
     display: "none",
   }),
