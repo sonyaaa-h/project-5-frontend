@@ -128,6 +128,7 @@ export const UserModal = ({ onClick }) => {
             initialValues={initialValues}
             validationSchema={updateValidationSchema}
             onSubmit={handleSubmit}
+            className={styles.formik}
           >
             <Form encType="multipart/form-data" className={styles.form}>
               <div className={styles.inputBox}>

@@ -51,11 +51,12 @@ const Currency = () => {
 
         localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
         setRates(filtered);
+        setError(false);
       } catch (error) {
         setError(true);
       } finally {
         setLoading(false);
-        setError(false);
+        // setError(false);
       }
     };
 
