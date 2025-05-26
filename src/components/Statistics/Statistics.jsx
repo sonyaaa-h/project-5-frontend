@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchStatistics } from "../../redux/statistics/operations";
 import Toggle from "../Toggle/Toggle";
 import Loader from "../Loader/Loader";
-import wallet from "../../assets/thumbupwallet.svg";
+import thumbupwallet from "../../assets/thumbupwallet.png";
 const Statistics = () => {
   const dispatch = useDispatch();
   const currentDate = new Date();
@@ -159,7 +159,7 @@ const Statistics = () => {
           <p>Error: {error}</p>
         ) : dataWithColor.length === 0 ? (
           <div className={s.noDataContainer}>
-            <img src={wallet} alt="No data" className={s.noDataImage} />
+            <img src={thumbupwallet} alt="No data" className={s.noDataImage} />
             <p className={s.noDataText}>No transactions for this period </p>
           </div>
         ) : (
