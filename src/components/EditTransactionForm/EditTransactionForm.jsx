@@ -31,8 +31,8 @@ const validationSchema = Yup.object().shape({
 
 const EditTransactionForm = ({ mode = 'add', onClose, onSave, _id, date, type, category, comment, sum }) => {
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.categories.items.data || []);
-
+  const categories = useSelector(state => state.categories.items || []);
+console.log(categories)
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
@@ -142,7 +142,7 @@ const EditTransactionForm = ({ mode = 'add', onClose, onSave, _id, date, type, c
                     errors.category && touched.category ? styles.error : ''
                   }`}
                 >
-                  <option value="">Select a category</option> {/* Плейсхолдер */}
+                  
                   {categories.map(categoryItem => (
                     <option key={categoryItem._id} value={categoryItem.name}>
                       {categoryItem.name}
