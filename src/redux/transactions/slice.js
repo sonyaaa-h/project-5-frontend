@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteTransaction, fetchTransactions } from "./operations";
+import {
+  addTransaction,
+  deleteTransaction,
+  fetchTransactions,
+} from "./operations";
 
 const initialState = {
   items: [],
@@ -30,7 +34,6 @@ const transactionsSlice = createSlice({
     builder
       .addCase(fetchTransactions.pending, handlePending)
       .addCase(fetchTransactions.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
 
         const { data, page, perPage, totalItems, totalPages, hasNextPage } =
@@ -53,8 +56,15 @@ const transactionsSlice = createSlice({
       .addCase(deleteTransaction.pending, handlePending)
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item._id !== action.payload);
+        state.isLoading = false;
       })
-      .addCase(deleteTransaction.rejected, handleRejected);
+      .addCase(deleteTransaction.rejected, handleRejected)
+      .addCase(addTransaction.fulfilled, (state, action) => {
+        state.items.push(action.payload)
+        state.isLoading = false;
+      })
+      .addCase(addTransaction.pending, handlePending)
+      .addCase(addTransaction.rejected, handleRejected)
   },
 });
 

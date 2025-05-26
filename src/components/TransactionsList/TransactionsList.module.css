@@ -4,79 +4,23 @@
     gap: 16px;
 }
 
+/* Заголовки колонок */
 .titles {
     display: none;
+    font-family: "Poppins", sans-serif;
+    flex-direction: row;
+    color: var(--white-color);
+    padding: 0 12px 0 0;
 }
 
+/* Список транзакцій */
 .wrapperTransactions {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-
-@media screen and (min-width: 768px) {
-    .wrapper {
-        border-radius: 16px;
-        padding: 32px 16px;
-        max-width: 704px;
-        height: 538px;
-        background-image: var(--primary-gradient);
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-
-    .titles {
-        display: block;
-        font-family: "Poppins", sans-serif;
-        display: flex;
-        flex-direction: row;
-        color: var(--white-color);
-        margin-bottom: 16px;
-    }
-
-    .date {
-        margin-right: 57px;
-    }
-
-    .type {
-        margin-right: 36px;
-    }
-
-    .category {
-        margin-right: 40px;
-    }
-
-    .comment {
-        margin-right: 58px;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-    .wrapper {
-        padding: 32px 18px 1px 27px;
-        max-width: 757px;
-        height: 585px;
-    }
-
-    .date {
-        margin-right: 74px;
-    }
-
-    .type {
-        margin-right: 55px;
-    }
-
-    .category {
-        margin-right: 48px;
-    }
-
-    .comment {
-        margin-right: 59px;
-    }
-}
-
-
+/* Прокрутка */
 .transactionsScroll {
     max-height: 415px;
     overflow-y: auto;
@@ -84,7 +28,7 @@
     scroll-behavior: smooth;
 }
 
-
+/* Кастомний скролбар */
 .transactionsScroll::-webkit-scrollbar {
     width: 4px;
 }
@@ -97,52 +41,117 @@
 .transactionsScroll::-webkit-scrollbar-track {
     background-image: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
     border-radius: 64px;
-
 }
 
+/* Кнопка "Load More" */
 .moreBtn {
     font-size: 16px;
+    font-weight: 500;
     color: var(--white-color);
-    margin: 0 auto;
+    background-color: transparent;
     border: 1px solid var(--white-color);
     border-radius: 8px;
     padding: 8px 32px;
-    background-color: transparent;
+    margin: 0 auto;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .moreBtn:hover {
     transform: scale(1.04);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Текст "No Transactions" */
 .noneTransText {
     display: flex;
-    width: 756px;
     align-items: center;
     justify-content: center;
     color: #fcfcfc;
     font-weight: 400;
-    font-size: 18px;
+    text-align: center;
+    font-size: 16px;
+    width: 288px;
+    margin: 0 auto;
 }
 
-@media screen and (max-width: 1279px) {
-    .moreBtn {
-        font-size: 18px;
-        font-weight: 500;
-        padding: 11px 68px;
+/* Лоадер */
+.loaderWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* ----------- MEDIA QUERIES ----------- */
+@media screen and (min-width: 768px) {
+    .wrapper {
+        border-radius: 16px;
+        padding: 32px 16px;
+        max-width: 704px;
+        height: 538px;
+        background-image: var(--primary-gradient);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .titles {
+        display: flex;
+        
     }
 
     .noneTransText {
         width: 706px;
+        font-size: 18px;
+    }
+
+    .moreBtn {
+        font-size: 18px;
+        padding: 11px 68px;
+    }
+
+    .date {
+        margin-left: 20px;
+        margin-right: 60px;
+    }
+
+    .type {
+        margin-right: 58px;
+    }
+
+    .category {
+        margin-right: 44px;
+    }
+
+    .comment {
+        margin-right: 50px;
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 1280px) {
+    .wrapper {
+        padding: 32px 18px 1px 27px;
+        max-width: 757px;
+        height: 585px;
+    }
+
+    .date {
+        margin-right: 65px;
+    }
+
+    .type {
+        margin-right: 59px;
+    }
+
+    .category {
+        margin-right: 38px;
+    }
+
+    .comment {
+        margin-right: 74px;
+    }
+
     .noneTransText {
-        width: 288px;
-        font-weight: 400;
-        font-size: 16px;
+        width: 756px;
     }
 }

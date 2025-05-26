@@ -1,37 +1,34 @@
+import { colors } from "@mui/material";
+
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
     width: "100%",
     backgroundColor: "transparent",
-    border: "none",
-    borderBottom: `2px solid ${state.isFocused ? "#6D54EB" : "#6D54EB"}`,
+    border: "2px solid #3b5d63",
+    borderRadius: "8px",
     boxShadow: "none",
-    color: "#fff",
     minHeight: "50px",
-    borderRadius: "0px",
     fontSize: "16px",
     fontWeight: "500",
-    // padding: "2px 10px",
     cursor: "pointer",
-    transition: "all 0.3s ease",
   }),
   indicatorSeparator: () => ({
     display: "none",
   }),
   menu: (provided) => ({
     ...provided,
-    backgroundColor: "#2d1a5a",
-    borderRadius: "12px",
+    backgroundColor: "#3b5d63",
+    borderRadius: "8px",
     padding: "5px",
-    marginTop: "8px",
     zIndex: 10,
   }),
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isSelected
-      ? "#6D54EB"
+      ? "#508f8c"
       : state.isFocused
-      ? "#442877"
+      ? "#508f8c"
       : "transparent",
     color: "#fff",
     borderRadius: "8px",
@@ -41,16 +38,16 @@ const customSelectStyles = {
   }),
   singleValue: (provided) => ({
     ...provided,
-    color: "#fff",
+    color: "#081222",
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: "#aaa",
-    fontSize: "16px",
+    color: "#3b5d63",
+    fontSize: "18px",
   }),
   input: (provided) => ({
     ...provided,
-    color: "#fff",
+    color: "#3b5d63",
   }),
 };
 

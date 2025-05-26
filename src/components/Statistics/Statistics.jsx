@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PieChartWithPaddingAngle from "../PieChartWithPaddingAngle/PieChartWithPaddingAngle";
 import s from "./Statistics.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,7 +40,9 @@ const Statistics = () => {
 
   const dataWithColor = Object.entries(groupedByCategory).map(
     ([categoryName, sum]) => {
-      const category = categories.data.find((cat) => cat.name === categoryName);
+      const category = categories?.find(
+        (cat) => cat.name === categoryName
+      );
       return {
         category: categoryName,
         sum,
@@ -142,7 +144,7 @@ const Statistics = () => {
         ) : (
           <table className={s.tableStatistics}>
             <thead className={s.theadStatistics}>
-              <tr>
+              <tr className={s.trhStatistics}>
                 <th className={s.thStatistics}>Category</th>
                 <th className={s.thStatistics}>Sum</th>
               </tr>
@@ -153,13 +155,9 @@ const Statistics = () => {
                   <td className={s.tdStatistics}>
                     <span
                       style={{
-                        display: "inline-block",
-                        width: "24px",
-                        height: "24px",
                         backgroundColor: item.color,
-                        marginRight: "24px",
-                        borderRadius: "2px",
                       }}
+                      className={s.spanStatistic}
                     ></span>
                     {item.category}
                   </td>
@@ -171,13 +169,13 @@ const Statistics = () => {
                 </tr>
               ))}
             </tbody>
-            <tfoot className={s.tfootStatistics}>
-              <tr>
-                <td className={s.tdStatistics}>
+            <tfoot>
+              <tr className={s.tfootStatistics}>
+                <td className={s.tdfStatistics}>
                   {isIncome ? "Expenses:" : "Income"}
                 </td>
                 <td
-                  className={s.tdStatistics}
+                  className={s.tdfStatistics}
                   style={{ color: isIncome ? "#f23a3a" : "#24cca7" }}
                 >
                   {total}
