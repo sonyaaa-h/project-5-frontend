@@ -19,16 +19,6 @@ const initialState = {
     isRefreshing: false,
 };
 
-const handlePending = (state) => {
-    state.isLoading = true;
-    state.error = null;
-};
-
-const handleRejected = (state, action) => {
-    state.isLoading = false;
-    state.error = action.payload;
-};
-
 const slice = createSlice({
     name: "auth",
     initialState,
@@ -43,8 +33,6 @@ const slice = createSlice({
                 state.isLoggedIn = true;
                 state.isAuthLoading = false;
             })
-            .addCase(registerThunk.pending, handlePending)
-            .addCase(registerThunk.rejected, handleRejected)
             .addCase(loginThunk.fulfilled, (state, action) => {
                 state.user.name = action.payload.user.name;
                 state.user.email = action.payload.user.email;
@@ -53,8 +41,6 @@ const slice = createSlice({
                 state.accessToken = action.payload.accessToken;
                 state.isLoggedIn = true;
             })
-            .addCase(loginThunk.pending, handlePending)
-            .addCase(loginThunk.rejected, handleRejected)
 
             .addCase(updateUserThunk.fulfilled, (state, action) => {
                 state.user.name = action.payload.user.name;
@@ -63,15 +49,10 @@ const slice = createSlice({
                 state.accessToken = action.payload.accessToken;
                 state.isLoggedIn = true;
             })
-            .addCase(updateUserThunk.pending, handlePending)
-            .addCase(updateUserThunk.rejected, handleRejected)
             .addCase(logoutThunk.fulfilled, () => initialState)
             .addCase(getCurrentUserThunk.fulfilled, (state, action) => {
                 state.user.balance = action.payload.balance;
             })
-
-            .addCase(getCurrentUserThunk.pending, handlePending)
-            .addCase(getCurrentUserThunk.rejected, handleRejected);
     },
 });
 
