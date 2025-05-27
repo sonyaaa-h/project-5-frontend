@@ -12,7 +12,7 @@
   position: relative;
   border-radius: 16px;
   width: 280px;
-  height: 528px;
+  /* height: 528px; */
   padding: 16px;
   background-color: #508f8c;
 }
@@ -24,11 +24,10 @@
 }
 
 .walletMob {
-  position: absolute;
-  bottom: 23px;
-  right: 12px;
   width: 159px;
   height: 118px;
+  margin-left: 93px;
+  margin-top: 37px;
 }
 
 .wallet {
@@ -213,6 +212,7 @@ input:-webkit-autofill {
   width: 248px;
   height: 44px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 37px;
 }
 
 .linkReg:hover {
@@ -220,15 +220,11 @@ input:-webkit-autofill {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* for tablet */
 @media screen and (min-width: 768px) {
-  .loginForm {
-    position: relative;
-    margin-top: 176px;
-  }
-
   .form {
     width: 533px;
-    height: 519px;
+    /* height: 519px; */
     padding: 53px 62px 82px 62px;
   }
 
@@ -242,11 +238,10 @@ input:-webkit-autofill {
 
   .wallet {
     display: flex;
-    position: absolute;
     width: 320px;
     height: auto;
     margin-left: 447px;
-    margin-top: 565px;
+    margin-top: 32px;
   }
 
   .emailContainer {
@@ -271,13 +266,15 @@ input:-webkit-autofill {
   }
 }
 
+/* for desktop */
 @media screen and (min-width: 1280px) {
   .loginForm {
-    margin-top: 75px;
+    position: relative;
   }
 
   .wallet {
+    position: absolute;
     margin-left: 944px;
-    margin-top: 371px;
+    margin-top: 446px;
   }
 }
