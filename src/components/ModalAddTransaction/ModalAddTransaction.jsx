@@ -36,14 +36,10 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
   const schema = yup.object().shape({
     money: yup
       .number()
-      .typeError('Money must be a number')
-      .positive('Money must be positive')
-      .required('Money is required'),
+      .required('Amount is required')
+      .typeError('Amount must be a number')
+      .positive('Amount must be positive'),
     comment: yup.string().max(50, 'Comment must be at most 50 characters'),
-      .required("Amount is required")
-      .typeError("Amount must be a number")
-      .positive("Amount must be positive"),
-    comment: yup.string().max(50, "Comment must be at most 50 characters"),
     // Категорія тепер обов'язкова, незалежно від типу транзакції
     category: yup.string().required('Category is required'),
   });
@@ -62,10 +58,6 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
       category: '', // Встановлюємо значення за замовчуванням для категорії
       money: '',
       comment: '',
-    },
-      category: "", // Встановлюємо значення за замовчуванням для категорії
-      money: "",
-      comment: "",
     },
   });
 
@@ -99,27 +91,11 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
         titleColor: '#fff',
       });
       return;
-      // Цей блок може бути менш необхідним, якщо валідація YUP працює коректно,
-      // але додаємо для безпеки, якщо data.category пройшло крізь YUP без _id
-      iziToast.error({
-        title: "Error",
-        message: "Invalid category selected.",
-        position: "topRight",
-        timeout: 5000,
-        close: true,
-        progressBar: true,
-        backgroundColor: "#ff4d4f",
-        messageColor: "#fff",
-        titleColor: "#fff",
-      });
-      return;
     }
 
     const categoryName = selectedCategory.name; // Використовуємо назву категорії
 
     const formatDate = date => {
-      // Перейменував параметр, щоб уникнути конфлікту з "data"
-    const formatDate = (date) => {
       // Перейменував параметр, щоб уникнути конфлікту з "data"
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -186,10 +162,6 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
         .map(category => ({
           value: category._id,
           label: category.name,
-        .filter((category) => category.type === transactionType)
-        .map((category) => ({
-          value: category._id,
-          label: category.name,
         }))
     : [];
 
@@ -230,8 +202,6 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
               onClick={() =>
                 handleTransactionTypeChange(
                   transactionType === 'income' ? 'expense' : 'income',
-                handleTransactionTypeChange(
-                  transactionType === "income" ? "expense" : "income"
                 )
               }
               className={clsx(
@@ -276,14 +246,10 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
                     styles={customSelectStyles}
                     onChange={option => {
                       field.onChange(option ? option.value : null);
-                    onChange={(option) => {
-                      field.onChange(option ? option.value : null);
                     }}
                     value={
                       categoryOptions.find(
                         option => option.value === field.value,
-                      ) || null
-                        (option) => option.value === field.value
                       ) || null
                     }
                   />
@@ -350,4 +316,3 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
 };
 
 export default ModalAddTransaction;
-

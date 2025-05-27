@@ -201,7 +201,7 @@ input[type="number"] {
   background-color: transparent;
 }
 
-*/ .dateWrapp {
+.dateWrapp {
   position: relative;
   /* <<<<<<<< Додано: Для правильного абсолютного позиціонування іконки */
   border-radius: 8px;
