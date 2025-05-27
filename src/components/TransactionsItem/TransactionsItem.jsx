@@ -1,22 +1,22 @@
-import s from "./TransactionsItem.module.css";
-import EditIcon from "../../assets/icon-edit.svg?react";
+import s from './TransactionsItem.module.css';
+import EditIcon from '../../assets/icon-edit.svg?react';
 
-import ModalDeleteTransaction from "../ModalDeleteTransaction/ModalDeleteTransaction.jsx";
-import { useState } from "react";
-import EditTransactionForm from "../EditTransactionForm/EditTransactionForm.jsx";
-import { useMediaQuery } from "react-responsive";
+import ModalDeleteTransaction from '../ModalDeleteTransaction/ModalDeleteTransaction.jsx';
+import { useState } from 'react';
+import EditTransactionForm from '../EditTransactionForm/EditTransactionForm.jsx';
+import { useMediaQuery } from 'react-responsive';
 import {
   fetchTransactions,
   updateTransaction,
-} from "../../redux/transactions/operations.js";
-import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+} from '../../redux/transactions/operations.js';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 // import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
 
-const formatDate = (isoDate) => {
+const formatDate = isoDate => {
   const dateObj = new Date(isoDate);
-  const day = String(dateObj.getDate()).padStart(2, "0");
-  const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
   const year = String(dateObj.getFullYear()).slice(-2);
   return `${day}.${month}.${year}`;
 };
@@ -28,31 +28,31 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
   const handleDeleteClick = () => setIsModalDelete(true);
   const handleEditClick = () => setIsModalEdit(true);
 
-  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
-  const sumClass = type == "+" ? s.sumIncome : s.sumExpense;
-  const isIncome = type === "+";
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const sumClass = type == '+' ? s.sumIncome : s.sumExpense;
+  const isIncome = type === '+';
 
   //оновлення транзакцій
   const dispatch = useDispatch();
-  const handleSave = async (data) => {
-    console.log("Data received in handleSave:", data);
+  const handleSave = async data => {
+    console.log('Data received in handleSave:', data);
     try {
       const { _id, ...updatedData } = data; // виділяємо id
       await dispatch(
-        updateTransaction({ id: _id, updatedTransactionData: updatedData })
+        updateTransaction({ id: _id, updatedTransactionData: updatedData }),
       );
-      toast.success("Transaction updated successfully");
+      toast.success('Transaction updated successfully');
       dispatch(fetchTransactions());
       setIsModalEdit(false);
     } catch (err) {
-      toast.error("Failed to update transaction", err);
+      toast.error('Failed to update transaction', err);
     }
   };
 
   return (
     <li
       className={isMobile ? s.mobileWrapperTransaction : s.wrapperTransaction}
-      data-type={isIncome ? "+" : "-"}
+      data-type={isIncome ? '+' : '-'}
     >
       {isMobile ? (
         <>

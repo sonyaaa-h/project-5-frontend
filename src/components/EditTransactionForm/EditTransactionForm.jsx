@@ -1,37 +1,35 @@
-// src/components/EditTransactionForm/EditTransactionForm.jsx
-
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import styles from "./EditTransactionForm.module.css";
-import { toast } from "react-hot-toast";
-import { IoClose } from "react-icons/io5";
-import ToggleForEdit from "../ToggleForEdit/ToggleForEdit";
-import { fetchCategories } from "../../redux/categories/operations";
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import styles from '../ModalAddTransaction/ModalAddTransaction.module.css';
+import css from './EditTransactionForm.module.css';
+import { IoAddOutline, IoCloseOutline } from 'react-icons/io5';
+import { FiMinus } from 'react-icons/fi';
+import clsx from 'clsx';
+import { toast } from 'react-hot-toast';
+import { fetchCategories } from '../../redux/categories/operations';
+import Select from 'react-select';
+import customSelectStyles from '../ModalAddTransaction/customSelectStyles.js';
+import { IoClose } from 'react-icons/io5';
 
 const validationSchema = Yup.object().shape({
   amount: Yup.number()
-    .required("Amount is required")
-    .positive("Amount must be positive")
-    .typeError("Amount must be a number"),
+    .required('Amount is required')
+    .positive('Amount must be positive')
+    .typeError('Amount must be a number'),
   date: Yup.date()
-    .required("Date is required")
-    .max(new Date(), "Date cannot be in the future"),
-  // Оновлена валідація для категорії:
-  // Категорія обов'язкова як для 'expense', так і для 'income'.
-  category: Yup.string().when("type", (type, schema) => {
-    // Тепер категорія обов'язкова для обох типів
-    return schema.required("Category is required");
-  }),
-  comment: Yup.string().max(100, "Comment must be less than 100 characters"),
+    .required('Date is required')
+    .max(new Date(), 'Date cannot be in the future'),
+  category: Yup.string().required('Category is required'),
+  comment: Yup.string().max(100, 'Comment must be less than 100 characters'),
 });
 
 const EditTransactionForm = ({
-  mode = "add",
+  mode = 'edit',
   onClose,
   onSave,
   _id,
@@ -42,52 +40,21 @@ const EditTransactionForm = ({
   sum,
 }) => {
   const dispatch = useDispatch();
-  // Припускаємо, що категорії з Redux вже мають властивість 'type' (income/expense)
-  const allCategories = useSelector((state) => state.categories.items || []);
+  const allCategories = useSelector(state => state.categories.items || []);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
   const initialFormValues = {
-    amount: mode === "edit" ? sum : "",
-    date: mode === "edit" && date ? new Date(date) : new Date(),
-    type: mode === "edit" ? (type === "+" ? "income" : "expense") : "income",
-    category: mode === "edit" ? category : "",
-    comment: mode === "edit" ? comment : "",
+    amount: sum || '',
+    date: date ? new Date(date) : new Date(),
+    type: type === '+' ? 'income' : 'expense',
+    category: category || '',
+    comment: comment || '',
   };
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      const transformedValues = {
-        _id,
-        type: values.type === "income" ? "+" : "-",
-        sum: values.amount,
-        date: values.date.toISOString(),
-        category: values.category, // Завжди відправляємо обрану категорію
-        comment: values.comment,
-      };
-
-      if (onSave) {
-        await onSave(transformedValues);
-      }
-
-      toast.success("Transaction saved successfully!");
-      if (onClose) onClose();
-    } catch (error) {
-      toast.error(error.message || "Failed to save transaction");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget && onClose) {
-      onClose();
-    }
-  };
-
-  const handleCloseClick = (e) => {
+  const handleCloseClick = e => {
     e.stopPropagation();
     if (onClose) {
       onClose();
@@ -95,165 +62,199 @@ const EditTransactionForm = ({
   };
 
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick}>
-      <Formik
-        initialValues={initialFormValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        enableReinitialize={true}
-      >
-        {({ values, errors, touched, setFieldValue, isSubmitting }) => {
-          // *** Логіка: Фільтруємо категорії за поточним типом транзакції ***
-          const filteredCategories = allCategories.filter(
-            (cat) => cat.type === values.type
-          );
+    <div className={styles.backdrop} onClick={onClose}>
+      <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+        <div className={styles.addModalWrapp}>
+          <p className={styles.addTransaction}>Edit transaction</p>
 
-          return (
-            <Form className={styles.modal}>
-              <button
-                type="button"
-                className={styles.closeButton}
-                onClick={handleCloseClick}
-              >
-                <IoClose size={24} />
-              </button>
+          <Formik
+            initialValues={initialFormValues}
+            validationSchema={validationSchema}
+            onSubmit={async (values, { setSubmitting }) => {
+              try {
+                const transformed = {
+                  _id,
+                  type: values.type === 'income' ? '+' : '-',
+                  sum: Number(values.amount),
+                  date: values.date.toISOString(),
+                  category: values.category,
+                  comment: values.comment,
+                };
+                await onSave(transformed);
+                toast.success('Transaction updated!');
+                onClose();
+              } catch (err) {
+                toast.error('Failed to update transaction');
+              } finally {
+                setSubmitting(false);
+              }
+            }}
+            enableReinitialize
+          >
+            {({ values, errors, touched, setFieldValue, isSubmitting }) => {
+              const filteredCategories = allCategories.filter(
+                cat => cat.type === values.type,
+              );
 
-              <h2 className={styles.title}>
-                {mode === "edit" ? "Edit" : "Add"} transaction
-              </h2>
+              const categoryOptions = filteredCategories.map(cat => ({
+                value: cat.name,
+                label: cat.name,
+              }));
 
-              <div className={styles.toggleGroup}>
-                <div
-                  className={`${styles.toggleOption} ${
-                    values.type === "income" ? styles.active : ""
-                  }`}
-                >
-                  Income
-                </div>
+              return (
+                <Form className={styles.form}>
+                  <button
+                    type="button"
+                    className={css.closeButton}
+                    onClick={handleCloseClick}
+                  >
+                    <IoClose size={24} />
+                  </button>
+                  <div className={css.toggleGroup}>
+                    <p
+                      onClick={() => {
+                        setFieldValue('type', 'income');
+                        setFieldValue('category', '');
+                      }}
+                      className={clsx(
+                        styles.income,
+                        values.type === 'income' && styles.active,
+                      )}
+                    >
+                      Income
+                    </p>
 
-                <ToggleForEdit
-                  isIncome={values.type === "income"}
-                  setIsIncome={(checked) => {
-                    // Встановлюємо новий тип транзакції
-                    setFieldValue("type", checked ? "income" : "expense");
-                    // *** Оновлення: скидаємо категорію при зміні типу ***
-                    // Це гарантує, що недійсна категорія не залишиться вибраною
-                    setFieldValue("category", "");
-                  }}
-                />
+                    <button className={styles.closeIconBtn} onClick={onClose}>
+                      <IoCloseOutline className={styles.closeIcon} />
+                    </button>
 
-                <div
-                  className={`${styles.toggleOption} ${
-                    values.type === "expense" ? styles.active : ""
-                  }`}
-                >
-                  Expense
-                </div>
-              </div>
+                    <div
+                      onClick={() => {
+                        const newType =
+                          values.type === 'income' ? 'expense' : 'income';
+                        setFieldValue('type', newType);
+                        setFieldValue('category', '');
+                      }}
+                      className={clsx(
+                        styles.btnTypeWrapp,
+                        values.type === 'expense' && styles.expenseActive,
+                      )}
+                    >
+                      <div
+                        className={clsx(
+                          styles.btnType,
+                          values.type === 'expense' && styles.btnTypeExpense,
+                        )}
+                      >
+                        {values.type === 'income' ? (
+                          <IoAddOutline className={styles.btnIconType} />
+                        ) : (
+                          <FiMinus />
+                        )}
+                      </div>
+                    </div>
 
-              {/* Поле Category відображається завжди, але список опцій фільтрується */}
-              <>
-                <Field
-                  name="category"
-                  as="select"
-                  className={`${styles.categorySelect} ${
-                    errors.category && touched.category ? styles.error : ""
-                  }`}
-                >
-                  <option value="">Select a category</option>
-                  {/* Використовуємо відфільтровані категорії */}
-                  {filteredCategories.map((categoryItem) => (
-                    <option key={categoryItem._id} value={categoryItem.name}>
-                      {categoryItem.name}
-                    </option>
-                  ))}
-                </Field>
-                {errors.category &&
-                  touched.category && (
-                    <div className={styles.errorText}>{errors.category}</div>
-                  )}
-              </>
+                    <p
+                      onClick={() => {
+                        setFieldValue('type', 'expense');
+                        setFieldValue('category', '');
+                      }}
+                      className={clsx(
+                        styles.expense,
+                        values.type === 'expense' && styles.activeExpense,
+                      )}
+                    >
+                      Expense
+                    </p>
+                  </div>
 
-              <div
-                className={`${styles.inputGroup} ${
-                  values.type === "income" ? styles.incomeMode : ""
-                }`}
-              >
-                <Field
-                  name="amount"
-                  type="text"
-                  className={`${styles.amountInput} ${
-                    errors.amount && touched.amount ? styles.error : ""
-                  }`}
-                  placeholder="Amount"
-                />
-                <DatePicker
-                  selected={values.date}
-                  onChange={(date) => setFieldValue("date", date)}
-                  className={`${styles.datePicker} ${
-                    errors.date && touched.date ? styles.error : ""
-                  }`}
-                  dateFormat="dd/MM/yyyy"
-                  showIcon
-                  toggleCalendarOnIconClick
-                />
-              </div>
-              {errors.amount &&
-                touched.amount && (
-                  <div className={styles.errorText}>{errors.amount}</div>
-                )}
-              {errors.date &&
-                touched.date && (
-                  <div className={styles.errorText}>{errors.date}</div>
-                )}
+                  <div className={styles.selectWrapp}>
+                    <Select
+                      options={categoryOptions}
+                      placeholder="Select a category"
+                      styles={customSelectStyles}
+                      value={
+                        categoryOptions.find(
+                          opt => opt.value === values.category,
+                        ) || null
+                      }
+                      onChange={option =>
+                        setFieldValue('category', option ? option.value : '')
+                      }
+                    />
+                    {errors.category && touched.category && (
+                      <p className={styles.errMoney}>{errors.category}</p>
+                    )}
+                  </div>
 
-              <Field
-                name="comment"
-                className={`${styles.descriptionInput} ${
-                  errors.comment && touched.comment ? styles.error : ""
-                }`}
-                placeholder="Comment"
-              />
-              {errors.comment && touched.comment && (
-                <div className={styles.errorText}>{errors.comment}</div>
-              )}
+                  <div className={styles.tabletWrap}>
+                    <div className={styles.moneyWrapp}>
+                      <Field
+                        name="amount"
+                        type="number"
+                        placeholder="0.00"
+                        className={styles.money}
+                      />
+                      {errors.amount && touched.amount && (
+                        <p className={styles.errMoney}>{errors.amount}</p>
+                      )}
+                    </div>
 
-              <div className={styles.buttonGroup}>
-                <button
-                  type="submit"
-                  className={styles.saveButton}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Saving..." : "Save"}
-                </button>
+                    <div className={styles.dateWrapp}>
+                      <DatePicker
+                        selected={values.date}
+                        onChange={date => setFieldValue('date', date)}
+                        className={styles.date}
+                        dateFormat="dd/MM/yyyy"
+                        toggleCalendarOnIconClick
+                      />
+                    </div>
+                  </div>
 
-                <button
-                  type="button"
-                  className={styles.cancelButton}
-                  onClick={() => {
-                    setFieldValue("amount", "");
-                    setFieldValue("comment", "");
-                    // Модальне вікно не закривається при відміні
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
+                  <div className={styles.moneyWrapp}>
+                    <Field
+                      name="comment"
+                      className={styles.comment}
+                      placeholder="Comment"
+                    />
+                    {errors.comment && touched.comment && (
+                      <p className={styles.errMoney}>{errors.comment}</p>
+                    )}
+                  </div>
+
+                  <div className={styles.btnWrapp}>
+                    <button
+                      type="submit"
+                      className={styles.btnAdd}
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Saving...' : 'Save'}
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.btnCancel}
+                      onClick={onClose}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
+        </div>
+      </div>
     </div>
   );
 };
 
 EditTransactionForm.propTypes = {
-  mode: PropTypes.oneOf(["edit", "add"]),
+  mode: PropTypes.oneOf(['edit', 'add']),
   onClose: PropTypes.func,
   onSave: PropTypes.func,
   _id: PropTypes.string,
   date: PropTypes.string,
-  type: PropTypes.oneOf(["+", "-"]),
+  type: PropTypes.oneOf(['+', '-']),
   category: PropTypes.string,
   comment: PropTypes.string,
   sum: PropTypes.number,
