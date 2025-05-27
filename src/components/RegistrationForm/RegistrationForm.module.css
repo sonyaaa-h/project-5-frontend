@@ -304,7 +304,7 @@ input:-webkit-autofill {
     margin-top: 24px;
     margin-bottom: 20px;
   }
-  span {
+  .span {
     margin-top: -20px;
   }
   .button {
@@ -333,7 +333,7 @@ input:-webkit-autofill {
     width: 320px;
     /* position: absolute; */
   }
-  span {
+  .span {
     margin-top: -20px;
   }
   /* html {
