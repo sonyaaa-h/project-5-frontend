@@ -1,4 +1,4 @@
-import { Bars } from "react-loader-spinner";
+import { Rings } from "react-loader-spinner";
 import css from "./MasterLoader.module.css";
 import ReactModal from "react-modal";
 
@@ -8,18 +8,15 @@ export default function MasterLoader({ open }) {
       appElement={document.getElementById("root") || undefined}
       isOpen={open}
       preventScroll={true}
-      className={css.modal}
-      style={{
-        overlay: { zIndex: 9, backgroundColor: "transparent" },
-      }}
+      overlayClassName={css.loaderOverlay}
+      className={css.loaderContent}
     >
-      <Bars
+      <Rings
         visible={true}
-        height="80"
-        width="80"
-        color="#223438"
+        height="150"
+        width="150"
+        color="#508f8c"
         ariaLabel="rings-loading"
-        wrapperClass={css.wrapper}
       />
     </ReactModal>
   );

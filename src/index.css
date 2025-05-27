@@ -15,10 +15,6 @@
   --chart-green: #24cca7;
 }
 
-html {
-  /* height: 100%; */
-}
-
 body {
   font-family: "Inter", sans-serif;
   line-height: 1.5;

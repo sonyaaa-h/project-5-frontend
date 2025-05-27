@@ -8,11 +8,13 @@ import ModalAddTransaction from "../../components/ModalAddTransaction/ModalAddTr
 import { useMediaQuery } from "react-responsive";
 import Ballance from "../../components/Ballance/Ballance";
 import c from "./HomeTab.module.css";
+import { selectIsLoading } from "../../redux/global/selectors";
 
 const HomeTab = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const token = useSelector((state) => state.auth.accessToken);
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     if (token) {
@@ -37,7 +39,7 @@ const HomeTab = () => {
     <div className={c.wrapperHome}>
       {isMobile && <Ballance />}
       <TransactionsList />
-      <AddTransactionButton openModal={handleOpenModal} />
+      {!isLoading && <AddTransactionButton openModal={handleOpenModal} />}
       <ModalAddTransaction
         openModal={showModal}
         closeModal={handleCloseModal}

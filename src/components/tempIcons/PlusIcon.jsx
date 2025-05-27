@@ -9,8 +9,8 @@ const PlusIconModal = ({ className, ...props }) => (
   >
     <path
       stroke="#FCFCFC"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       d="M5.5 2.083v5.834M2.583 5h5.833"
     />
   </svg>

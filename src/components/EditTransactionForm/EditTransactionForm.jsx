@@ -21,16 +21,11 @@ const validationSchema = Yup.object().shape({
   date: Yup.date()
     .required("Date is required")
     .max(new Date(), "Date cannot be in the future"),
-  // category: Yup.string().when("type", {
-  //   // Category is required only if type is 'expense'
-  //   is: "expense",
-  //   then: Yup.string().required("Category is required"),
-  //   otherwise: Yup.string().notRequired(),
-  // }),
+  // Оновлена валідація для категорії:
+  // Категорія обов'язкова як для 'expense', так і для 'income'.
   category: Yup.string().when("type", (type, schema) => {
-    return type === "expense"
-      ? schema.required("Category is required")
-      : schema.notRequired();
+    // Тепер категорія обов'язкова для обох типів
+    return schema.required("Category is required");
   }),
   comment: Yup.string().max(100, "Comment must be less than 100 characters"),
 });
@@ -47,18 +42,19 @@ const EditTransactionForm = ({
   sum,
 }) => {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.categories.items || []);
+  // Припускаємо, що категорії з Redux вже мають властивість 'type' (income/expense)
+  const allCategories = useSelector((state) => state.categories.items || []);
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
   const initialFormValues = {
-    amount: mode === "edit" ? sum : "", // Подгружается sum для редактирования, пусто для добавления
-    date: mode === "edit" && date ? new Date(date) : new Date(), // <-- ИЗМЕНЕНО: Возвращаем логику даты
-    type: mode === "edit" ? (type === "+" ? "income" : "expense") : "income", // Это остается, так как связано с состоянием переключателя
-    category: mode === "edit" ? category : "", // Подгружается category для редактирования, пусто для добавления
-    comment: mode === "edit" ? comment : "", // Подгружается comment для редактирования, пусто для добавления
+    amount: mode === "edit" ? sum : "",
+    date: mode === "edit" && date ? new Date(date) : new Date(),
+    type: mode === "edit" ? (type === "+" ? "income" : "expense") : "income",
+    category: mode === "edit" ? category : "",
+    comment: mode === "edit" ? comment : "",
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -66,14 +62,14 @@ const EditTransactionForm = ({
       const transformedValues = {
         _id,
         type: values.type === "income" ? "+" : "-",
-        sum: values.amount, // перейменовуємо
-        date: values.date.toISOString(), // конвертуємо дату
-        category: values.type === "income" ? "" : values.category,
+        sum: values.amount,
+        date: values.date.toISOString(),
+        category: values.category, // Завжди відправляємо обрану категорію
         comment: values.comment,
       };
 
       if (onSave) {
-        await onSave(transformedValues); // Передаємо у onSave
+        await onSave(transformedValues);
       }
 
       toast.success("Transaction saved successfully!");
@@ -87,14 +83,14 @@ const EditTransactionForm = ({
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget && onClose) {
-      onClose(); // Закрываем модальное окно при клике на оверлей
+      onClose();
     }
   };
 
   const handleCloseClick = (e) => {
     e.stopPropagation();
     if (onClose) {
-      onClose(); // Закрываем модальное окно при клике на крестик
+      onClose();
     }
   };
 
@@ -104,49 +100,58 @@ const EditTransactionForm = ({
         initialValues={initialFormValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        enableReinitialize={true} // Важно для обновления initialValues при изменении пропсов
+        enableReinitialize={true}
       >
-        {({ values, errors, touched, setFieldValue, isSubmitting }) => (
-          <Form className={styles.modal}>
-            <button
-              type="button"
-              className={styles.closeButton}
-              onClick={handleCloseClick}
-            >
-              <IoClose size={24} />
-            </button>
+        {({ values, errors, touched, setFieldValue, isSubmitting }) => {
+          // *** Логіка: Фільтруємо категорії за поточним типом транзакції ***
+          const filteredCategories = allCategories.filter(
+            (cat) => cat.type === values.type
+          );
 
-            <h2 className={styles.title}>
-              {mode === "edit" ? "Edit" : "Add"} transaction
-            </h2>
-
-            <div className={styles.toggleGroup}>
-              <div
-                className={`${styles.toggleOption} ${
-                  values.type === "income" ? styles.active : ""
-                }`}
+          return (
+            <Form className={styles.modal}>
+              <button
+                type="button"
+                className={styles.closeButton}
+                onClick={handleCloseClick}
               >
-                Income
+                <IoClose size={24} />
+              </button>
+
+              <h2 className={styles.title}>
+                {mode === "edit" ? "Edit" : "Add"} transaction
+              </h2>
+
+              <div className={styles.toggleGroup}>
+                <div
+                  className={`${styles.toggleOption} ${
+                    values.type === "income" ? styles.active : ""
+                  }`}
+                >
+                  Income
+                </div>
+
+                <ToggleForEdit
+                  isIncome={values.type === "income"}
+                  setIsIncome={(checked) => {
+                    // Встановлюємо новий тип транзакції
+                    setFieldValue("type", checked ? "income" : "expense");
+                    // *** Оновлення: скидаємо категорію при зміні типу ***
+                    // Це гарантує, що недійсна категорія не залишиться вибраною
+                    setFieldValue("category", "");
+                  }}
+                />
+
+                <div
+                  className={`${styles.toggleOption} ${
+                    values.type === "expense" ? styles.active : ""
+                  }`}
+                >
+                  Expense
+                </div>
               </div>
 
-              <ToggleForEdit
-                isIncome={values.type === "income"}
-                setIsIncome={(checked) =>
-                  setFieldValue("type", checked ? "income" : "expense")
-                }
-              />
-
-              <div
-                className={`${styles.toggleOption} ${
-                  values.type === "expense" ? styles.active : ""
-                }`}
-              >
-                Expense
-              </div>
-            </div>
-
-            {/* Поле Category отображается только если тип 'expense' */}
-            {values.type === "expense" && (
+              {/* Поле Category відображається завжди, але список опцій фільтрується */}
               <>
                 <Field
                   name="category"
@@ -155,87 +160,88 @@ const EditTransactionForm = ({
                     errors.category && touched.category ? styles.error : ""
                   }`}
                 >
-                  {categories.map((categoryItem) => (
+                  <option value="">Select a category</option>
+                  {/* Використовуємо відфільтровані категорії */}
+                  {filteredCategories.map((categoryItem) => (
                     <option key={categoryItem._id} value={categoryItem.name}>
                       {categoryItem.name}
                     </option>
                   ))}
                 </Field>
                 {errors.category &&
-                  touched.category &&
-                  values.type === "expense" && (
+                  touched.category && (
                     <div className={styles.errorText}>{errors.category}</div>
                   )}
               </>
-            )}
 
-            <div
-              className={`${styles.inputGroup} ${
-                values.type === "income" ? styles.incomeMode : ""
-              }`}
-            >
+              <div
+                className={`${styles.inputGroup} ${
+                  values.type === "income" ? styles.incomeMode : ""
+                }`}
+              >
+                <Field
+                  name="amount"
+                  type="text"
+                  className={`${styles.amountInput} ${
+                    errors.amount && touched.amount ? styles.error : ""
+                  }`}
+                  placeholder="Amount"
+                />
+                <DatePicker
+                  selected={values.date}
+                  onChange={(date) => setFieldValue("date", date)}
+                  className={`${styles.datePicker} ${
+                    errors.date && touched.date ? styles.error : ""
+                  }`}
+                  dateFormat="dd/MM/yyyy"
+                  showIcon
+                  toggleCalendarOnIconClick
+                />
+              </div>
+              {errors.amount &&
+                touched.amount && (
+                  <div className={styles.errorText}>{errors.amount}</div>
+                )}
+              {errors.date &&
+                touched.date && (
+                  <div className={styles.errorText}>{errors.date}</div>
+                )}
+
               <Field
-                name="amount"
-                type="text"
-                className={`${styles.amountInput} ${
-                  errors.amount && touched.amount ? styles.error : ""
+                name="comment"
+                className={`${styles.descriptionInput} ${
+                  errors.comment && touched.comment ? styles.error : ""
                 }`}
-                placeholder="Amount"
+                placeholder="Comment"
               />
-              <DatePicker
-                selected={values.date}
-                onChange={(date) => setFieldValue("date", date)}
-                className={`${styles.datePicker} ${
-                  errors.date && touched.date ? styles.error : ""
-                }`}
-                dateFormat="dd/MM/yyyy"
-                showIcon
-                toggleCalendarOnIconClick
-              />
-            </div>
-            {errors.amount &&
-              touched.amount && ( // Отдельно выводим ошибки для amount
-                <div className={styles.errorText}>{errors.amount}</div>
-              )}
-            {errors.date &&
-              touched.date && ( // Отдельно выводим ошибки для date
-                <div className={styles.errorText}>{errors.date}</div>
+              {errors.comment && touched.comment && (
+                <div className={styles.errorText}>{errors.comment}</div>
               )}
 
-            <Field
-              name="comment"
-              className={`${styles.descriptionInput} ${
-                errors.comment && touched.comment ? styles.error : ""
-              }`}
-              placeholder="Comment"
-            />
-            {errors.comment && touched.comment && (
-              <div className={styles.errorText}>{errors.comment}</div>
-            )}
+              <div className={styles.buttonGroup}>
+                <button
+                  type="submit"
+                  className={styles.saveButton}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Saving..." : "Save"}
+                </button>
 
-            <div className={styles.buttonGroup}>
-              <button
-                type="submit"
-                className={styles.saveButton}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Saving..." : "Save"}
-              </button>
-
-              <button
-                type="button"
-                className={styles.cancelButton}
-                onClick={() => {
-                  setFieldValue("amount", ""); // Очищаем поле Amount
-                  setFieldValue("comment", ""); // Очищаем поле Comment
-                  // Модальное окно не закрывается при отмене
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </Form>
-        )}
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={() => {
+                    setFieldValue("amount", "");
+                    setFieldValue("comment", "");
+                    // Модальне вікно не закривається при відміні
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );

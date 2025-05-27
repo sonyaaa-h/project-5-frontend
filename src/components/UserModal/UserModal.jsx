@@ -7,14 +7,12 @@ import toast from "react-hot-toast";
 import { updateUserThunk } from "../../redux/auth/operations";
 import CloseIconModal from "../tempIcons/CloseIcon";
 import PlusIconModal from "../tempIcons/PlusIcon";
-import Loader from "../Loader/Loader";
 
 export const UserModal = ({ onClick }) => {
   const dispatch = useDispatch();
 
   const [photo, setPhoto] = useState("");
   const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const username = useSelector((state) => state.auth.user.name);
   const useremail = useSelector((state) => state.auth.user.email);
@@ -46,7 +44,6 @@ export const UserModal = ({ onClick }) => {
       formData.append("photo", photo);
     }
 
-    setLoading(true);
 
     dispatch(updateUserThunk(formData))
       .unwrap()
@@ -54,8 +51,7 @@ export const UserModal = ({ onClick }) => {
         toast.success("Successfully updated a user!");
         onClick();
       })
-      .catch((error) => {
-        setLoading(false);
+      .catch(() => {
         toast.error("Something went wrong. Try again!", {
           duration: 2000,
           style: {
@@ -79,7 +75,6 @@ export const UserModal = ({ onClick }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
-        setLoading(false);
         onClick();
       }
     };
@@ -89,7 +84,6 @@ export const UserModal = ({ onClick }) => {
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      setLoading(false);
       onClick();
     }
   };
@@ -186,11 +180,6 @@ export const UserModal = ({ onClick }) => {
               </button>
             </Form>
           </Formik>
-          {loading && (
-            <div className={styles.loader}>
-              <Loader />
-            </div>
-          )}
         </div>
       </div>
     </div>
