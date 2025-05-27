@@ -12,7 +12,7 @@
   border-radius: 16px;
   width: 280px;
   padding: 16px;
-  background-color: #508f8c;
+  background-color: var(--main-light-green);
   /* position: relative; */
   /* margin-bottom: 10px; */
 }
@@ -36,14 +36,14 @@
   width: 248px;
   height: 44px;
   background-color: transparent;
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   outline: transparent;
   transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .iconUser {
   position: absolute;
   font-size: 24px;
-  color: #081222;
+  color: var(--text-color);
 }
 .emailContainer {
   position: relative;
@@ -55,7 +55,7 @@
   height: 44px;
   margin-top: 16px;
   background-color: transparent;
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   outline: transparent;
   transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -63,7 +63,7 @@
 .iconEmail {
   position: absolute;
   font-size: 24px;
-  color: #081222;
+  color: var(--text-color);
 }
 
 .pwdContainer {
@@ -76,7 +76,7 @@
   height: 44px;
   margin-top: 16px;
   background-color: transparent;
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   outline: transparent;
   transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -91,7 +91,7 @@
   margin-top: 16px;
   margin-bottom: 10px;
   background-color: transparent;
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   outline: transparent;
   transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -132,7 +132,7 @@
 .iconLock {
   position: absolute;
   font-size: 24px;
-  color: #081222;
+  color: var(--text-color);
 }
 
 .toggleBtn {
@@ -144,7 +144,7 @@
   border: none;
   cursor: pointer;
   font-size: 18px;
-  color: #081222;
+  color: var(--text-color);
 }
 
 .icon {
@@ -163,7 +163,7 @@
 input::placeholder {
   font-weight: 500;
   font-size: 18px;
-  color: #081222;
+  color: var(--text-color);
   transition: color 0.3s ease;
 }
 
@@ -174,41 +174,41 @@ input:-webkit-autofill {
 }
 
 .passwordBar > p {
-  color: #508f8c !important;
+  color: var(--main-light-green) !important;
 }
 .error {
   font-weight: 400;
   font-size: 10px;
-  color: #b20202;
+  color: var(--red-color);
   display: flex;
 }
 
 .errorState {
-  border-color: #b20202 !important;
+  border-color: var(--red-color) !important;
 }
 
 .errorState .iconUser,
 .errorState .iconEmail,
 .errorState .iconLock {
-  color: #b20202 !important;
+  color: var(--red-color) !important;
 }
 
 .errorState input::placeholder {
-  color: #b20202 !important;
+  color: var(--red-color) !important;
 }
 
 .successState {
-  border-color: #0b6016 !important;
+  border-color: var(--successfull-color) !important;
 }
 
 .successState .iconUser,
 .successState .iconEmail,
 .successState .iconLock {
-  color: #0b6016 !important;
+  color: var(--successfull-color) !important;
 }
 
 .successState input::placeholder {
-  color: #0b6016 !important;
+  color: var(--successfull-color) !important;
 }
 
 .button {
@@ -227,7 +227,7 @@ input:-webkit-autofill {
   font-weight: 500;
   font-size: 18px;
   text-align: center;
-  color: #fcfcfc;
+  color: var(--white-color);
 }
 .button:hover {
   transform: scale(1.04);
@@ -237,12 +237,12 @@ input:-webkit-autofill {
   font-weight: 500;
   font-size: 18px;
   text-align: center;
-  color: #081222;
+  color: var(--text-color);
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #081222;
+  border: 1px solid var(--text-color);
   border-radius: 8px;
   padding: 11px 68px;
   background-color: transparent;
@@ -258,7 +258,7 @@ input:-webkit-autofill {
 span {
   font-weight: 400;
   font-size: 10px;
-  color: #b20202;
+  color: var(--red-color);
   display: flex;
 }
 @media screen and (min-width: 768px) {
