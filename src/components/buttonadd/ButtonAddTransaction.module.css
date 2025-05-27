@@ -19,20 +19,24 @@
 }
 
 .iconWrapp {
-  width: 56px;
-  height: 56px;
-  color: #081222;
-  background-color: #508f8c;
-  border-radius: 100%;
-  padding: 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #508f8c;
+  color: #081222;
+  border: none;
+  border-radius: 100%;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1000;
   box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease;
 }
-
 @media screen and (min-width: 768px) {
-
   /* .btnAddWrapp {
 
     margin-top: -72px;
@@ -48,7 +52,6 @@
     bottom: 16px;
   }
 }
-
 
 @media screen and (min-width: 1280px) {
   .btnAddWrapp {

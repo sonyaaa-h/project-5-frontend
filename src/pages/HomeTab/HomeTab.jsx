@@ -25,6 +25,10 @@ const HomeTab = () => {
 
   const handleOpenModal = () => {
     setShowModal(true);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const handleCloseModal = () => {
