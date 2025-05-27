@@ -7,9 +7,10 @@ import RestrictedRoute from "./RestrictedRoute";
 // import { refreshUser } from "./redux/auth/operations";
 import { selectToken } from "./redux/auth/selectors.js";
 import { lazy, Suspense } from "react";
-// import MasterLoader from "./components/MasterLoader/MasterLoader";
+import MasterLoader from "./components/MasterLoader/MasterLoader";
 import { setAuthHeader } from "./redux/auth/api.js";
 import { AnimatePresence } from "framer-motion";
+import { selectIsLoading } from "./redux/global/selectors.js";
 const RegistrationPage = lazy(() =>
   import("./pages/RegistrationPage/RegistrationPage")
 );
@@ -23,6 +24,7 @@ const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 function App() {
   const token = useSelector(selectToken);
   const location = useLocation();
+  const isLoading = useSelector(selectIsLoading)
 
   useEffect(() => {
     if (token) {
@@ -32,8 +34,8 @@ function App() {
 
   return (
     <>
-      {/* {isLoading && <MasterLoader open={true} />}  -na ves App*/} 
-      <Suspense fallback={<div>Loading page...</div>}>
+      {isLoading && <MasterLoader open={true} />} 
+      <Suspense fallback={<MasterLoader/>}>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route

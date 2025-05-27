@@ -4,7 +4,6 @@ import s from "./Statistics.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStatistics } from "../../redux/statistics/operations";
 import Toggle from "../Toggle/Toggle";
-import Loader from "../Loader/Loader";
 import thumbupwallet from "../../assets/thumbupwallet.png";
 const Statistics = () => {
   const dispatch = useDispatch();
@@ -153,7 +152,6 @@ const Statistics = () => {
               top: "30%",
             }}
           >
-            <Loader />
           </div>
         ) : error ? (
           <p>Error: {error}</p>
