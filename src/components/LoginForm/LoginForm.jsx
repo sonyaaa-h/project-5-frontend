@@ -76,7 +76,7 @@ export const LoginForm = () => {
         onSubmit={handleSubmit}
       >
         {({ errors, touched }) => (
-          <Form className={s.form}>
+          <Form className={s.form} noValidate>
             <img className={s.logo} src={logo} alt="logo" />
             <div>
               <div
@@ -101,7 +101,6 @@ export const LoginForm = () => {
                   id={emailFieldId}
                   placeholder="E-mail"
                   autoComplete="email"
-                  required
                 />
               </div>
               <ErrorMessage className={s.error} name="email" component="span" />
@@ -128,7 +127,6 @@ export const LoginForm = () => {
                   id={passwordFieldId}
                   placeholder="Password"
                   autoComplete="password"
-                  required
                 />
                 <button
                   className={s.toggleBtn}

@@ -99,7 +99,7 @@ const RegistrationForm = () => {
         onSubmit={handleSubmit}
       >
         {({ errors, touched, values }) => (
-          <Form className={s.formWrapper}>
+          <Form className={s.formWrapper} noValidate>
             <img className={s.logo} src={logo} alt="logo" />
             <div>
               <div
@@ -148,7 +148,6 @@ const RegistrationForm = () => {
                   className={s.input}
                   placeholder="E-mail"
                   autoComplete="email"
-                  required
                 />
               </div>
               <ErrorMessage className={s.error} name="email" component="span" />
@@ -174,7 +173,6 @@ const RegistrationForm = () => {
                   placeholder="Password"
                   autoComplete="password"
                   id={passwordFieldId}
-                  required
                   //   onChange={handlePasswordChange}
                 />
                 <button
