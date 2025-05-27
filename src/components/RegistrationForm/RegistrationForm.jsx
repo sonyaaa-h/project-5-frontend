@@ -111,14 +111,16 @@ const RegistrationForm = () => {
               <div>
                 <div
                   className={`${s.nameContainer} 
-                                              ${touched.name && errors.name
-                      ? s.errorState
-                      : ""
-                    }
-                                              ${touched.name && !errors.name
-                      ? s.successState
-                      : ""
-                    }
+                                              ${
+                                                touched.name && errors.name
+                                                  ? s.errorState
+                                                  : ""
+                                              }
+                                              ${
+                                                touched.name && !errors.name
+                                                  ? s.successState
+                                                  : ""
+                                              }
                                           `}
                 >
                   <FaUser className={s.iconUser} />
@@ -130,17 +132,23 @@ const RegistrationForm = () => {
                     style={{ color: "rgb(54, 32, 4)" }}
                   />
                 </div>
-                <ErrorMessage className={s.error} name="name" component="span" />
+                <ErrorMessage
+                  className={s.error}
+                  name="name"
+                  component="span"
+                />
                 <div
                   className={`${s.emailContainer} 
-                                              ${touched.email && errors.email
-                      ? s.errorState
-                      : ""
-                    }
-                                              ${touched.email && !errors.email
-                      ? s.successState
-                      : ""
-                    }
+                                              ${
+                                                touched.email && errors.email
+                                                  ? s.errorState
+                                                  : ""
+                                              }
+                                              ${
+                                                touched.email && !errors.email
+                                                  ? s.successState
+                                                  : ""
+                                              }
                                           `}
                 >
                   <MdEmail className={s.iconEmail} />
@@ -153,17 +161,23 @@ const RegistrationForm = () => {
                     autoComplete="email"
                   />
                 </div>
-                <ErrorMessage className={s.error} name="email" component="span" />
+                <ErrorMessage
+                  className={s.error}
+                  name="email"
+                  component="span"
+                />
                 <div
                   className={`${s.pwdContainer} 
-                                          ${touched.password && errors.password
-                      ? s.errorState
-                      : ""
-                    }
-                                          ${touched.password && !errors.password
-                      ? s.successState
-                      : ""
-                    }
+                                          ${
+                                            touched.password && errors.password
+                                              ? s.errorState
+                                              : ""
+                                          }
+                                          ${
+                                            touched.password && !errors.password
+                                              ? s.successState
+                                              : ""
+                                          }
                                       `}
                 >
                   <IoMdLock className={s.iconLock} />
@@ -174,7 +188,7 @@ const RegistrationForm = () => {
                     placeholder="Password"
                     autoComplete="password"
                     id={passwordFieldId}
-                  //   onChange={handlePasswordChange}
+                    //   onChange={handlePasswordChange}
                   />
                   <button
                     className={s.toggleBtn}
@@ -195,14 +209,16 @@ const RegistrationForm = () => {
                 />
                 <div
                   className={`${s.pwdConfContainer} 
-                                          ${touched.password && errors.password
-                      ? s.errorState
-                      : ""
-                    }
-                                          ${touched.password && !errors.password
-                      ? s.successState
-                      : ""
-                    }
+                                          ${
+                                            touched.password && errors.password
+                                              ? s.errorState
+                                              : ""
+                                          }
+                                          ${
+                                            touched.password && !errors.password
+                                              ? s.successState
+                                              : ""
+                                          }
                                       `}
                 >
                   <IoMdLock className={s.iconLock} />
