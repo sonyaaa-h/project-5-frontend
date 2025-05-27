@@ -255,7 +255,7 @@ input:-webkit-autofill {
   transform: scale(1.04);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
-.span {
+span {
   font-weight: 400;
   font-size: 10px;
   color: #b20202;
@@ -264,7 +264,7 @@ input:-webkit-autofill {
 @media screen and (min-width: 768px) {
   .div {
     position: relative;
-    margin-top: 10px;
+    /* margin-top: 10px; */
   }
 
   .formWrapper {
@@ -304,7 +304,7 @@ input:-webkit-autofill {
     margin-top: 24px;
     margin-bottom: 20px;
   }
-  .span {
+  span {
     margin-top: -20px;
   }
   .button {
@@ -317,12 +317,12 @@ input:-webkit-autofill {
     width: 409px;
   }
   html {
-    height: 100%;
+    /* height: 100%; */
   }
 }
 @media screen and (min-width: 1280px) {
   .div {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     /* flex-direction: row; */
     gap: 10px;
   }
@@ -333,7 +333,7 @@ input:-webkit-autofill {
     width: 320px;
     /* position: absolute; */
   }
-  .span {
+  span {
     margin-top: -20px;
   }
   /* html {
