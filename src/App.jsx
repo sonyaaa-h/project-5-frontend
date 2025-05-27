@@ -35,7 +35,7 @@ function App() {
   return (
     <>
       {isLoading && <MasterLoader open={true} />} 
-      <Suspense fallback={<MasterLoader/>}>
+      <Suspense fallback={<MasterLoader open={true}/>}>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route
