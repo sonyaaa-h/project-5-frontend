@@ -15,15 +15,15 @@ import { addTransaction } from "../../redux/transactions/operations";
 import Select from "react-select";
 import customSelectStyles from "./customSelectStyles";
 import "izitoast/dist/css/iziToast.min.css";
-import iziToast from "izitoast";
+import iziToast from "izitoast"; // Зверніть увагу: iziToast використовується тут, але toast з react-hot-toast також імпортується
 import { fetchCategories } from "../../redux/categories/operations";
 import { getCurrentUserThunk } from "../../redux/auth/operations";
-import toast from "react-hot-toast";
+import toast from "react-hot-toast"; // Цей toast також використовується
 
 const ModalAddTransaction = ({ openModal, closeModal }) => {
   const [startDate, setStartDate] = useState(new Date());
-  const [transactionType, setTransactionType] = useState("expense");
-  const [expenseOptions, setExpenseOptions] = useState([]);
+  const [transactionType, setTransactionType] = useState("expense"); // Початковий тип "expense"
+  // const [expenseOptions, setExpenseOptions] = useState([]); // Цей стан більше не потрібен
   const categories = useSelector((state) => state.categories.items);
   const dispatch = useDispatch();
 
@@ -31,6 +31,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  // Оновлена схема валідації: категорія тепер завжди обов'язкова
   const schema = yup.object().shape({
     money: yup
       .number()
@@ -38,11 +39,8 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
       .positive("Money must be positive")
       .required("Money is required"),
     comment: yup.string().max(50, "Comment must be at most 50 characters"),
-    category: yup.string().when("transactionType", {
-      is: "expense",
-      then: (schema) => schema.required("Category is required"),
-      otherwise: (schema) => schema.notRequired(),
-    }),
+    // Категорія тепер обов'язкова, незалежно від типу транзакції
+    category: yup.string().required("Category is required"),
   });
 
   const {
@@ -51,48 +49,64 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     formState: { errors },
     reset,
     control,
+    setValue, // Додано setValue для програмної зміни значень полів форми
   } = useForm({
     resolver: yupResolver(schema),
-    context: { transactionType },
+    context: { transactionType }, // Передаємо transactionType в контекст валідації
+    defaultValues: {
+        category: "", // Встановлюємо значення за замовчуванням для категорії
+        money: "",
+        comment: "",
+    }
   });
 
-  useEffect(() => {
-    const options = categories?.map((cat) => ({
-      value: typeof cat === "string" ? cat : cat.name,
-      label: typeof cat === "string" ? cat : cat.name,
-    }));
-    setExpenseOptions(options);
-  }, [categories]);
-  
+  // useEffect для expenseOptions більше не потрібен, оскільки categoryOptions
+  // обчислюється динамічно перед рендерингом
+
+  // Функція для зміни типу транзакції та скидання категорії
+  const handleTransactionTypeChange = (newType) => {
+    setTransactionType(newType);
+    setValue("category", null); // Скидаємо вибрану категорію при зміні типу
+    // resetField("category"); // Альтернатива setValue("category", null);
+  };
+
   const onSubmit = async (data) => {
-    if (transactionType === "expense" && !data.category) {
-      iziToast.error({
-        title: "Error",
-        message: "Please select a category",
-        position: "topRight",
-        timeout: 5000,
-        close: true,
-        progressBar: true,
-        backgroundColor: "#ff4d4f",
-        messageColor: "#fff",
-        titleColor: "#fff",
-      });
-      return;
-    }
-    const formatDate = (data) => {
-      const year = data.getFullYear();
-      const month = String(data.getMonth() + 1).padStart(2, "0");
-      const day = String(data.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    };
+    // Ручна перевірка категорії видалена, оскільки її обробляє Yup
     const selectedCategory = categories?.find(
       (cat) => cat._id === data.category
     );
-    const categoryName = selectedCategory ? selectedCategory.name : "Other";
+
+    // Перевіряємо, чи знайдено категорію, якщо вона обов'язкова
+    if (!selectedCategory) {
+        // Цей блок може бути менш необхідним, якщо валідація YUP працює коректно,
+        // але додаємо для безпеки, якщо data.category пройшло крізь YUP без _id
+        iziToast.error({
+            title: "Error",
+            message: "Invalid category selected.",
+            position: "topRight",
+            timeout: 5000,
+            close: true,
+            progressBar: true,
+            backgroundColor: "#ff4d4f",
+            messageColor: "#fff",
+            titleColor: "#fff",
+        });
+        return;
+    }
+
+    const categoryName = selectedCategory.name; // Використовуємо назву категорії
+
+    const formatDate = (date) => { // Перейменував параметр, щоб уникнути конфлікту з "data"
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
     const payload = {
       date: formatDate(startDate),
       type: transactionType === "income" ? "+" : "-",
-      category: categoryName,
+      category: categoryName, // Передаємо назву категорії
       comment: data.comment,
       sum: Number(data.money),
     };
@@ -100,9 +114,11 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
 
     try {
       await dispatch(addTransaction(payload)).unwrap();
-      await dispatch(getCurrentUserThunk()).unwrap();
-      toast.success(`Transaction is added successfully!`);
-      reset();
+      await dispatch(getCurrentUserThunk()).unwrap(); // Оновлення балансу користувача
+      toast.success(`Transaction added successfully!`);
+      reset(); // Скидаємо форму після успішної відправки
+      setStartDate(new Date()); // Скидаємо дату до поточної
+      setTransactionType("expense"); // Скидаємо тип до початкового
       closeModal();
     } catch (err) {
       iziToast.error({
@@ -127,21 +143,25 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
       window.scrollTo(0, 0);
     } else {
       document.body.style.overflow = "auto";
+      reset(); // Скидаємо форму при закритті модалки
+      setStartDate(new Date()); // Скидаємо дату
+      setTransactionType("expense"); // Скидаємо тип
     }
 
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [openModal]);
+  }, [openModal, reset]); // Додано reset в залежності
 
   if (!openModal) return null;
 
+  // Динамічне обчислення categoryOptions на основі transactionType
   const categoryOptions = Array.isArray(categories)
     ? categories
-        .filter((category) => category.type === transactionType)
+        .filter((category) => category.type === transactionType) 
         .map((category) => ({
-          value: category._id,
-          label: category.name,
+          value: category._id, 
+          label: category.name, 
         }))
     : [];
 
@@ -152,7 +172,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
           <p className={css.addTransaction}>Add transaction</p>
           <div className={css.typeTransaction}>
             <p
-              onClick={() => setTransactionType("income")}
+              onClick={() => handleTransactionTypeChange("income")}
               className={clsx(
                 css.income,
                 transactionType === "income" && css.active
@@ -166,8 +186,8 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
 
             <div
               onClick={() =>
-                setTransactionType((prev) =>
-                  prev === "income" ? "expense" : "income"
+                handleTransactionTypeChange( 
+                  transactionType === "income" ? "expense" : "income"
                 )
               }
               className={clsx(
@@ -189,7 +209,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
               </button>
             </div>
             <p
-              onClick={() => setTransactionType("expense")}
+              onClick={() => handleTransactionTypeChange("expense")}
               className={clsx(
                 css.expense,
                 transactionType === "expense" && css.activeExpense
@@ -199,30 +219,33 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
             </p>
           </div>
           <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
-            {transactionType === "expense" && (
-              <div className={css.selectWrapp}>
-                <Controller
-                  control={control}
-                  name="category"
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      options={categoryOptions}
-                      placeholder="Select a category"
-                      classNamePrefix="customSelect"
-                      styles={customSelectStyles}
-                      onChange={(option) => field.onChange(option.value)}
-                      value={categoryOptions.find(
+            <div className={css.selectWrapp}>
+              <Controller
+                control={control}
+                name="category"
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    options={categoryOptions}
+                    placeholder="Select a category"
+                    classNamePrefix="customSelect"
+                    styles={customSelectStyles}
+                    onChange={(option) => {
+                      field.onChange(option ? option.value : null); 
+                    }}
+                    value={
+                      categoryOptions.find(
                         (option) => option.value === field.value
-                      )}
-                    />
-                  )}
-                />
-                {errors.category && (
-                  <p className={css.errMoney}>{errors.category.message}</p>
+                      ) || null  
+                    }
+                  />
                 )}
-              </div>
-            )}
+              />
+              {errors.category && (
+                <p className={css.errMoney}>{errors.category.message}</p>
+              )}
+            </div>
+
             <div className={css.tabletWrap}>
               <div className={css.moneyWrapp}>
                 <input
@@ -237,10 +260,12 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
               </div>
 
               <div className={css.dateWrapp}>
-                <DatePicker className={css.date}
+                <DatePicker
+                  className={css.date}
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
                   dateFormat="dd/MM/yyyy"
+                  toggleCalendarOnIconClick
                 />
                 <FaRegCalendarAlt className={css.calendarIcon} />
               </div>

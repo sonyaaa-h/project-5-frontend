@@ -148,7 +148,7 @@ input[type="number"] {
   padding-left: 10px;
 }
 
-.dateWrapp {
+/* .dateWrapp {
   border-radius: 8px;
   border: 2px solid #3b5d63;
   padding: 10px 14px;
@@ -168,16 +168,54 @@ input[type="number"] {
   padding: 0;
   color: #081222;
   background-color: transparent;
+} */
+
+.dateWrapp {
+  position: relative; /* <<<<<<<< Додано: Для правильного абсолютного позиціонування іконки */
+  border-radius: 8px;
+  border: 2px solid #3b5d63;
+  padding: 10px 14px;
+  height: 42px;
+  width: 193px;
+  background: transparent;
+  display: flex; /* Продовжуємо використовувати flex для вирівнювання */
+  align-items: center;
+  /* justify-content: space-between; */ /* Це можна залишити або прибрати, якщо використовуєте absolute для іконки */
+}
+
+.date {
+  border: none;
+  font-weight: 500;
+  font-size: 18px;
+  width: 100%; /* <<<<<<<< Змінено: Зробимо інпут максимально широким всередині обгортки */
+  padding: 0 30px 0 0; /* <<<<<<<< Змінено: Додано padding-right для відступу від іконки */
+  color: #081222;
+  background-color: transparent;
+  box-sizing: border-box; /* <<<<<<<< Додано: Дуже важливо для правильної ширини з padding */
+}
+
+.date:focus {
+  outline: none; /* Можете додати свої стилі focus, якщо потрібно */
 }
 
 
-
 .calendarIcon {
+  position: absolute; /* <<<<<<<< Додано: Абсолютне позиціонування */
+  right: 14px; /* <<<<<<<< Змінено: Вирівнюємо по правому padding-right батьківського елемента */
+  top: 50%;
+  transform: translateY(-50%);
   fill: #081222;
   height: 24px;
   width: 24px;
   pointer-events: none;
 }
+
+/* .calendarIcon {
+  fill: #081222;
+  height: 24px;
+  width: 24px;
+  pointer-events: none;
+} */
 
 .comment {
   border-radius: 8px;
