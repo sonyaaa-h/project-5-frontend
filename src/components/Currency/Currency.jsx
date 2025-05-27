@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Currency.module.css";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
-import Loader from "../Loader/Loader.jsx";
 import wallet from "../../assets/wallet.png";
 
 const CURRENCY_API_URL = "https://api.monobank.ua/bank/currency";
@@ -17,7 +16,6 @@ const currencyCodes = {
 const Currency = () => {
   const [rates, setRates] = useState([]);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCurrency = async () => {
@@ -32,7 +30,6 @@ const Currency = () => {
 
           if (isCacheValid) {
             setRates(rates);
-            setLoading(false);
             return;
           }
         }
@@ -59,7 +56,6 @@ const Currency = () => {
         setError(true);
         setRates([]);
       } finally {
-        setLoading(false);
       }
     };
 
@@ -91,11 +87,6 @@ const Currency = () => {
         </tbody>
       </table>
       {error && <ErrorMessage />}
-      {loading && (
-        <div className={styles.loader}>
-          <Loader />
-        </div>
-      )}
       <img src={wallet} alt="wallet" className={styles.wallet} />
     </div>
   );
