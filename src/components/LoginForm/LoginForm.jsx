@@ -11,6 +11,7 @@ import { IoMdLock } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
 import logo from "../../assets/logo.svg";
 import wallet from "../../assets/wallet.png";
+import { motion } from "framer-motion";
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -69,97 +70,100 @@ export const LoginForm = () => {
   });
 
   return (
-    <div className={s.loginForm}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={LogInSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ errors, touched }) => (
-          <Form className={s.form} noValidate>
-            <img className={s.logo} src={logo} alt="logo" />
-            <div>
-              <div
-                className={`${s.emailContainer} 
-                                ${
-                                  touched.email && errors.email
-                                    ? s.errorState
-                                    : ""
-                                }
-                                ${
-                                  touched.email && !errors.email
-                                    ? s.successState
-                                    : ""
-                                }
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4 }}
+    >
+      <div className={s.loginForm}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={LogInSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched }) => (
+            <Form className={s.form} noValidate>
+              <img className={s.logo} src={logo} alt="logo" />
+              <div>
+                <div
+                  className={`${s.emailContainer} 
+                                ${touched.email && errors.email
+                      ? s.errorState
+                      : ""
+                    }
+                                ${touched.email && !errors.email
+                      ? s.successState
+                      : ""
+                    }
                             `}
-              >
-                <MdEmail className={s.iconEmail} />
-                <Field
-                  className={s.input}
-                  name="email"
-                  type="email"
-                  id={emailFieldId}
-                  placeholder="E-mail"
-                  autoComplete="email"
-                />
-              </div>
-              <ErrorMessage className={s.error} name="email" component="span" />
-
-              <div
-                className={`${s.pwdContainer} 
-                            ${
-                              touched.password && errors.password
-                                ? s.errorState
-                                : ""
-                            }
-                            ${
-                              touched.password && !errors.password
-                                ? s.successState
-                                : ""
-                            }
-                        `}
-              >
-                <IoMdLock className={s.iconLock} />
-                <Field
-                  className={s.input}
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  id={passwordFieldId}
-                  placeholder="Password"
-                  autoComplete="password"
-                />
-                <button
-                  className={s.toggleBtn}
-                  type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
                 >
-                  {showPassword ? (
-                    <RiEye2Line className={s.icon} />
-                  ) : (
-                    <RiEyeCloseFill className={s.icon} />
-                  )}
-                </button>
-              </div>
-              <ErrorMessage
-                className={s.error}
-                name="password"
-                component="span"
-              />
-            </div>
+                  <MdEmail className={s.iconEmail} />
+                  <Field
+                    className={s.input}
+                    name="email"
+                    type="email"
+                    id={emailFieldId}
+                    placeholder="E-mail"
+                    autoComplete="email"
+                  />
+                </div>
+                <ErrorMessage className={s.error} name="email" component="span" />
 
-            <button className={s.btnLogIn} type="submit">
-              Log in
-            </button>
-            <p className={s.link}>
-              <NavLink className={s.linkReg} to="/register">
-                Register
-              </NavLink>
-            </p>
-            <img className={s.walletMob} src={wallet} alt="wallet" />
-          </Form>
-        )}
-      </Formik>
-      <img className={s.wallet} src={wallet} alt="wallet" />
-    </div>
+                <div
+                  className={`${s.pwdContainer} 
+                            ${touched.password && errors.password
+                      ? s.errorState
+                      : ""
+                    }
+                            ${touched.password && !errors.password
+                      ? s.successState
+                      : ""
+                    }
+                        `}
+                >
+                  <IoMdLock className={s.iconLock} />
+                  <Field
+                    className={s.input}
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    id={passwordFieldId}
+                    placeholder="Password"
+                    autoComplete="password"
+                  />
+                  <button
+                    className={s.toggleBtn}
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <RiEye2Line className={s.icon} />
+                    ) : (
+                      <RiEyeCloseFill className={s.icon} />
+                    )}
+                  </button>
+                </div>
+                <ErrorMessage
+                  className={s.error}
+                  name="password"
+                  component="span"
+                />
+              </div>
+
+              <button className={s.btnLogIn} type="submit">
+                Log in
+              </button>
+              <p className={s.link}>
+                <NavLink className={s.linkReg} to="/register">
+                  Register
+                </NavLink>
+              </p>
+              <img className={s.walletMob} src={wallet} alt="wallet" />
+            </Form>
+          )}
+        </Formik>
+        <img className={s.wallet} src={wallet} alt="wallet" />
+      </div>
+    </motion.div>
   );
 };
