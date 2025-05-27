@@ -17,24 +17,25 @@ const currencyCodes = {
 const Currency = () => {
   const [rates, setRates] = useState([]);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-      const { timestamp, rates } = JSON.parse(cached);
-      const isCacheValid = Date.now() - timestamp < CACHE_EXPIRATION_MS;
-
-      if (isCacheValid) {
-        setRates(rates);
-        return;
-      }
-    }
-
     const fetchCurrency = async () => {
       try {
         setError(false);
-        setLoading(true);
+
+        const cached = localStorage.getItem(CACHE_KEY);
+
+        if (cached) {
+          const { timestamp, rates } = JSON.parse(cached);
+          const isCacheValid = Date.now() - timestamp < CACHE_EXPIRATION_MS;
+
+          if (isCacheValid) {
+            setRates(rates);
+            setLoading(false);
+            return;
+          }
+        }
 
         const response = await axios.get(CURRENCY_API_URL);
 
@@ -51,12 +52,14 @@ const Currency = () => {
 
         localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
         setRates(filtered);
-        setError(false);
-      } catch (error) {
+      } catch (e) {
+        if (e.response?.status === 429) {
+          console.warn("Too many requests — Monobank rate limit exceeded.");
+        }
         setError(true);
+        setRates([]);
       } finally {
         setLoading(false);
-        // setError(false);
       }
     };
 

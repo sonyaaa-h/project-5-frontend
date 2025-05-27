@@ -87,6 +87,13 @@
   .td {
     padding: 16px 16px 14.5px 16px;
   }
+
+  .td:first-child {
+    padding: 16px 16px 14.5px 32px;
+  }
+  .td:last-child {
+    padding: 16px 32px 14.5px 16px;
+  }
 }
 
 @media screen and (min-width: 1280px) {
