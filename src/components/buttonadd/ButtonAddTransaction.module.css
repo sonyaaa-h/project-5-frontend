@@ -28,8 +28,8 @@
 }
 
 .iconAdd {
-  width: 45px;
-  height: 45px;
+  width: 26px;
+  height: 26px;
   color: var(--text-color);
   display: block;
   line-height: 1;
@@ -43,9 +43,7 @@
 .iconAdd:focus {
   color: var(--white-color);
 }
-
 @media screen and (min-width: 768px) {
-
   /* .btnAddWrapp {
 
     margin-top: -72px;
@@ -67,5 +65,4 @@
     right: 16px;
     bottom: 16px;
   }
-
 }

@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PieChartWithPaddingAngle from "../PieChartWithPaddingAngle/PieChartWithPaddingAngle";
 import s from "./Statistics.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStatistics } from "../../redux/statistics/operations";
 import Toggle from "../Toggle/Toggle";
-import thumbupwallet from "../../assets/thumbupwallet.png";
+import wallet from "../../assets/wallet.png";
+import Select from "react-select";
+import { options1, options2 } from "../../utils/selectValue";
+import "./selectStyles.css";
+import { setIsIncome, setMonth, setYear } from "../../redux/statistics/slice";
+
 const Statistics = () => {
   const dispatch = useDispatch();
-  const currentDate = new Date();
-  const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
-  const currentYear = String(currentDate.getFullYear());
-
-  const [month, setMonth] = useState(currentMonth);
-  const [year, setYear] = useState(currentYear);
-  const [isIncome, setIsIncome] = useState(true);
+  const month = useSelector((state) => state.statistics.month);
+  const year = useSelector((state) => state.statistics.year);
+  const isIncome = useSelector((state) => state.statistics.isIncome);
 
   const { data, isLoading, error } = useSelector((state) => state.statistics);
   const categories = useSelector((state) => state.categories.items);
@@ -62,7 +63,10 @@ const Statistics = () => {
       <div className={s.firstBlock}>
         <div className={s.pStatistics}>
           <span className={s.income}>Income</span>
-          <Toggle isIncome={isIncome} setIsIncome={setIsIncome} />
+          <Toggle
+            isIncome={isIncome}
+            setIsIncome={(value) => dispatch(setIsIncome(value))}
+          />
           <span className={s.expense}>Expense</span>
         </div>
         {dataWithColor.length > 0 && (
@@ -71,76 +75,29 @@ const Statistics = () => {
       </div>
       <div className={s.secondBlock}>
         <div className={s.selectBlock}>
-          <select
+          <Select
+            options={options2}
             id="monthSelect"
             name="monthSelect"
-            className={s.selectStatistics}
-            value={month}
-            onChange={(e) => setMonth(e.target.value)}
-          >
-            <option className={s.optionStatistics} value="01">
-              January
-            </option>
-            <option className={s.optionStatistics} value="02">
-              February
-            </option>
-            <option className={s.optionStatistics} value="03">
-              March
-            </option>
-            <option className={s.optionStatistics} value="04">
-              April
-            </option>
-            <option className={s.optionStatistics} value="05">
-              May
-            </option>
-            <option className={s.optionStatistics} value="06">
-              June
-            </option>
-            <option className={s.optionStatistics} value="07">
-              July
-            </option>
-            <option className={s.optionStatistics} value="08">
-              August
-            </option>
-            <option className={s.optionStatistics} value="09">
-              September
-            </option>
-            <option className={s.optionStatistics} value="10">
-              October
-            </option>
-            <option className={s.optionStatistics} value="11">
-              November
-            </option>
-            <option className={s.optionStatistics} value="12">
-              December
-            </option>
-          </select>
-          <select
+            className="selectStatistics"
+            classNamePrefix="selectStatistics"
+            value={
+              options2.find((option) => option.value === String(month)) || null
+            }
+            onChange={(selected) => dispatch(setMonth(selected.value))}
+          />
+
+          <Select
+            options={options1}
             id="yearSelect"
             name="yearSelect"
-            className={s.selectStatistics}
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-          >
-            <option className={s.optionStatistics} value="2020">
-              2020
-            </option>
-            <option className={s.optionStatistics} value="2021">
-              2021
-            </option>
-            <option className={s.optionStatistics} value="2022">
-              2022
-            </option>
-            <option className={s.optionStatistics} value="2023">
-              2023
-            </option>
-            <option className={s.optionStatistics} value="2024">
-              2024
-            </option>
-            <option className={s.optionStatistics} value="2025">
-              2025
-            </option>
-          </select>
+            className="selectStatistics"
+            classNamePrefix="selectStatistics"
+            value={
+              options1.find((option) => option.value === String(year)) || null
+            }
+            onChange={(selected) => dispatch(setYear(selected.value))}
+          />
         </div>
         {isLoading ? (
           <div
@@ -151,13 +108,12 @@ const Statistics = () => {
               right: "30%",
               top: "30%",
             }}
-          >
-          </div>
+          ></div>
         ) : error ? (
           <p>Error: {error}</p>
         ) : dataWithColor.length === 0 ? (
           <div className={s.noDataContainer}>
-            <img src={thumbupwallet} alt="No data" className={s.noDataImage} />
+            <img src={wallet} alt="No data" className={s.noDataImage} />
             <p className={s.noDataText}>No transactions for this period </p>
           </div>
         ) : (
