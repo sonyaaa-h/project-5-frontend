@@ -6,6 +6,18 @@
   bottom: 16px;
 }
 
+.iconAdd:hover,
+.iconWrapp:hover {
+  fill: var(--main-white);
+
+}
+
+.btnAddWrapp:hover,
+.btnAddWrapp:focus {
+  transform: scale(1.04);
+  fill: var(--main-white)
+}
+
 .iconAdd {
   width: 45px;
   height: 45px;
@@ -55,4 +67,5 @@
     right: 16px;
     bottom: 16px;
   }
+
 }
