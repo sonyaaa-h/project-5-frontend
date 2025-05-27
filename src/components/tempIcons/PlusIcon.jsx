@@ -2,16 +2,21 @@ const PlusIconModal = ({ className, ...props }) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"
-    width="11"
-    height="10"
+    width="26"
+    height="26"
+    viewBox="0 0 26 26"
     fill="none"
     {...props}
   >
     <path
-      stroke="#FCFCFC"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M5.5 2.083v5.834M2.583 5h5.833"
+      d="M13 0.272705V25.7273"
+      stroke="currentColor"
+      strokeWidth="2.54545"
+    />
+    <path
+      d="M0.272949 13L25.7275 13"
+      stroke="currentColor"
+      strokeWidth="2.54545"
     />
   </svg>
 );
