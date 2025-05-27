@@ -71,8 +71,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 20px;
-  /* Отступ от заголовка для мобильных */
   align-self: center;
 }
 
@@ -289,9 +287,6 @@
 
   .toggleGroup {
     width: 252px;
-    /* Возвращаем фиксированную ширину для планшета */
-    margin-top: 40px;
-    /* Отступ от заголовка */
   }
 
   .toggleOption {
@@ -392,9 +387,6 @@
 
   .toggleGroup {
     width: 252px;
-    /* Фиксированная ширина */
-    margin-top: 40px;
-    /* Отступ от заголовка */
   }
 
   .toggleOption {
