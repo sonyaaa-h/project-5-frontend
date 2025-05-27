@@ -25,13 +25,12 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerThunk.fulfilled, (state, action) => {
-        console.log("action.payload", action.payload);
         state.user.userId = action.payload._id;
         state.user.name = action.payload.name;
         state.user.email = action.payload.email;
         state.user.balance = action.payload.balance;
         state.accessToken = action.payload.accessToken;
-        state.isLoggedIn = true;
+        state.isLoggedIn = false;
         state.isAuthLoading = false;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
