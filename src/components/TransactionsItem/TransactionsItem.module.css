@@ -1,4 +1,3 @@
-/* mobile */
 .mobileWrapperTransaction {
     display: flex;
     flex-direction: column;
@@ -86,7 +85,6 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-
 .btnDelete {
     border: 1px solid var(--main-white);
     border-radius: 8px;
@@ -120,7 +118,6 @@
     color: var(--main-white);
 }
 
-
 .btnEdit .icon {
     width: 14px;
     height: 14px;
@@ -137,8 +134,6 @@
     transform: scale(1.04);
 }
 
-
-/* tablet */
 @media screen and (min-width: 768px) {
     .wrapperTransaction {
         background-color: transparent;

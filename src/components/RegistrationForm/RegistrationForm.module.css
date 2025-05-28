@@ -13,8 +13,6 @@
   width: 280px;
   padding: 16px;
   background-color: var(--main-light-green);
-  /* position: relative; */
-  /* margin-bottom: 10px; */
 }
 
 .logo {
@@ -255,7 +253,7 @@ input:-webkit-autofill {
   transform: scale(1.04);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
-span {
+h6 {
   font-weight: 400;
   font-size: 10px;
   color: var(--red-color);
@@ -264,12 +262,10 @@ span {
 @media screen and (min-width: 768px) {
   .div {
     position: relative;
-    /* margin-top: 10px; */
   }
 
   .formWrapper {
     width: 533px;
-    /* height: 631px; */
     padding: 20px 61px 61px 62px;
   }
 
@@ -279,11 +275,8 @@ span {
 
   .wallet {
     display: flex;
-    /* position: absolute; */
     width: 280px;
-    /* height: auto; */
     margin-left: 447px;
-    /* margin-top: 650px; */
   }
 
   .nameContainer {
@@ -304,7 +297,7 @@ span {
     margin-top: 24px;
     margin-bottom: 20px;
   }
-  span {
+  h6 {
     margin-top: -20px;
   }
   .button {
@@ -316,14 +309,9 @@ span {
   .link {
     width: 409px;
   }
-  html {
-    /* height: 100%; */
-  }
 }
 @media screen and (min-width: 1280px) {
   .div {
-    /* margin-top: 50px; */
-    /* flex-direction: row; */
     gap: 10px;
   }
 
@@ -331,12 +319,8 @@ span {
     margin-left: 914px;
     margin-top: -220px;
     width: 320px;
-    /* position: absolute; */
   }
-  span {
+  h6 {
     margin-top: -20px;
   }
-  /* html {
-    height: 100%;
-  } */
 }

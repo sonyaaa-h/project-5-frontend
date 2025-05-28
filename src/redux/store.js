@@ -11,18 +11,10 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
 import { categoriesReducer } from "./categories/sliсe.js";
 import { statisticsReducer } from "./statistics/slice.js";
 import { globalReducer } from "./global/slice.js";
 import { transactionsReducer } from "./transactions/slice.js";
-
-// const persistConfig = {
-//   key: "auth",
-//   version: 1,
-//   storage,
-//   whitelist: ["accessToken", "isLoggedIn", "user", "statistics"],
-// };
 
 const persistConfig = {
   key: "auth",

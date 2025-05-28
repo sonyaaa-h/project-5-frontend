@@ -27,11 +27,8 @@
 
 .block {
   display: flex;
-  /* flex-direction: column; */
-  /* padding: 16px 32px; */
   border-radius: 16px;
   align-items: flex-start;
-  /* margin-bottom: 24px; */
 }
 
 @media screen and (max-width: 767px) {

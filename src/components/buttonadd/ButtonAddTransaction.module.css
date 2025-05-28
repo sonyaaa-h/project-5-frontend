@@ -44,15 +44,6 @@
   color: var(--white-color);
 }
 @media screen and (min-width: 768px) {
-  /* .btnAddWrapp {
-
-    margin-top: -72px;
-    margin-right: 16px;
-    display: flex;
-    justify-content: flex-end;
-    position: sticky;
-    /* bottom: 40px;
-    right: 16px; */
   .btnAddWrapp {
     position: absolute;
     right: 16px;

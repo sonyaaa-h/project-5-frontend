@@ -9,7 +9,6 @@ export const fetchTransactions = createAsyncThunk(
       const response = await api.get(`transactions?page=${page}`);
       return response.data;
     } catch (error) {
-      // return thunkAPI.rejectWithValue(error.message);
       const message = error?.response?.data?.message || error.message;
       return thunkAPI.rejectWithValue(message);
     }
@@ -20,7 +19,7 @@ export const addTransaction = createAsyncThunk(
   async (newTransactionData, thunkAPI) => {
     try {
       const response = await api.post("/transactions", newTransactionData);
-      thunkAPI.dispatch(getCurrentUserThunk()); //оновлення баланс
+      thunkAPI.dispatch(getCurrentUserThunk());
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -37,7 +36,7 @@ export const updateTransaction = createAsyncThunk(
         `/transactions/${id}`,
         updatedTransactionData
       );
-      thunkAPI.dispatch(getCurrentUserThunk()); //оновлення балансу
+      thunkAPI.dispatch(getCurrentUserThunk());
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

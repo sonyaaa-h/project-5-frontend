@@ -4,7 +4,6 @@
     gap: 16px;
 }
 
-/* Заголовки колонок */
 .titles {
     display: none;
     font-family: "Poppins", sans-serif;
@@ -13,14 +12,12 @@
     padding: 0 12px 0 0;
 }
 
-/* Список транзакцій */
 .wrapperTransactions {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-/* Прокрутка */
 .transactionsScroll {
     flex: 1;
     height: 100%;
@@ -29,7 +26,6 @@
     scroll-behavior: smooth;
 }
 
-/* Кастомний скролбар */
 .transactionsScroll::-webkit-scrollbar {
     width: 4px;
 }
@@ -44,7 +40,6 @@
     border-radius: 64px;
 }
 
-/* Кнопка "Load More" */
 .moreBtn {
     font-size: 16px;
     font-weight: 500;
@@ -65,7 +60,6 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Текст "No Transactions" */
 .noneTransText {
     display: flex;
     align-items: center;
@@ -78,7 +72,6 @@
     margin: 0 auto;
 }
 
-/* Лоадер */
 .loaderWrapper {
     display: flex;
     align-items: center;
@@ -86,7 +79,6 @@
     width: 100%;
 }
 
-/* ----------- MEDIA QUERIES ----------- */
 @media screen and (min-width: 768px) {
     .wrapper {
         border-radius: 16px;

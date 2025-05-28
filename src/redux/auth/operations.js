@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import { setUser, setIsRefreshing } from "./slice"; // setToken импортирован для будущего использования
 import toast from "react-hot-toast";
 import { store } from "../store";
 import { logoutThunk } from "./logoutThunk";
@@ -11,7 +10,6 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       clearAuthHeader();
       store.dispatch(logoutThunk());
-      // Редірект видалений з інтерсептора
     }
     return Promise.reject(error);
   }
@@ -59,7 +57,6 @@ export const registerThunk = createAsyncThunk(
       setAuthHeader(response.data.data.accessToken);
       return response.data.data;
     } catch (error) {
-      // console.log(error.response.data);
       if (error.response.status === 409) {
         toast.error("User already exists! Please log in!", {
           duration: 2000,

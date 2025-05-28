@@ -15,6 +15,7 @@ import { fetchCategories } from '../../redux/categories/operations';
 import Select from 'react-select';
 import customSelectStyles from '../ModalAddTransaction/customSelectStyles.js';
 import { IoClose } from 'react-icons/io5';
+import { FaRegCalendarAlt } from 'react-icons/fa';
 
 const validationSchema = Yup.object().shape({
   amount: Yup.number()
@@ -208,6 +209,7 @@ const EditTransactionForm = ({
                         dateFormat="dd/MM/yyyy"
                         toggleCalendarOnIconClick
                       />
+                      <FaRegCalendarAlt className={css.calendarIcon} />
                     </div>
                   </div>
 

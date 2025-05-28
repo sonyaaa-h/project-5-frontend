@@ -12,7 +12,6 @@
   position: relative;
   border-radius: 16px;
   width: 280px;
-  /* height: 528px; */
   padding: 16px;
   background-color: #508f8c;
 }
@@ -128,7 +127,6 @@ input::placeholder {
   transition: color 0.3s ease;
 }
 
-/* щоб при автозаповненні був фон імпуту */
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px var(--bg-color) inset !important;
   -webkit-text-fill-color: var(--text-color) !important;
@@ -143,7 +141,6 @@ input:-webkit-autofill {
   margin-top: 4px;
 }
 
-/* Error state */
 .errorState {
   border-color: #b20202 !important;
 }
@@ -157,7 +154,6 @@ input:-webkit-autofill {
   color: #b20202 !important;
 }
 
-/* Success state */
 .successState {
   border-color: #0b6016 !important;
 }
@@ -220,11 +216,9 @@ input:-webkit-autofill {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* for tablet */
 @media screen and (min-width: 768px) {
   .form {
     width: 533px;
-    /* height: 519px; */
     padding: 53px 62px 82px 62px;
   }
 
@@ -266,7 +260,6 @@ input:-webkit-autofill {
   }
 }
 
-/* for desktop */
 @media screen and (min-width: 1280px) {
   .loginForm {
     position: relative;

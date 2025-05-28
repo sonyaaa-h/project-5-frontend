@@ -1,6 +1,5 @@
 import s from './TransactionsItem.module.css';
 import EditIcon from '../../assets/icon-edit.svg?react';
-
 import ModalDeleteTransaction from '../ModalDeleteTransaction/ModalDeleteTransaction.jsx';
 import { useState } from 'react';
 import EditTransactionForm from '../EditTransactionForm/EditTransactionForm.jsx';
@@ -11,7 +10,6 @@ import {
 } from '../../redux/transactions/operations.js';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-// import ModalEditTransaction from "../ModalEditTransaction/ModalEditTransaction.jsx";
 
 const formatDate = isoDate => {
   const dateObj = new Date(isoDate);
@@ -32,12 +30,11 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
   const sumClass = type == '+' ? s.sumIncome : s.sumExpense;
   const isIncome = type === '+';
 
-  //оновлення транзакцій
   const dispatch = useDispatch();
   const handleSave = async data => {
     console.log('Data received in handleSave:', data);
     try {
-      const { _id, ...updatedData } = data; // виділяємо id
+      const { _id, ...updatedData } = data;
       await dispatch(
         updateTransaction({ id: _id, updatedTransactionData: updatedData }),
       );
@@ -113,9 +110,9 @@ const TransactionsItem = ({ _id, date, type, category, comment, sum }) => {
 
       {isModalEdit && (
         <EditTransactionForm
-          mode="edit" // <-- ДОДАВ ЦЕЙ РЯДОК
+          mode="edit" 
           _id={_id}
-          date={date} // <-- ЗМІНИВ data={date} НА date={date} для консистентності імен пропсів
+          date={date} 
           type={type}
           category={category}
           comment={comment}
