@@ -4,7 +4,6 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
 import RestrictedRoute from "./RestrictedRoute";
-// import { refreshUser } from "./redux/auth/operations";
 import { selectToken } from "./redux/auth/selectors.js";
 import { lazy, Suspense } from "react";
 import MasterLoader from "./components/MasterLoader/MasterLoader";

@@ -108,7 +108,7 @@ export const LoginForm = () => {
                     autoComplete="email"
                   />
                 </div>
-                <ErrorMessage className={s.error} name="email" component="span" />
+                <ErrorMessage className={s.error} name="email" component="h6" />
 
                 <div
                   className={`${s.pwdContainer} 
@@ -146,7 +146,7 @@ export const LoginForm = () => {
                 <ErrorMessage
                   className={s.error}
                   name="password"
-                  component="span"
+                  component="h6"
                 />
               </div>
 
