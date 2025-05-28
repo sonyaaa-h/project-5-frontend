@@ -38,35 +38,33 @@ const CustomSwitch = styled(Switch)(({ theme }) => ({
   height: 40,
   padding: 0,
   borderRadius: 30,
-  backgroundColor: "#fcfcfc", // Загальний фон доріжки перемикача
+  backgroundColor: "#fcfcfc", 
   display: "flex",
   alignItems: "center",
   overflow: "visible",
 
   "& .MuiSwitch-switchBase": {
     top: "50%",
-    // Изначальное (неchecked) состояние - ползунок справа, цвет расхода
-    transform: "translate(40px, -50%)", // Перемещаем ползунок вправо в неchecked состоянии
+    transform: "translate(40px, -50%)", 
     padding: 0,
-    color: "#b20202", // Цвет ползунка для расхода (минус)
-    backgroundColor: "#b20202", // Фон ползунка для расхода
+    color: "#b20202", 
+    backgroundColor: "#b20202", 
     "&:hover": {
-      backgroundColor: "#b20202", // Цвет при наведении для расхода
+      backgroundColor: "#b20202", 
     },
 
     "&.Mui-checked": {
-      // Checked состояние - ползунок слева, цвет дохода
-      transform: "translate(0, -50%)", // Перемещаем ползунок влево (начальная позиция) в checked состоянии
-      color: "#dfad3f", // Цвет ползунка для дохода (плюс)
-      backgroundColor: "#dfad3f", // Фон ползунка для дохода
+      transform: "translate(0, -50%)", 
+      color: "#dfad3f", 
+      backgroundColor: "#dfad3f", 
       "& + .MuiSwitch-track": {
-        backgroundColor: "#fcfcfc", // Фон дорожки остается белым
+        backgroundColor: "#fcfcfc", 
       },
       "&:hover": {
-        backgroundColor: "inherit", // Сброс цвета при наведении (по умолчанию MUI)
+        backgroundColor: "inherit", 
       },
       "&.Mui-checked:hover": {
-        backgroundColor: "#dfad3f", // Цвет при наведении для дохода
+        backgroundColor: "#dfad3f", 
       },
       "&.Mui-focusVisible": {
         backgroundColor: "inherit",
@@ -86,7 +84,7 @@ const CustomSwitch = styled(Switch)(({ theme }) => ({
   },
   "& .MuiSwitch-track": {
     borderRadius: 30,
-    backgroundColor: "#fcfcfc", // Общий фон дорожки
+    backgroundColor: "#fcfcfc",
     opacity: 1,
   },
 }));
@@ -100,8 +98,6 @@ export default function ToggleForEdit({ isIncome, setIsIncome }) {
     <CustomSwitch
       checked={isIncome}
       onChange={handleChange}
-      // Меняем местами иконки:
-      // Если НЕ checked (isIncome === false), показываем MinusIcon
       icon={
         <span
           style={{
@@ -115,7 +111,6 @@ export default function ToggleForEdit({ isIncome, setIsIncome }) {
           {MinusIcon}
         </span>
       }
-      // Если checked (isIncome === true), показываем PlusIcon
       checkedIcon={
         <span
           style={{

@@ -15,16 +15,15 @@ import { addTransaction } from '../../redux/transactions/operations';
 import Select from 'react-select';
 import customSelectStyles from './customSelectStyles';
 import 'izitoast/dist/css/iziToast.min.css';
-import iziToast from 'izitoast'; // Зверніть увагу: iziToast використовується тут, але toast з react-hot-toast також імпортується
+import iziToast from 'izitoast'; 
 import { fetchCategories } from '../../redux/categories/operations';
 import { getCurrentUserThunk } from '../../redux/auth/operations';
-import toast from 'react-hot-toast'; // Цей toast також використовується
+import toast from 'react-hot-toast'; 
 import { IoClose } from 'react-icons/io5';
 
 const ModalAddTransaction = ({ openModal, closeModal }) => {
   const [startDate, setStartDate] = useState(new Date());
-  const [transactionType, setTransactionType] = useState('expense'); // Початковий тип "expense"
-  // const [expenseOptions, setExpenseOptions] = useState([]); // Цей стан більше не потрібен
+  const [transactionType, setTransactionType] = useState('expense'); 
   const categories = useSelector(state => state.categories.items);
   const dispatch = useDispatch();
 
@@ -32,7 +31,6 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  // Оновлена схема валідації: категорія тепер завжди обов'язкова
   const schema = yup.object().shape({
     money: yup
       .number()
@@ -40,7 +38,6 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
       .typeError('Amount must be a number')
       .positive('Amount must be positive'),
     comment: yup.string().max(50, 'Comment must be at most 50 characters'),
-    // Категорія тепер обов'язкова, незалежно від типу транзакції
     category: yup.string().required('Category is required'),
   });
 
@@ -50,35 +47,26 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     formState: { errors },
     reset,
     control,
-    setValue, // Додано setValue для програмної зміни значень полів форми
+    setValue, 
   } = useForm({
     resolver: yupResolver(schema),
-    context: { transactionType }, // Передаємо transactionType в контекст валідації
+    context: { transactionType }, 
     defaultValues: {
-      category: '', // Встановлюємо значення за замовчуванням для категорії
+      category: '', 
       money: '',
       comment: '',
     },
   });
 
-  // useEffect для expenseOptions більше не потрібен, оскільки categoryOptions
-  // обчислюється динамічно перед рендерингом
-
-  // Функція для зміни типу транзакції та скидання категорії
   const handleTransactionTypeChange = newType => {
     setTransactionType(newType);
-    setValue('category', null); // Скидаємо вибрану категорію при зміні типу
-    // resetField("category"); // Альтернатива setValue("category", null);
+    setValue('category', null); 
   };
 
   const onSubmit = async data => {
-    // Ручна перевірка категорії видалена, оскільки її обробляє Yup
     const selectedCategory = categories?.find(cat => cat._id === data.category);
 
-    // Перевіряємо, чи знайдено категорію, якщо вона обов'язкова
     if (!selectedCategory) {
-      // Цей блок може бути менш необхідним, якщо валідація YUP працює коректно,
-      // але додаємо для безпеки, якщо data.category пройшло крізь YUP без _id
       iziToast.error({
         title: 'Error',
         message: 'Invalid category selected.',
@@ -93,10 +81,9 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
       return;
     }
 
-    const categoryName = selectedCategory.name; // Використовуємо назву категорії
+    const categoryName = selectedCategory.name; 
 
     const formatDate = date => {
-      // Перейменував параметр, щоб уникнути конфлікту з "data"
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
@@ -106,7 +93,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     const payload = {
       date: formatDate(startDate),
       type: transactionType === 'income' ? '+' : '-',
-      category: categoryName, // Передаємо назву категорії
+      category: categoryName, 
       comment: data.comment,
       sum: Number(data.money),
     };
@@ -114,11 +101,11 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
 
     try {
       await dispatch(addTransaction(payload)).unwrap();
-      await dispatch(getCurrentUserThunk()).unwrap(); // Оновлення балансу користувача
+      await dispatch(getCurrentUserThunk()).unwrap(); 
       toast.success(`Transaction added successfully!`);
-      reset(); // Скидаємо форму після успішної відправки
-      setStartDate(new Date()); // Скидаємо дату до поточної
-      setTransactionType('expense'); // Скидаємо тип до початкового
+      reset(); 
+      setStartDate(new Date()); 
+      setTransactionType('expense'); 
       closeModal();
     } catch (err) {
       iziToast.error({
@@ -143,19 +130,18 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
       window.scrollTo(0, 0);
     } else {
       document.body.style.overflow = 'auto';
-      reset(); // Скидаємо форму при закритті модалки
-      setStartDate(new Date()); // Скидаємо дату
-      setTransactionType('expense'); // Скидаємо тип
+      reset(); 
+      setStartDate(new Date()); 
+      setTransactionType('expense'); 
     }
 
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [openModal, reset]); // Додано reset в залежності
+  }, [openModal, reset]); 
 
   if (!openModal) return null;
-
-  // Динамічне обчислення categoryOptions на основі transactionType
+  
   const categoryOptions = Array.isArray(categories)
     ? categories
         .filter(category => category.type === transactionType)

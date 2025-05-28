@@ -1,4 +1,4 @@
-import { Field, Formik, Form, ErrorMessage, useFormik } from "formik";
+import { Field, Formik, Form, ErrorMessage } from "formik";
 import { useId, useState } from "react";
 import s from "./RegistrationForm.module.css";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,6 @@ import { FaUser } from "react-icons/fa";
 import { RiEye2Line, RiEyeCloseFill } from "react-icons/ri";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { motion } from "framer-motion";
-// import watch from "react-password-strength-bar";
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -23,7 +22,6 @@ const RegistrationForm = () => {
   const passwordFieldId = useId();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  //   const [passwordValue, setPasswordValue] = useState("");
 
   const registerValidationSchema = Yup.object().shape({
     name: Yup.string()
@@ -38,9 +36,6 @@ const RegistrationForm = () => {
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must be 64 characters or less")
       .required("Error: Password is required"),
-    // confirmPassword: Yup.string()
-    //   .oneOf([Yup.ref("password"), null], "Passwords must match")
-    //   .required("Error: Password is required"),
   });
 
   const initialValues = {
@@ -68,30 +63,9 @@ const RegistrationForm = () => {
             },
           });
         }
-        // else {
-        //   toast.error("Bad request error", {
-        //     duration: 2000,
-        //     style: {
-        //       background: "rgb(206, 84, 84)",
-        //       color: "#fff",
-        //       fontSize: "16px",
-        //       fontWeight: "500",
-        //     },
-        //     // options.resetForm();
-        //   });
-        // }
       });
   };
-  //   const formik = useFormik({
-  //     initialValues,
-  //     validationSchema: registerValidationSchema,
-  //     onSubmit: handleSubmit,
-  //   });
-  //   //   const passwordValue = formik.watch("password");
-  //   //   const passwordValue = watch("password");
-  //   const handlePasswordChange = (event) => {
-  //     formik.setFieldValue("password", event.target.value);
-  //   };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -135,7 +109,7 @@ const RegistrationForm = () => {
                 <ErrorMessage
                   className={s.error}
                   name="name"
-                  component="span"
+                  component="h6"
                 />
                 <div
                   className={`${s.emailContainer} 
@@ -164,7 +138,7 @@ const RegistrationForm = () => {
                 <ErrorMessage
                   className={s.error}
                   name="email"
-                  component="span"
+                  component="h6"
                 />
                 <div
                   className={`${s.pwdContainer} 
@@ -188,7 +162,6 @@ const RegistrationForm = () => {
                     placeholder="Password"
                     autoComplete="password"
                     id={passwordFieldId}
-                    //   onChange={handlePasswordChange}
                   />
                   <button
                     className={s.toggleBtn}
@@ -205,7 +178,7 @@ const RegistrationForm = () => {
                 <ErrorMessage
                   className={s.error}
                   name="password"
-                  component="span"
+                  component="h6"
                 />
                 <div
                   className={`${s.pwdConfContainer} 
@@ -244,7 +217,7 @@ const RegistrationForm = () => {
                 <ErrorMessage
                   className={s.error}
                   name="confirm password"
-                  component="span"
+                  component="h6"
                 />
               </div>
               <PasswordStrengthBar
@@ -260,9 +233,6 @@ const RegistrationForm = () => {
                 scoreWords={["Weak", "Okay", "Good", "Strong", "Excellent"]}
                 minLength={8}
                 shortScoreWord="Weak"
-                onChangeScore={(score, feedback) =>
-                  console.log("score", score, feedback)
-                }
               />
               <button type="submit" className={s.button}>
                 Register

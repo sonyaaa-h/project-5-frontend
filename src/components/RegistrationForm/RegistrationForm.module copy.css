@@ -21,28 +21,9 @@
   margin-bottom: 20px;
 }
 
-/* .toggleBtn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: #081222;
-}
-
-.icon {
-  outline: transparent;
-  border: none;
-} */
-
 .input {
   margin-left: 40px;
 }
-
-/* Error state */
 
 .button {
   width: 410px;
