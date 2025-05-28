@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./Currency.module.css";
 import ErrorMessage from "../ErrorMessage/ErrorMessage.jsx";
-import Loader from "../Loader/Loader.jsx";
 import wallet from "../../assets/wallet.png";
 
 const CURRENCY_API_URL = "https://api.monobank.ua/bank/currency";
@@ -17,24 +16,23 @@ const currencyCodes = {
 const Currency = () => {
   const [rates, setRates] = useState([]);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-      const { timestamp, rates } = JSON.parse(cached);
-      const isCacheValid = Date.now() - timestamp < CACHE_EXPIRATION_MS;
-
-      if (isCacheValid) {
-        setRates(rates);
-        return;
-      }
-    }
-
     const fetchCurrency = async () => {
       try {
         setError(false);
-        setLoading(true);
+
+        const cached = localStorage.getItem(CACHE_KEY);
+
+        if (cached) {
+          const { timestamp, rates } = JSON.parse(cached);
+          const isCacheValid = Date.now() - timestamp < CACHE_EXPIRATION_MS;
+
+          if (isCacheValid) {
+            setRates(rates);
+            return;
+          }
+        }
 
         const response = await axios.get(CURRENCY_API_URL);
 
@@ -51,12 +49,13 @@ const Currency = () => {
 
         localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
         setRates(filtered);
-        setError(false);
-      } catch (error) {
+      } catch (e) {
+        if (e.response?.status === 429) {
+          console.warn("Too many requests — Monobank rate limit exceeded.");
+        }
         setError(true);
+        setRates([]);
       } finally {
-        setLoading(false);
-        // setError(false);
       }
     };
 
@@ -88,11 +87,6 @@ const Currency = () => {
         </tbody>
       </table>
       {error && <ErrorMessage />}
-      {loading && (
-        <div className={styles.loader}>
-          <Loader />
-        </div>
-      )}
       <img src={wallet} alt="wallet" className={styles.wallet} />
     </div>
   );
