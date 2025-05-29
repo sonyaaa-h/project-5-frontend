@@ -6,7 +6,9 @@
     background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
     flex-direction: column;
     height: 741px;
+    width: 288px;
   }
+
   .pStatistics {
     display: flex;
     align-items: center;
@@ -15,6 +17,7 @@
     color: #fcfcfc;
     gap: 15px;
   }
+
   .firstBlock {
     display: flex;
     gap: 32px;
@@ -22,23 +25,27 @@
     align-items: center;
     margin-bottom: 60px;
   }
+
   .secondBlock {
     display: flex;
     gap: 20px;
     flex-direction: column;
     align-items: center;
   }
+
   .selectBlock {
     display: flex;
     gap: 20px;
   }
+
   .spanStatistic {
     display: inline-block;
-    width: 19px;
+    width: 24px;
     height: 24px;
     margin-right: 20px;
     border-radius: 2px;
   }
+
   .tableStatistics {
     display: flex;
     flex-direction: column;
@@ -46,11 +53,13 @@
     gap: 19px;
     justify-content: space-between;
   }
+
   .theadStatistics {
     border-radius: 8px;
     background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
     color: #fcfcfc;
   }
+
   .thStatistics {
     border-radius: 8px;
     padding: 16px 28px;
@@ -58,6 +67,7 @@
     font-size: 16px;
     text-align: right;
   }
+
   .tdStatistics {
     display: flex;
     font-weight: 400;
@@ -65,6 +75,7 @@
     color: #fcfcfc;
     align-items: center;
   }
+
   .trStatistics::after {
     content: "";
     position: absolute;
@@ -72,36 +83,42 @@
     left: 0;
     height: 1px;
     width: 100%;
-    background-color: #fcfcfc;
+    background-color: var(--main-white);
+    opacity: 0.2
   }
+
   .trhStatistics {
     display: flex;
     justify-content: space-between;
+    padding: 0;
   }
+
   .trStatistics {
     display: flex;
     justify-content: space-between;
     position: relative;
   }
+
   .tbodyStatistics {
     display: flex;
     flex-direction: column;
     gap: 29px;
-    padding-right: 24px;
-    padding-left: 16px;
+
   }
+
   .tdfStatistics {
     font-weight: 400;
     font-size: 14px;
     color: #fcfcfc;
     align-items: center;
   }
+
   .tfootStatistics {
     display: flex;
     justify-content: space-between;
-    padding-right: 23px;
-    padding-left: 16px;
+
   }
+
   .noDataContainer {
     font-weight: 600;
     font-size: 25px;
@@ -116,6 +133,7 @@
     text-align: center;
   }
 }
+
 @media screen and (min-width: 768px) {
   .statistics {
     display: flex;
@@ -124,7 +142,9 @@
     background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
     justify-content: space-between;
     height: 540px;
+    width: 698px;
   }
+
   .pStatistics {
     display: flex;
     align-items: center;
@@ -134,6 +154,7 @@
     color: #fcfcfc;
     gap: 15px;
   }
+
   .firstBlock {
     display: flex;
     gap: 32px;
@@ -141,16 +162,19 @@
     align-items: center;
     margin-right: 60px;
   }
+
   .secondBlock {
     display: flex;
     gap: 20px;
     flex-direction: column;
     align-items: center;
   }
+
   .selectBlock {
     display: flex;
     gap: 20px;
   }
+
   .spanStatistic {
     display: inline-block;
     width: 19px;
@@ -166,11 +190,13 @@
     gap: 19px;
     justify-content: space-between;
   }
+
   .theadStatistics {
     border-radius: 8px;
     background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
     color: #fcfcfc;
   }
+
   .thStatistics {
     border-radius: 8px;
     padding: 16px 28px;
@@ -178,6 +204,7 @@
     font-size: 16px;
     text-align: right;
   }
+
   .tdStatistics {
     display: flex;
     font-weight: 400;
@@ -185,6 +212,7 @@
     color: #fcfcfc;
     align-items: center;
   }
+
   .trStatistics::after {
     content: "";
     position: absolute;
@@ -192,36 +220,45 @@
     left: 0;
     height: 1px;
     width: 100%;
-    background-color: #fcfcfc;
+    background-color: var(--main-white);
+    opacity: 0.2;
   }
+
   .trhStatistics {
     display: flex;
     justify-content: space-between;
+
   }
+
   .trStatistics {
     display: flex;
     justify-content: space-between;
     position: relative;
+    padding: 0 24px 0 16px;
+
   }
+
   .tbodyStatistics {
     display: flex;
     flex-direction: column;
     gap: 29px;
-    padding-right: 24px;
-    padding-left: 16px;
+
   }
+
   .tdfStatistics {
     font-weight: 400;
     font-size: 14px;
     color: #fcfcfc;
     align-items: center;
   }
+
   .tfootStatistics {
     display: flex;
     justify-content: space-between;
     padding-right: 23px;
     padding-left: 16px;
   }
+
   .noDataContainer {
     font-weight: 600;
     font-size: 32px;
@@ -244,7 +281,9 @@
     padding: 16px 32px;
     background: linear-gradient(180deg, #355359 0%, #3b5d63 100%);
     height: 582px;
+    width: 757px;
   }
+
   .pStatistics {
     display: flex;
     align-items: center;
@@ -254,6 +293,7 @@
     color: #fcfcfc;
     gap: 20px;
   }
+
   .firstBlock {
     display: flex;
     gap: 16px;
@@ -261,12 +301,14 @@
     align-items: center;
     margin-right: 36px;
   }
+
   .secondBlock {
     display: flex;
     gap: 16px;
     flex-direction: column;
     align-items: center;
   }
+
   .selectBlock {
     display: flex;
     gap: 20px;
@@ -279,21 +321,25 @@
     margin-right: 24px;
     border-radius: 2px;
   }
+
   .tableStatistics {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 21px;
   }
+
   .theadStatistics {
     border-radius: 8px;
     background: linear-gradient(180deg, #294045 0%, #1e2f33 100%);
     color: #fcfcfc;
   }
+
   .thStatistics {
     border-radius: 8px;
     padding: 16px 28px;
   }
+
   .tdStatistics {
     display: flex;
     font-weight: 400;
@@ -301,10 +347,12 @@
     color: #fcfcfc;
     align-items: center;
   }
+
   .trhStatistics {
     display: flex;
     justify-content: space-between;
   }
+
   .trStatistics::after {
     content: "";
     position: absolute;
@@ -312,26 +360,31 @@
     left: 0;
     height: 1px;
     width: 100%;
-    background-color: #fcfcfc;
+    background-color: var(--main-white);
+    opacity: 0.2;
   }
+
   .trStatistics {
     display: flex;
     justify-content: space-between;
     position: relative;
+    padding: 0 20px 0 29px;
   }
+
   .tbodyStatistics {
     display: flex;
     flex-direction: column;
     gap: 29px;
-    padding-right: 29px;
-    padding-left: 20px;
+
   }
+
   .tfootStatistics {
     display: flex;
     justify-content: space-between;
-    padding-right: 29px;
-    padding-left: 29px;
+    padding-right: 20px;
+    padding-left: 34px;
   }
+
   .noDataContainer {
     display: flex;
     flex-direction: column;
@@ -349,12 +402,15 @@
     margin: 0 auto;
   }
 }
+
 .statistics {
   position: relative;
 }
+
 .income {
   transition: transform 0.9s ease;
 }
+
 .income:hover {
   transform: scale(1.1);
   animation: shimmer 2s linear infinite;
@@ -368,6 +424,7 @@
 .expense {
   transition: transform 0.9s ease;
 }
+
 .expense:hover {
   transform: scale(1.1);
   animation: shimmer 2s linear infinite;
@@ -382,6 +439,7 @@
   0% {
     background-position: 0% center;
   }
+
   100% {
     background-position: 200% center;
   }

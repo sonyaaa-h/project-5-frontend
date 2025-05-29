@@ -1,30 +1,30 @@
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { useEffect, useState } from 'react';
-import css from './ModalAddTransaction.module.css';
-import { IoAddOutline } from 'react-icons/io5';
-import { FiMinus } from 'react-icons/fi';
-import { FaRegCalendarAlt } from 'react-icons/fa';
-import clsx from 'clsx';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { IoCloseOutline } from 'react-icons/io5';
-import { addTransaction } from '../../redux/transactions/operations';
-import Select from 'react-select';
-import customSelectStyles from './customSelectStyles';
-import 'izitoast/dist/css/iziToast.min.css';
-import iziToast from 'izitoast'; 
-import { fetchCategories } from '../../redux/categories/operations';
-import { getCurrentUserThunk } from '../../redux/auth/operations';
-import toast from 'react-hot-toast'; 
-import { IoClose } from 'react-icons/io5';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useEffect, useState } from "react";
+import css from "./ModalAddTransaction.module.css";
+import { IoAddOutline } from "react-icons/io5";
+import { FiMinus } from "react-icons/fi";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import clsx from "clsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { IoCloseOutline } from "react-icons/io5";
+import { addTransaction } from "../../redux/transactions/operations";
+import Select from "react-select";
+import customSelectStyles from "./customSelectStyles";
+import "izitoast/dist/css/iziToast.min.css";
+import iziToast from "izitoast";
+import { fetchCategories } from "../../redux/categories/operations";
+import { getCurrentUserThunk } from "../../redux/auth/operations";
+import toast from "react-hot-toast";
+import { IoClose } from "react-icons/io5";
 
 const ModalAddTransaction = ({ openModal, closeModal }) => {
   const [startDate, setStartDate] = useState(new Date());
-  const [transactionType, setTransactionType] = useState('expense'); 
-  const categories = useSelector(state => state.categories.items);
+  const [transactionType, setTransactionType] = useState("expense");
+  const categories = useSelector((state) => state.categories.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,11 +34,11 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
   const schema = yup.object().shape({
     money: yup
       .number()
-      .required('Amount is required')
-      .typeError('Amount must be a number')
-      .positive('Amount must be positive'),
-    comment: yup.string().max(50, 'Comment must be at most 50 characters'),
-    category: yup.string().required('Category is required'),
+      .required("Amount is required")
+      .typeError("Amount must be a number")
+      .positive("Amount must be positive"),
+    comment: yup.string().max(50, "Comment must be at most 50 characters"),
+    category: yup.string().required("Category is required"),
   });
 
   const {
@@ -47,111 +47,112 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
     formState: { errors },
     reset,
     control,
-    setValue, 
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
-    context: { transactionType }, 
+    context: { transactionType },
     defaultValues: {
-      category: '', 
-      money: '',
-      comment: '',
+      category: "",
+      money: "",
+      comment: "",
     },
   });
 
-  const handleTransactionTypeChange = newType => {
+  const handleTransactionTypeChange = (newType) => {
     setTransactionType(newType);
-    setValue('category', null); 
+    setValue("category", null);
   };
 
-  const onSubmit = async data => {
-    const selectedCategory = categories?.find(cat => cat._id === data.category);
+  const onSubmit = async (data) => {
+    const selectedCategory = categories?.find(
+      (cat) => cat._id === data.category
+    );
 
     if (!selectedCategory) {
       iziToast.error({
-        title: 'Error',
-        message: 'Invalid category selected.',
-        position: 'topRight',
+        title: "Error",
+        message: "Invalid category selected.",
+        position: "topRight",
         timeout: 5000,
         close: true,
         progressBar: true,
-        backgroundColor: '#ff4d4f',
-        messageColor: '#fff',
-        titleColor: '#fff',
+        backgroundColor: "#ff4d4f",
+        messageColor: "#fff",
+        titleColor: "#fff",
       });
       return;
     }
 
-    const categoryName = selectedCategory.name; 
+    const categoryName = selectedCategory.name;
 
-    const formatDate = date => {
+    const formatDate = (date) => {
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     };
 
     const payload = {
       date: formatDate(startDate),
-      type: transactionType === 'income' ? '+' : '-',
-      category: categoryName, 
+      type: transactionType === "income" ? "+" : "-",
+      category: categoryName,
       comment: data.comment,
       sum: Number(data.money),
     };
-    console.log(payload);
 
     try {
       await dispatch(addTransaction(payload)).unwrap();
-      await dispatch(getCurrentUserThunk()).unwrap(); 
+      await dispatch(getCurrentUserThunk()).unwrap();
       toast.success(`Transaction added successfully!`);
-      reset(); 
-      setStartDate(new Date()); 
-      setTransactionType('expense'); 
+      reset();
+      setStartDate(new Date());
+      setTransactionType("expense");
       closeModal();
     } catch (err) {
       iziToast.error({
-        title: 'Error',
+        title: "Error",
         message:
           err?.response?.data?.message ||
-          'Something went wrong. Please try again!',
-        position: 'topRight',
+          "Something went wrong. Please try again!",
+        position: "topRight",
         timeout: 5000,
         close: true,
         progressBar: true,
-        backgroundColor: '#ff4d4f',
-        messageColor: '#fff',
-        titleColor: '#fff',
+        backgroundColor: "#ff4d4f",
+        messageColor: "#fff",
+        titleColor: "#fff",
       });
     }
   };
 
   useEffect(() => {
     if (openModal) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
       window.scrollTo(0, 0);
     } else {
-      document.body.style.overflow = 'auto';
-      reset(); 
-      setStartDate(new Date()); 
-      setTransactionType('expense'); 
+      document.body.style.overflow = "auto";
+      reset();
+      setStartDate(new Date());
+      setTransactionType("expense");
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
-  }, [openModal, reset]); 
+  }, [openModal, reset]);
 
   if (!openModal) return null;
-  
+
   const categoryOptions = Array.isArray(categories)
     ? categories
-        .filter(category => category.type === transactionType)
-        .map(category => ({
+        .filter((category) => category.type === transactionType)
+        .map((category) => ({
           value: category._id,
           label: category.name,
         }))
     : [];
 
-  const handleCloseClick = e => {
+  const handleCloseClick = (e) => {
     e.stopPropagation();
     if (closeModal) {
       closeModal();
@@ -160,7 +161,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
 
   return (
     <div className={css.backdrop} onClick={closeModal}>
-      <div className={css.modalContent} onClick={e => e.stopPropagation()}>
+      <div className={css.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={css.addModalWrapp}>
           <button
             type="button"
@@ -172,10 +173,10 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
           <p className={css.addTransaction}>Add transaction</p>
           <div className={css.typeTransaction}>
             <p
-              onClick={() => handleTransactionTypeChange('income')}
+              onClick={() => handleTransactionTypeChange("income")}
               className={clsx(
                 css.income,
-                transactionType === 'income' && css.active,
+                transactionType === "income" && css.active
               )}
             >
               Income
@@ -187,21 +188,21 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
             <div
               onClick={() =>
                 handleTransactionTypeChange(
-                  transactionType === 'income' ? 'expense' : 'income',
+                  transactionType === "income" ? "expense" : "income"
                 )
               }
               className={clsx(
                 css.btnTypeWrapp,
-                transactionType === 'expense' && css.expenseActive,
+                transactionType === "expense" && css.expenseActive
               )}
             >
               <button
                 className={clsx(
                   css.btnType,
-                  transactionType === 'expense' && css.btnTypeExpense,
+                  transactionType === "expense" && css.btnTypeExpense
                 )}
               >
-                {transactionType === 'income' ? (
+                {transactionType === "income" ? (
                   <IoAddOutline className={css.btnIconType} />
                 ) : (
                   <FiMinus />
@@ -209,10 +210,10 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
               </button>
             </div>
             <p
-              onClick={() => handleTransactionTypeChange('expense')}
+              onClick={() => handleTransactionTypeChange("expense")}
               className={clsx(
                 css.expense,
-                transactionType === 'expense' && css.activeExpense,
+                transactionType === "expense" && css.activeExpense
               )}
             >
               Expense
@@ -230,12 +231,12 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
                     placeholder="Select a category"
                     classNamePrefix="customSelect"
                     styles={customSelectStyles}
-                    onChange={option => {
+                    onChange={(option) => {
                       field.onChange(option ? option.value : null);
                     }}
                     value={
                       categoryOptions.find(
-                        option => option.value === field.value,
+                        (option) => option.value === field.value
                       ) || null
                     }
                   />
@@ -250,7 +251,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
               <div className={css.moneyWrapp}>
                 <input
                   type="number"
-                  {...register('money')}
+                  {...register("money")}
                   className={css.money}
                   placeholder="0.00"
                 />
@@ -263,7 +264,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
                 <DatePicker
                   className={css.date}
                   selected={startDate}
-                  onChange={date => setStartDate(date)}
+                  onChange={(date) => setStartDate(date)}
                   dateFormat="dd/MM/yyyy"
                   toggleCalendarOnIconClick
                 />
@@ -273,7 +274,7 @@ const ModalAddTransaction = ({ openModal, closeModal }) => {
 
             <div className={css.moneyWrapp}>
               <input
-                {...register('comment')}
+                {...register("comment")}
                 className={css.comment}
                 placeholder="Comment"
               />

@@ -30,8 +30,6 @@ export const updateTransaction = createAsyncThunk(
   "transactions/updateTransaction",
   async ({ id, updatedTransactionData }, thunkAPI) => {
     try {
-      console.log("Sending PATCH request to:", `/transactions/${id}`);
-      console.log("With data:", updatedTransactionData);
       const response = await api.patch(
         `/transactions/${id}`,
         updatedTransactionData
