@@ -5,7 +5,7 @@
     border: 1px solid #fcfcfc;
     border-radius: 8px !important;
     padding: 0 14px !important;
-    width: 148px !important;
+    min-width: 187.5px !important;
     height: 44px !important;
     background-color: transparent !important;
     font-weight: 500 !important;
