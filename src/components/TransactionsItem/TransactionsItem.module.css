@@ -37,7 +37,6 @@
     color: var(--main-white);
     font-size: 16px;
     box-sizing: border-box;
-
 }
 
 .mobileRow:last-of-type {
@@ -54,6 +53,9 @@
     flex-basis: 60%;
     text-align: right;
     font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sumRow .value {
@@ -178,6 +180,9 @@
 
     .transaction li:nth-child(4) {
         width: 142px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;   
     }
 
     .transaction li:nth-child(5) {
