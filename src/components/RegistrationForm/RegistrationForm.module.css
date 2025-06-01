@@ -51,7 +51,6 @@
   padding: 10px 14px;
   width: 248px;
   height: 44px;
-  margin-top: 16px;
   background-color: transparent;
   border: 1px solid var(--text-color);
   outline: transparent;
@@ -72,7 +71,6 @@
   padding: 10px 14px;
   width: 248px;
   height: 44px;
-  margin-top: 16px;
   background-color: transparent;
   border: 1px solid var(--text-color);
   outline: transparent;
@@ -86,7 +84,6 @@
   padding: 10px 14px;
   width: 248px;
   height: 44px;
-  margin-top: 16px;
   margin-bottom: 10px;
   background-color: transparent;
   border: 1px solid var(--text-color);
@@ -179,6 +176,9 @@ input:-webkit-autofill {
   font-size: 10px;
   color: var(--red-color);
   display: flex;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  min-height: 16px;
 }
 
 .errorState {
@@ -248,6 +248,7 @@ input:-webkit-autofill {
   cursor: pointer;
   width: 248px;
   height: 44px;
+  margin-bottom: 20px;
 }
 .link:hover {
   transform: scale(1.04);
@@ -266,7 +267,7 @@ h6 {
 
   .formWrapper {
     width: 533px;
-    padding: 20px 61px 61px 62px;
+    padding: 32px 61px 50px 62px;
   }
 
   .logo {
@@ -281,33 +282,38 @@ h6 {
 
   .nameContainer {
     width: 409px;
-    margin-bottom: 24px;
   }
   .emailContainer {
     width: 409px;
-    margin-bottom: 24px;
+    margin-top: 8px;
   }
 
   .pwdContainer {
     width: 409px;
-    margin-bottom: 24px;
+    margin-top: 8px;
   }
   .pwdConfContainer {
     width: 409px;
-    margin-top: 24px;
-    margin-bottom: 20px;
+    margin-top: 8px;
+    margin-bottom: 18px;
   }
   h6 {
     margin-top: -20px;
   }
+
+  .error {
+    margin-top: 4px;
+    margin-bottom: 0;
+  }
+
   .button {
     width: 409px;
     margin-bottom: 21px;
-    margin-top: 5px;
   }
 
   .link {
     width: 409px;
+    margin-bottom: 0;
   }
 }
 @media screen and (min-width: 1280px) {
