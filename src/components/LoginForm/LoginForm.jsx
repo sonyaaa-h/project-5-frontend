@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useId, useState } from "react";
 import * as Yup from "yup";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import toast from "react-hot-toast";
 import s from "./LoginForm.module.css";
 import { loginThunk } from "../../redux/auth/operations.js";
@@ -62,11 +62,11 @@ export const LoginForm = () => {
     email: Yup.string()
       .email("Error: Invalid email format")
       .max(64, "Email must be 64 characters or less")
-      .required("Error: Email is required"),
+      .required("Error: Email is required!"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must be 64 characters or less")
-      .required("Error: Password is required"),
+      .required("Error: Password is required!"),
   });
 
   return (
@@ -108,7 +108,9 @@ export const LoginForm = () => {
                     autoComplete="email"
                   />
                 </div>
-                <ErrorMessage className={s.error} name="email" component="h6" />
+                <h6 className={s.error}>
+                  {touched.email && errors.email ? errors.email : '\u00A0'}
+                </h6>
 
                 <div
                   className={`${s.pwdContainer} 
@@ -143,11 +145,9 @@ export const LoginForm = () => {
                     )}
                   </button>
                 </div>
-                <ErrorMessage
-                  className={s.error}
-                  name="password"
-                  component="h6"
-                />
+                <h6 className={s.error}>
+                  {touched.password && errors.password ? errors.password : '\u00A0'}
+                </h6>
               </div>
 
               <button className={s.btnLogIn} type="submit">

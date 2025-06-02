@@ -31,11 +31,11 @@ const RegistrationForm = () => {
     email: Yup.string()
       .email("Error: Invalid email format!")
       .max(64, "Email must be 64 characters or less")
-      .required("Email is required!"),
+      .required("Error: Email is required!"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters long")
       .max(64, "Password must be 64 characters or less")
-      .required("Error: Password is required"),
+      .required("Error: Password is required!"),
   });
 
   const initialValues = {
@@ -106,11 +106,9 @@ const RegistrationForm = () => {
                     style={{ color: "rgb(54, 32, 4)" }}
                   />
                 </div>
-                <ErrorMessage
-                  className={s.error}
-                  name="name"
-                  component="h6"
-                />
+                <h6 className={s.error}>
+                  {touched.name && errors.name ? errors.name : '\u00A0'}
+                </h6>
                 <div
                   className={`${s.emailContainer} 
                                               ${
@@ -135,11 +133,9 @@ const RegistrationForm = () => {
                     autoComplete="email"
                   />
                 </div>
-                <ErrorMessage
-                  className={s.error}
-                  name="email"
-                  component="h6"
-                />
+                <h6 className={s.error}>
+                  {touched.email && errors.email ? errors.email : '\u00A0'}
+                </h6>
                 <div
                   className={`${s.pwdContainer} 
                                           ${
@@ -175,11 +171,9 @@ const RegistrationForm = () => {
                     )}
                   </button>
                 </div>
-                <ErrorMessage
-                  className={s.error}
-                  name="password"
-                  component="h6"
-                />
+                <h6 className={s.error}>
+                  {touched.password && errors.password ? errors.password : '\u00A0'}
+                </h6>
                 <div
                   className={`${s.pwdConfContainer} 
                                           ${
